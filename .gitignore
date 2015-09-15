@@ -1,3 +1,5 @@
 *.suo
-/SrProj/obj/Debug/*.cache
-/SrProj/SrProj.csproj.user
+*.cache
+*.csproj.user
+*.dll
+*.pdb

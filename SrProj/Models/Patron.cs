@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SrProj.Models
 {
-    public class Patron
+    public class Patron : ModelBase
     {
         [Key]
-        public int id { get; set; }
+        public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -16,8 +16,10 @@ namespace SrProj.Models
         public virtual IList<EmergencyContact> EmergencyContacts { get; set; }
     }
 
-    public class Address
+    public class Address : ModelBase
     {
+        [Key]
+        public int ID { get; set; }
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string County { get; set; }
@@ -27,13 +29,17 @@ namespace SrProj.Models
 
     public class EmergencyContact : Address
     {
+        [Key]
+        new public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public IList<PhoneNumber> PhoneNumbers { get; set; }
     }
 
-    public class PhoneNumber
+    public class PhoneNumber : ModelBase
     {
+        [Key]
+        public int ID { get; set; }
         public string ContactNumber { get; set; }
     }
 }
