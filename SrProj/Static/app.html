@@ -1,13 +1,21 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title data-bind="text: pageTitle"></title>
-    <link rel="stylesheet" type="text/css" href="bower_componenets/semantic/dist/semantic.css">
+  <title data-bind="text: pageTitle"></title>
+  <link rel="stylesheet" type="text/css" href="bower_componenets/semantic/dist/semantic.css">
 </head>
 <body>
-    <script src="bower_componenets/jquery/dist/jquery.js" type="text/javascript"></script>
-    <script src="bower_componenets/knockout/dist/knockout.js" type="text/javascript"></script>
-    <script src="bower_componenets/semantic/dist/semantic.js" type="text/javascript"></script>
-    
+
+  <div id="renderArea"></div>
+
+  <div id="partials" style="display: none;"></div>
+
+  <script src="bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
+  <script src="bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
+  <script src="bower_components/semantic/dist/semantic.js" type="text/javascript"></script>
+
+  <script src="assets/js/router.js"></script>
+  <script src="viewModels/appViewModel.js"></script>
+  <script src="controllers/appController.js"></script>
 </body>
 </html>
