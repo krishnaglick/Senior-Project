@@ -28,6 +28,9 @@ function Router(renderElement, partialContainer) {
   }.bind(this);
 
   this.loadContent = function(route) {
+    if(!this.routes[route])
+      route = this.routes.default;
+    
     function loadRouteContent(route) {
       this.routeTransitionBegin();
 
