@@ -1,1 +1,3 @@
 *.suo
+/SrProj/obj/Debug/*.cache
+/SrProj/SrProj.csproj.user
