@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SrProj.Models
 {
@@ -8,8 +9,16 @@ namespace SrProj.Models
     {
         [Key]
         public int ID { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [NotMapped]
+        public string FullName
+        {
+            get { return string.Format("{0} {1}", this.FirstName, this.LastName); }
+        }
+        [Required]
         public DateTime DateOfBirth { get; set; }
         public IList<PhoneNumber> PhoneNumbers { get; set; }
         public virtual IList<Address> Addresses { get; set; }
@@ -29,17 +38,23 @@ namespace SrProj.Models
 
     public class EmergencyContact : Address
     {
-        [Key]
-        new public int ID { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [NotMapped]
+        public string FullName
+        {
+            get { return string.Format("{0} {1}", this.FirstName, this.LastName); }
+        }
         public IList<PhoneNumber> PhoneNumbers { get; set; }
     }
 
-    public class PhoneNumber : ModelBase
+    [ComplexType]
+    public class PhoneNumber
     {
-        [Key]
-        public int ID { get; set; }
+        [MinLength(10)]
+        [MaxLength(10)]
         public string ContactNumber { get; set; }
     }
 }

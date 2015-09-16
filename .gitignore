@@ -3,3 +3,4 @@
 *.csproj.user
 *.dll
 *.pdb
+/*.user
