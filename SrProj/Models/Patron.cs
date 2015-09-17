@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SrProj.Models
 {
     public class PatronContext : DbContext
     {
-        public PatronContext() : base("PatronContext") { }
+        public PatronContext() : base("potato") { }
         public DbSet<Patron> Patrons { get; set; }
         public DbSet<EmergencyContact> EmergencyContacts { get; set; }
 
@@ -60,8 +61,17 @@ namespace SrProj.Models
         public ICollection<EmergencyContact> EmergencyContacts { get; set; }
     }
 
+    public interface IAddress
+    {
+        string StreetAddress { get; set; }
+        string City { get; set; }
+        string County { get; set; }
+        string State { get; set; }
+        string Zip { get; set; }
+    }
+
     [ComplexType]
-    public class Address : ModelBase
+    public class Address : IAddress
     {
         public string StreetAddress { get; set; }
         public string City { get; set; }
@@ -70,7 +80,7 @@ namespace SrProj.Models
         public string Zip { get; set; }
     }
 
-    public class EmergencyContact : Address
+    public class EmergencyContact : ModelBase, IAddress
     {
         [Key]
         public int ID { get; set; }
@@ -84,6 +94,11 @@ namespace SrProj.Models
             get { return string.Format("{0} {1}", this.FirstName, this.LastName); }
         }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        public string StreetAddress { get; set; }
+        public string City { get; set; }
+        public string County { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
     }
 
     [ComplexType]

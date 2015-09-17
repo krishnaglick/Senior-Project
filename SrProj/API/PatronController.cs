@@ -31,7 +31,7 @@ namespace SrProj.API
             {
                 new PatronContext().Patrons.Add(patron);
                 response.data = response.DefaultSuccessResponse;
-                return response.GenerateResponse(HttpStatusCode.OK);
+                return response.GenerateResponse(HttpStatusCode.Created);
             }
             catch(Exception e)
             {

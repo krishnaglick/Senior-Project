@@ -7,7 +7,7 @@ using SrProj.Utility.ExtensionMethod;
 
 namespace SrProj.Tests
 {
-    [TestClass]
+    /*[TestClass]
     public class TestTest
     {
         [TestMethod]
@@ -17,5 +17,5 @@ namespace SrProj.Tests
             string desiredVal = "This service represents when a patron visits for information.";
             Assert.AreEqual(desiredVal, val.desc);
         }
-    }
+    }*/
 }
