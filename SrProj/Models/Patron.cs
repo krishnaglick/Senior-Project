@@ -2,11 +2,46 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace SrProj.Models
 {
+    public class PatronContext : DbContext
+    {
+        public PatronContext() : base("PatronContext") { }
+        public DbSet<Patron> Patrons { get; set; }
+        public DbSet<EmergencyContact> EmergencyContacts { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
+    }
+
     public class Patron : ModelBase
     {
+        public override bool Equals(object obj)
+        {
+            return obj.GetType() == typeof(Patron) &&
+                (
+                    ((Patron)obj).ID == this.ID ||
+                    (
+                        ((Patron)obj).FirstName == this.FirstName &&
+                        ((Patron)obj).LastName == this.LastName   &&
+                        ((Patron)obj).DateOfBirth == this.DateOfBirth
+
+                    )
+                );
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ID.GetHashCode()        ^
+                   this.FirstName.GetHashCode() ^
+                   this.LastName.GetHashCode();
+        }
+
         [Key]
         public int ID { get; set; }
         [Required]
@@ -20,15 +55,14 @@ namespace SrProj.Models
         }
         [Required]
         public DateTime DateOfBirth { get; set; }
-        public IList<PhoneNumber> PhoneNumbers { get; set; }
-        public virtual IList<Address> Addresses { get; set; }
-        public virtual IList<EmergencyContact> EmergencyContacts { get; set; }
+        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
+        public ICollection<EmergencyContact> EmergencyContacts { get; set; }
     }
 
+    [ComplexType]
     public class Address : ModelBase
     {
-        [Key]
-        public int ID { get; set; }
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string County { get; set; }
@@ -38,6 +72,8 @@ namespace SrProj.Models
 
     public class EmergencyContact : Address
     {
+        [Key]
+        public int ID { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -47,7 +83,7 @@ namespace SrProj.Models
         {
             get { return string.Format("{0} {1}", this.FirstName, this.LastName); }
         }
-        public IList<PhoneNumber> PhoneNumbers { get; set; }
+        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
     }
 
     [ComplexType]
