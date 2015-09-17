@@ -1,9 +1,9 @@
 ﻿
 namespace SrProj.Utility.ExtensionMethod
 {
-    public static class EnumExtensionscs
+    public static class EnumExtensions
     {
-        public static object GetEnumAttribute<T>(this System.Enum enumVal) where T : System.Attribute
+        public static T GetEnumAttribute<T>(this System.Enum enumVal) where T : System.Attribute
         {
             var type = enumVal.GetType();
             var memInfo = type.GetMember(enumVal.ToString());

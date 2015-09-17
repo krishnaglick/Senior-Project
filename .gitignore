@@ -4,3 +4,4 @@
 *.dll
 *.pdb
 /*.user
+*.dll.config
