@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace SrProj
@@ -16,6 +17,12 @@ namespace SrProj
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapHttpRoute(
+                name: "API Default",
+                routeTemplate: "API/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
             );
         }
     }
