@@ -29,7 +29,11 @@ namespace SrProj.API
             ApiResponse response = new ApiResponse(Request);
             try
             {
-                new PatronContext().Patrons.Add(patron);
+                patron.CreateDate = DateTime.Now;
+                var patronContext = new PatronContext();
+                patronContext.Patrons.Add(patron);
+                patronContext.SaveChanges();
+
                 response.data = response.DefaultSuccessResponse;
                 return response.GenerateResponse(HttpStatusCode.Created);
             }

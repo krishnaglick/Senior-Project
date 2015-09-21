@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Security.Cryptography.X509Certificates;
 
 namespace SrProj.Models
 {
@@ -16,6 +15,7 @@ namespace SrProj.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
@@ -57,7 +57,7 @@ namespace SrProj.Models
         [Required]
         public DateTime DateOfBirth { get; set; }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-        public virtual ICollection<Address> Addresses { get; set; }
+        public ICollection<Address> Addresses { get; set; }
         public ICollection<EmergencyContact> EmergencyContacts { get; set; }
     }
 
