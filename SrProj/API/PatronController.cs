@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -17,10 +19,13 @@ namespace SrProj.API
             return new PatronContext().Patrons.Find(patronID);
         }
 
-        [HttpPost]
-        public Patron Search(Patron patron)
+        [HttpGet]
+        public Patron[] Search([FromUri] string namePartial)
         {
-            return new PatronContext().Patrons.Single(p => p.Equals(patron));
+            namePartial = namePartial.ToLower();
+            return
+                new PatronContext().Patrons.Where(
+                    p => p.FirstName.ToLower().Contains(namePartial) || p.LastName.ToLower().Contains(namePartial)).ToArray();
         }
 
         [HttpPost]
