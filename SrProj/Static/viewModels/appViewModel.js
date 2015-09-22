@@ -1,3 +1,3 @@
-var AppViewModel = function() {
+function AppViewModel() {
   this.pageTitle = ko.observable('Home');
-};
+}

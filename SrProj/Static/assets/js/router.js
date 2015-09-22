@@ -12,7 +12,8 @@ function Router(renderElement, partialContainer) {
     sampleRoute: {
       url: 'path/to/partial',
       name: 'Sample',
-      id: 'sample'
+      id: 'sample',
+      vm: null
     },
     default: ''
   };
@@ -41,8 +42,8 @@ function Router(renderElement, partialContainer) {
       //If partial is not on page
       if(!$('#' + this.routes[route].id)[0]) {
         this.contentArea.load(this.routes[route].url, function() {
-          ko.applyBindings(this.viewModel, this.contentArea[0]);
-          this.addPartialToPartialHolder(this.routes[route].id, this.contentArea.html());
+          ko.applyBindings(this.routes[route].vm || this.viewModel, this.contentArea[0]);
+          this.addPartialToPartialHolder(this.routes[route].id, '<span>' + this.contentArea.html() + '</span>');
           this.routeTransitionEnd();
         }.bind(this));
       }

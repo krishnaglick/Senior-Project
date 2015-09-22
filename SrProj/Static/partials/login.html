@@ -1,0 +1,15 @@
+<script src="viewModels/loginViewModel.js"></script>
+
+<div class="ui form">
+  <div class="field">
+    <label>Username</label>
+    <input id="username" placeholder="Username" type="text" data-bind="textInput: username" autofocus />
+  </div>
+
+  <div class="field">
+    <label>Password</label>
+    <input id="password" placeholder="Password" type="text" data-bind="textInput: password" />
+  </div>
+
+  <button type="button" class="ui inverted green button" data-bind="click: login">Login</button>
+</div>

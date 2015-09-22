@@ -5,13 +5,19 @@ $(function() {
   createRouter();
 
   function createRouter() {
-    var router = new Router(renderArea, partials);
+    window.router = new Router(renderArea, partials);
 
     var routes = {
       Home: {
           url: 'partials/mainPage.html',
           name: 'Home',
           id: 'mainPage'
+      },
+
+      Login: {
+        url: 'partials/login.html',
+        name: 'Login',
+        id: 'login'
       },
 
       default: 'Home'

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace SrProj.Models
 {
@@ -21,7 +20,8 @@ namespace SrProj.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("potato", throwIfV1Schema: false)
+            //TODO: Make this a config option.
+            : base("homeNetwork", throwIfV1Schema: false)
         {
         }
         

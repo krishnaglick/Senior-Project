@@ -1,11 +1,10 @@
+using SrProj.Models.Context;
+
 namespace SrProj.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SrProj.Models.PatronContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<PatronContext>
     {
         public Configuration()
         {
@@ -13,7 +12,7 @@ namespace SrProj.Migrations
             ContextKey = "SrProj.Models.PatronContext";
         }
 
-        protected override void Seed(SrProj.Models.PatronContext context)
+        protected override void Seed(PatronContext context)
         {
             //  This method will be called after migrating to the latest version.
 

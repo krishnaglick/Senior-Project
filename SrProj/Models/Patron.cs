@@ -1,27 +1,20 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace SrProj.Models
 {
-    public class PatronContext : DbContext
-    {
-        public PatronContext() : base("potato") { }
-        public DbSet<Patron> Patrons { get; set; }
-        public DbSet<EmergencyContact> EmergencyContacts { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        }
-    }
-
     public class Patron : ModelBase
     {
+        public override int GetHashCode()
+        {
+            return this.ID.GetHashCode() ^
+                   this.FirstName.GetHashCode() ^
+                   this.LastName.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             return obj.GetType() == typeof(Patron) &&
@@ -34,13 +27,6 @@ namespace SrProj.Models
 
                     )
                 );
-        }
-
-        public override int GetHashCode()
-        {
-            return this.ID.GetHashCode()        ^
-                   this.FirstName.GetHashCode() ^
-                   this.LastName.GetHashCode();
         }
 
         [Key]

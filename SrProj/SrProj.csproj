@@ -219,6 +219,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Context\ContextBase.cs" />
+    <Compile Include="Models\Context\PatronContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Patron.cs" />

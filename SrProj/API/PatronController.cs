@@ -1,13 +1,12 @@
 ﻿
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using SrProj.API.Response;
 using SrProj.Models;
+using SrProj.Models.Context;
 
 namespace SrProj.API
 {
