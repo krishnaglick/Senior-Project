@@ -1,7 +1,7 @@
 $(function() {
-  window.app_view_model = new AppViewModel();
+  window.app = new App();
 
-  ko.applyBindings(app_view_model, $('title')[0]);
+  ko.applyBindings(app, $('title')[0]);
   createRouter();
 
   function createRouter() {
@@ -17,12 +17,13 @@ $(function() {
       Login: {
         url: 'partials/login.html',
         name: 'Login',
-        id: 'login'
+        id: 'login',
+        vm: function() { return new LoginViewModel(); }
       },
 
       default: 'Home'
     };
 
-    router.registerRouting(app_view_model, routes);
+    router.registerRouting(app.pageTitle, routes);
   }
 });

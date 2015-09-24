@@ -172,6 +172,7 @@
     <Compile Include="API\AuthorizableApi.cs" />
     <Compile Include="API\PatronController.cs" />
     <Compile Include="API\Responses\ApiResponse.cs" />
+    <Compile Include="API\Responses\Errors\InvalidPatron.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
