@@ -1,6 +1,4 @@
 ﻿
-using SrProj.API.Response;
-
 namespace SrProj.API.Responses.Errors
 {
     public class InvalidPatron : JsonError

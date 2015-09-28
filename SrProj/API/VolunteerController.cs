@@ -1,6 +1,6 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -10,12 +10,12 @@ using SrProj.Models;
 using SrProj.Models.Context;
 using PasswordHasher = SrProj.Utility.Security.PasswordHasher;
 
-namespace SrProj.Controllers
+namespace SrProj.API
 {
     public class VolunteerController : ApiController
     {
         [HttpPost]
-        public HttpResponseMessage CreateVolunteer(Volunteer volunteer)
+        public HttpResponseMessage CreateVolunteer([FromBody] Volunteer volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
 
@@ -44,7 +44,7 @@ namespace SrProj.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage Login(Volunteer volunteer)
+        public HttpResponseMessage Login([FromBody] Volunteer volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
             var volunteerContext = new VolunteerContext();
@@ -62,7 +62,7 @@ namespace SrProj.Controllers
                 return response.GenerateResponse(HttpStatusCode.BadRequest);
             }
 
-            var passwordResult = PasswordHasher.VerifyPassword(foundVolunteer.Password, volunteer.Password);
+            var passwordResult = foundVolunteer.VerifyPassword(volunteer.Password);
             if(passwordResult == PasswordVerificationResult.SuccessRehashNeeded)
             {
                 foundVolunteer.Password = PasswordHasher.EncryptPassword(volunteer.Password);

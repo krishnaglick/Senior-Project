@@ -18,7 +18,14 @@ $(function() {
         url: 'partials/login.html',
         name: 'Login',
         id: 'login',
-        vm: function() { return new LoginViewModel(); }
+        vm: function() { return new VolunteerViewModel(); }
+      },
+
+      Register: {
+        url: 'partials/register.html',
+        name: 'Register',
+        id: 'register',
+        vm: function() { return new VolunteerViewModel(); }
       },
 
       default: 'Home'

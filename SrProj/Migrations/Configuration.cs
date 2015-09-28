@@ -1,18 +1,18 @@
-using SrProj.Models.Context;
-
 namespace SrProj.Migrations
 {
+    using System;
+    using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<PatronContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SrProj.Models.Context.AuthenticationTokenContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            ContextKey = "SrProj.Models.PatronContext";
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(PatronContext context)
+        protected override void Seed(SrProj.Models.Context.AuthenticationTokenContext context)
         {
             //  This method will be called after migrating to the latest version.
 

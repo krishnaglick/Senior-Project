@@ -183,8 +183,8 @@ D:\C#\Senior-Project\SrProj\bin\Microsoft.Owin.Security.Twitter.xml
 D:\C#\Senior-Project\SrProj\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\C#\Senior-Project\SrProj\bin\System.Web.Http.Owin.xml
 D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.csprojResolveAssemblyReference.cache
-D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.Migrations.InitialCreate.resources
-D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.csproj.GenerateResource.Cache
 D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.dll
 D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.pdb
 C:\C#\SrProj\SrProj\obj\Debug\SrProj.csprojResolveAssemblyReference.cache
+D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.Migrations.Context1Init.resources
+D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.csproj.GenerateResource.Cache

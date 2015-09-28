@@ -209,13 +209,13 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\VolunteerController.cs" />
+    <Compile Include="API\VolunteerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201509210122203_InitialCreate.cs" />
-    <Compile Include="Migrations\201509210122203_InitialCreate.Designer.cs">
-      <DependentUpon>201509210122203_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201509280455268_Context1Init.cs" />
+    <Compile Include="Migrations\201509280455268_Context1Init.Designer.cs">
+      <DependentUpon>201509280455268_Context1Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -1115,8 +1115,8 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201509210122203_InitialCreate.resx">
-      <DependentUpon>201509210122203_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201509280455268_Context1Init.resx">
+      <DependentUpon>201509280455268_Context1Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

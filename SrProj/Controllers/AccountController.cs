@@ -23,7 +23,7 @@ namespace SrProj.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private const string LocalLoginProvider = "Local";
+        /*private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
         public AccountController()
@@ -74,7 +74,7 @@ namespace SrProj.Controllers
             return Ok();
         }
 
-        public IHttpActionResult Login(ApplicationUser user, string password)
+        /*public IHttpActionResult Login(ApplicationUser user, string password)
         {
             if (UserManager.CheckPassword(user, password))
             {
@@ -503,6 +503,6 @@ namespace SrProj.Controllers
             }
         }
 
-        #endregion
+        #endregion*/
     }
 }

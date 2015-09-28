@@ -13,5 +13,18 @@ namespace SrProj.Models.Context
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+        public override int SaveChanges()
+        {
+            foreach (var volunteer in Volunteers)
+            {
+                if (!string.IsNullOrEmpty(volunteer.Password))
+                {
+                    volunteer.SecurePassword();
+                }
+            }
+
+            return base.SaveChanges();
+        }
     }
 }
