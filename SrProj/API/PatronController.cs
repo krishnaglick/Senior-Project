@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using SrProj.API.Responses;
+using SrProj.API.Responses.Errors;
 using SrProj.Models;
 using SrProj.Models.Context;
 
@@ -43,14 +44,7 @@ namespace SrProj.API
             }
             catch(Exception e)
             {
-                //TODO: Put this in its own error.
-                response.errors.Add(new JsonError
-                {
-                    code = "Invalid Input",
-                    detail = "There was something wrong with the given patron",
-                    id = 0,
-                    source = e
-                });
+                response.errors.Add(new InvalidPatron { source = e });
                 return response.GenerateResponse(HttpStatusCode.BadRequest);
             }
         }

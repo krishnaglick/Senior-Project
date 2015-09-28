@@ -74,6 +74,20 @@ namespace SrProj.Controllers
             return Ok();
         }
 
+        public IHttpActionResult Login(ApplicationUser user, string password)
+        {
+            if (UserManager.CheckPassword(user, password))
+            {
+                //Login
+            }
+            else
+            {
+                //Not logged in
+            }
+
+            return Ok();
+        }
+
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
@@ -331,25 +345,6 @@ namespace SrProj.Controllers
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            return Ok();
-        }
-
-        public IHttpActionResult Create(RegisterBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
-            IdentityResult result = UserManager.Create(user, model.Password);
 
             if (!result.Succeeded)
             {

@@ -21,7 +21,7 @@ namespace SrProj.Models
     {
         public ApplicationDbContext()
             //TODO: Make this a config option.
-            : base("homeNetwork", throwIfV1Schema: false)
+            : base("potato", throwIfV1Schema: false)
         {
         }
         

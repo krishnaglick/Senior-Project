@@ -1,19 +1,16 @@
 function Router(renderElement, partialContainer) {
-  //Render element should be a jquery element.
+  
   this.contentArea = $(renderElement);
-  //Partial Holder should be a jquery element.
   this.partialHolder = $(partialContainer);
 
-  this.viewModel = {
-    pageTitle: function() { throw 'NotImplementedException'; }
-  };
+  this.pageTitle = function() { throw 'NotImplementedException'; };
 
   this.routes = {
     sampleRoute: {
       url: 'path/to/partial',
       name: 'Sample',
       id: 'sample',
-      vm: null
+      vm: function() { throw 'NotImplementedException'; }
     },
     default: ''
   };
@@ -22,10 +19,9 @@ function Router(renderElement, partialContainer) {
   this.routeTransitionEnd = function() {};
 
   this.addPartialToPartialHolder = function(idOfPartial, partialHtml) {
-    var newPartial = document.createElement('div');
-    this.partialHolder.append('<div id="' + idOfPartial + '">' + 
+    this.partialHolder.append('<span id="' + idOfPartial + '">' + 
       partialHtml +
-      '</div>');
+      '</span>');
   }.bind(this);
 
   this.loadContent = function(route) {
@@ -39,26 +35,31 @@ function Router(renderElement, partialContainer) {
         ko.cleanNode(this.contentArea[0]);
       }
 
+      function applyBinding() {
+        if(this.routes[route].vm)
+          ko.applyBindings(this.routes[route].vm(), this.contentArea[0]);
+      }
+
       //If partial is not on page
       if(!$('#' + this.routes[route].id)[0]) {
         this.contentArea.load(this.routes[route].url, function() {
-          ko.applyBindings(this.routes[route].vm || this.viewModel, this.contentArea[0]);
-          this.addPartialToPartialHolder(this.routes[route].id, '<span>' + this.contentArea.html() + '</span>');
+          applyBinding.call(this);
+          this.addPartialToPartialHolder(this.routes[route].id, this.contentArea.html());
           this.routeTransitionEnd();
         }.bind(this));
       }
       else {
         this.contentArea.html($('#' + this.routes[route].id).html());
-        ko.applyBindings(this.viewModel, this.contentArea[0]);
+        applyBinding.call(this);
         this.routeTransitionEnd();
       }
     }
 
-    this.viewModel.pageTitle(this.routes[route].name);
+    this.pageTitle(this.routes[route].name);
     loadRouteContent.call(this, route);
   }.bind(this);
 
-  this.registerRouting = function(viewModel, routes) {
+  this.registerRouting = function(pageTitle, routes) {
     this.routes = routes;
 
     window.addEventListener('hashchange', function(e) {
@@ -71,7 +72,7 @@ function Router(renderElement, partialContainer) {
       }
     }.bind(this));
     
-    this.viewModel = viewModel;
+    this.pageTitle = pageTitle;
 
     this.loadDefaultRoute();
   }.bind(this);
