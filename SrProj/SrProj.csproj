@@ -225,6 +225,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Patron.cs" />
+    <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Tests\PatronTest.cs" />
     <Compile Include="Tests\TestTest.cs" />
     <Compile Include="Utility\Attribute\EnumDecorators.cs" />
