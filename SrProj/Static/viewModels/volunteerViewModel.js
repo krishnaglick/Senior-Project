@@ -19,9 +19,11 @@ function VolunteerViewModel() {
           if(authToken) {
             app.authToken = authToken;
             //TODO: Let user know they logged in.
+            alert('You\'re logged in!');
           }
           else {
             //Bad things
+            alert('There was a problem logging you in, please try again!');
           }
         }.bind(this),
 
@@ -37,6 +39,7 @@ function VolunteerViewModel() {
             }
 
             //Handle single error.
+            alert('Invalid username or password.')
           }
           debugger;
         }.bind(this),
@@ -60,9 +63,11 @@ function VolunteerViewModel() {
         success: function(data, textStatus, request) {
           if(data.result == 'success') {
             //Good things
+            alert('Account Created!');
           }
           else {
             //Bad things!
+            alert('Bad things!');
           }
           debugger;
         }.bind(this),
@@ -79,6 +84,7 @@ function VolunteerViewModel() {
             }
 
             //Handle single error.
+            alert('Please try a different username!');
           }
           debugger;
         }.bind(this),
