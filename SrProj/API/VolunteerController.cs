@@ -22,7 +22,8 @@ namespace SrProj.API
             try
             {
                 volunteer.CreateDate = DateTime.UtcNow;
-                var volunteerContext = new VolunteerContext();
+                volunteer.SecurePassword();
+                var volunteerContext = new Database();
                 volunteerContext.Volunteers.Add(volunteer);
                 volunteerContext.SaveChanges();
 
@@ -47,7 +48,7 @@ namespace SrProj.API
         public HttpResponseMessage Login([FromBody] Volunteer volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
-            var volunteerContext = new VolunteerContext();
+            var volunteerContext = new Database();
             var foundVolunteer = volunteerContext.Volunteers.Find(volunteer.Username);
 
             if (foundVolunteer == null)
@@ -77,7 +78,7 @@ namespace SrProj.API
                     LastAccessedTime = DateTime.UtcNow,
                     AssociatedVolunteer = foundVolunteer
                 };
-                var authTokenContext = new AuthenticationTokenContext();
+                var authTokenContext = volunteerContext;
                 authTokenContext.AuthenticationTokens.Add(authToken);
                 authTokenContext.SaveChanges();
 

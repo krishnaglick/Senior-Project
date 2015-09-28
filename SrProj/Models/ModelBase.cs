@@ -10,5 +10,10 @@ namespace SrProj.Models
         public DateTime CreateDate { get; set; }
         //public ApplicationUser ModifyUser { get; set; }
         public DateTime? ModifyDate { get; set; }
+
+        protected ModelBase()
+        {
+            CreateDate = DateTime.UtcNow;
+        }
     }
 }

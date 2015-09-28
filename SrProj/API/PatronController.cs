@@ -35,7 +35,7 @@ namespace SrProj.API
             try
             {
                 patron.CreateDate = DateTime.UtcNow;
-                var patronContext = new PatronContext();
+                var patronContext = new Database();
                 patronContext.Patrons.Add(patron);
                 patronContext.SaveChanges();
 

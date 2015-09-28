@@ -14,6 +14,7 @@ $(function() {
           id: 'mainPage'
       },
 
+      //TODO: Merge login and register areas.
       Login: {
         url: 'partials/login.html',
         name: 'Login',

@@ -123,8 +123,6 @@ C:\C#\SrProj\SrProj\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\C#\SrProj\SrProj\bin\System.Web.Http.Owin.xml
 C:\C#\SrProj\SrProj\obj\Debug\SrProj.dll
 C:\C#\SrProj\SrProj\obj\Debug\SrProj.pdb
-C:\C#\SrProj\SrProj\obj\Debug\SrProj.Migrations.InitialCreate.resources
-C:\C#\SrProj\SrProj\obj\Debug\SrProj.csproj.GenerateResource.Cache
 D:\C#\Senior-Project\SrProj\bin\SrProj.dll.config
 D:\C#\Senior-Project\SrProj\bin\SrProj.dll
 D:\C#\Senior-Project\SrProj\bin\SrProj.pdb

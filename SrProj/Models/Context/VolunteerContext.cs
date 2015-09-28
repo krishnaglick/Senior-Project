@@ -8,12 +8,6 @@ namespace SrProj.Models.Context
     {
         public DbSet<Volunteer> Volunteers { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        }
-
         public override int SaveChanges()
         {
             foreach (var volunteer in Volunteers)
