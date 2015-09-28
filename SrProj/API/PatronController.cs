@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using SrProj.API.Response;
+using SrProj.API.Responses;
 using SrProj.Models;
 using SrProj.Models.Context;
 
@@ -33,7 +33,7 @@ namespace SrProj.API
             ApiResponse response = new ApiResponse(Request);
             try
             {
-                patron.CreateDate = DateTime.Now;
+                patron.CreateDate = DateTime.UtcNow;
                 var patronContext = new PatronContext();
                 patronContext.Patrons.Add(patron);
                 patronContext.SaveChanges();

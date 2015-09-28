@@ -4,16 +4,16 @@ using System.Net;
 using System.Net.Http;
 using WebGrease.Css.Extensions;
 
-namespace SrProj.API.Response
+namespace SrProj.API.Responses
 {
     public class JsonError
     {
-        public int id;
-        public string code;
-        public string title;
-        public string detail;
-        public HttpStatusCode status;
-        public Exception source;
+        public int id { get; set; }
+        public string code { get; set; }
+        public string title { get; set; }
+        public string detail { get; set; }
+        public HttpStatusCode status { get; set; }
+        public Exception source { get; set; }
     }
 
     public class ApiResponse
