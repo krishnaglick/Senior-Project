@@ -37,14 +37,17 @@ $(function() {
 
   (function loadHeaderAndSetupMenu(){
     $('#header').load('partials/header.html', function() {
-      $(document).on('click', '.ui.menu a', function(menuItem) {
-        $('.ui.menu a').removeClass('active');
-        $(menuItem.target).addClass('active');
-      });
+      function changeActiveMenuOption() {
+        var currentPage = window.location.href.split('#')[1];
+        if(currentPage == 'Register') currentPage = 'Login';
+        var target = currentPage ? $('.ui.menu a:contains(' +  currentPage + ')') : $('.ui.menu a:contains(Home)');
 
-      var currentPage = window.location.href.split('#')[1];
-      var target = target[0] || $('.ua.menu a[text=\'Home\']') = target = $('.ua.menu a[text=\'' +  currentPage.toLowerCase() + '\']');
-      $('.ui.menu a[text=\'' +  currentPage + '\']').click();
+        $('.ui.menu a').removeClass('active');
+        target.addClass('active');
+      }
+
+      window.addEventListener('hashchange', changeActiveMenuOption);
+      changeActiveMenuOption();
     });
   })();
 });

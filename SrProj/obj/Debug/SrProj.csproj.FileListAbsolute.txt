@@ -184,5 +184,3 @@ D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.csprojResolveAssemblyReference.cach
 D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.dll
 D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.pdb
 C:\C#\SrProj\SrProj\obj\Debug\SrProj.csprojResolveAssemblyReference.cache
-D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.Migrations.Context1Init.resources
-D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.csproj.GenerateResource.Cache

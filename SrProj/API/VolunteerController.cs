@@ -12,9 +12,10 @@ using PasswordHasher = SrProj.Utility.Security.PasswordHasher;
 
 namespace SrProj.API
 {
-    public class VolunteerController : ApiController
+    public class VolunteerController : AuthorizableApi
     {
         [HttpPost]
+        [AuthorizableRoute]
         public HttpResponseMessage CreateVolunteer([FromBody] Volunteer volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
