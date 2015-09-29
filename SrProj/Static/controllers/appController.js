@@ -34,4 +34,17 @@ $(function() {
 
     router.registerRouting(app.pageTitle, routes);
   }
+
+  (function loadHeaderAndSetupMenu(){
+    $('#header').load('partials/header.html', function() {
+      $(document).on('click', '.ui.menu a', function(menuItem) {
+        $('.ui.menu a').removeClass('active');
+        $(menuItem.target).addClass('active');
+      });
+
+      var currentPage = window.location.href.split('#')[1];
+      var target = target[0] || $('.ua.menu a[text=\'Home\']') = target = $('.ua.menu a[text=\'' +  currentPage.toLowerCase() + '\']');
+      $('.ui.menu a[text=\'' +  currentPage + '\']').click();
+    });
+  })();
 });
