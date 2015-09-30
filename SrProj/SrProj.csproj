@@ -216,10 +216,12 @@
     <Compile Include="Models\Context\AuthenticationTokenContext.cs" />
     <Compile Include="Models\Context\ContextBase.cs" />
     <Compile Include="Models\Context\PatronContext.cs" />
+    <Compile Include="Models\Context\RoleContext.cs" />
     <Compile Include="Models\Context\VolunteerContext.cs" />
     <Compile Include="Models\EmergencyContact.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Patron.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Tests\PatronTest.cs" />
     <Compile Include="Tests\TestTest.cs" />

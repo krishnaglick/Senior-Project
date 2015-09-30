@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using SrProj.API.Responses;
 using SrProj.Models;
@@ -12,7 +13,7 @@ using PasswordHasher = SrProj.Utility.Security.PasswordHasher;
 
 namespace SrProj.API
 {
-    public class VolunteerController : AuthorizableApi
+    public class VolunteerController : ApiController
     {
         [HttpPost]
         [AuthorizableRoute]

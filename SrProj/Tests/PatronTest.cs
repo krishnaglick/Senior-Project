@@ -20,12 +20,6 @@ namespace SrProj.Tests
         [TestMethod]
         public void CreatePatron()
         {
-            var user = new ApplicationUser
-            {
-                UserName = "potato",
-                Email = "s",
-                EmailConfirmed = true
-            };
 
             var newPatron = new Patron
             {

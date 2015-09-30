@@ -24,5 +24,6 @@ namespace SrProj.Models.Context
         public DbSet<EmergencyContact> EmergencyContacts { get; set; }
         public DbSet<AuthenticationToken> AuthenticationTokens { get; set; }
         public DbSet<Volunteer> Volunteers { get; set; }
+        public DbSet<Role> Roles { get; set; }
     }
 }

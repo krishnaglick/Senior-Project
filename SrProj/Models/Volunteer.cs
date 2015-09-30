@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNet.Identity;
@@ -12,6 +13,7 @@ namespace SrProj.Models
         [Required]
         [Index(IsUnique = true)]
         public string Username { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string HashedPassword { get; set; }
