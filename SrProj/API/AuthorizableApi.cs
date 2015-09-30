@@ -1,21 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using SrProj.API.Responses;
-using SrProj.Models.Context;
+using System.Web.Security;
 
 namespace SrProj.API
 {
     //TODO: Make this work.
     [AttributeUsage(AttributeTargets.Method)]
-    public class AuthorizableRoute : Attribute { }
+    public class AuthorizableRoute : AuthorizeAttribute
+    {
+        protected override bool IsAuthorized(HttpActionContext actionContext)
+        {
+            // do any stuff here
+            // it will be invoked when the decorated method is called
+            if (true)
+                return true; // authorized
+            else
+                return false; // not authorized
+        }
+    }
 
     public class AuthorizableApi : ApiController
     {
@@ -33,6 +40,14 @@ namespace SrProj.API
             }*/
             //Attribute.GetCustomAttribute(myRoute, typeof (AuthorizableRoute));
             return base.ExecuteAsync(controllerContext, cancellationToken);
+        }
+    }
+
+    internal static class AuthorizationActions
+    {
+        public static bool Authorize(HttpControllerContext controllerContext, IEnumerable<Role> roles)
+        {
+            
         }
     }
 }
