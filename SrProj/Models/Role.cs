@@ -15,6 +15,7 @@ namespace SrProj.Models
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }
 
+        //TODO: There is likely a better place for this.
         [NotMapped]
         private static readonly string[] authRoles = new []
         {

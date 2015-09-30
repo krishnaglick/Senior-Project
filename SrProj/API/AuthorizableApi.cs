@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using System.Web.Security;
 using Microsoft.Ajax.Utilities;
 using SrProj.API.Responses;
 using SrProj.Models;
@@ -15,40 +14,39 @@ using SrProj.Models.Context;
 
 namespace SrProj.API
 {
-    //TODO: Make this work.
+    //TODO: Test, and it can probably use a refactor.
     [AttributeUsage(AttributeTargets.Method)]
     public class AuthorizableRoute : AuthorizeAttribute
     {
         public new List<Role> Roles;
-
-        public AuthorizableRoute()
+        public AuthorizableRoute(List<Role> roles = null)
         {
-            this.Roles = Role.GetAuthorizedRoles();
-        }
-
-        public AuthorizableRoute(List<Role> roles)
-        {
-            this.Roles = roles;
+            this.Roles = roles ?? Role.GetAuthorizedRoles();
         }
 
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
             return AuthorizationActions.Authorize(actionContext.Request, this.Roles);
         }
+
+        protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
+        {
+            ApiResponse response = new ApiResponse(actionContext.Request);
+            //TODO: This error should be the same as the one in AuthorizableApi.
+            response.errors.Add(new JsonError
+            {
+                id = 28
+            });
+            actionContext.Response = response.GenerateResponse(HttpStatusCode.Forbidden);
+        }
     }
 
     public class AuthorizableApi : ApiController
     {
         public List<Role> Roles;
-
-        public AuthorizableApi()
+        public AuthorizableApi(List<Role> roles = null)
         {
-            this.Roles = Role.GetAuthorizedRoles();
-        }
-
-        public AuthorizableApi(List<Role> roles)
-        {
-            this.Roles = roles;
+            this.Roles = roles ?? Role.GetAuthorizedRoles();
         }
 
         public override Task<HttpResponseMessage> ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
@@ -86,7 +84,7 @@ namespace SrProj.API
 
                 if (session.LastAccessedTime <= DateTime.UtcNow.AddMinutes(-15) &&
                     session.AssociatedVolunteer.Username == activeUser &&
-                    session.AssociatedVolunteer.Roles.Intersect(roles).Count() == roles.Count()
+                    session.AssociatedVolunteer.Roles.Intersect(roles).Count() == roles.Count
                     )
                 {
                     return true;

@@ -1,3 +1,5 @@
+using SrProj.Models;
+
 namespace SrProj.Migrations
 {
     using System;
@@ -27,6 +29,12 @@ namespace SrProj.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            context.Roles.AddOrUpdate(new []
+            {
+                new Role() {RoleName = "Admin", RoleDescription = "This role applies to all admin users in the system"},
+                new Role() {RoleName = "Volunteer", RoleDescription = "This role applies to all users in the system"}
+            });
         }
     }
 }
