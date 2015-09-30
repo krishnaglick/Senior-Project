@@ -39,9 +39,9 @@ function VolunteerViewModel() {
             }
 
             //Handle single error.
-            alert('Invalid username or password.')
+            alert('Invalid username or password.');
           }
-          debugger;
+          //debugger;
         }.bind(this),
 
         complete: function() {
@@ -69,7 +69,7 @@ function VolunteerViewModel() {
             //Bad things!
             alert('Bad things!');
           }
-          debugger;
+          //debugger;
         }.bind(this),
 
         error: function(data) {
@@ -86,7 +86,7 @@ function VolunteerViewModel() {
             //Handle single error.
             alert('Please try a different username!');
           }
-          debugger;
+          //debugger;
         }.bind(this),
 
         complete: function() {

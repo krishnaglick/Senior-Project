@@ -31,6 +31,7 @@ namespace SrProj.API
 
                 response.GenerateResponse(HttpStatusCode.Unauthorized);
             }*/
+            //Attribute.GetCustomAttribute(myRoute, typeof (AuthorizableRoute));
             return base.ExecuteAsync(controllerContext, cancellationToken);
         }
     }
