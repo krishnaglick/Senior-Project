@@ -11,7 +11,7 @@ using SrProj.Models.Context;
 
 namespace SrProj.API
 {
-    [AuthorizableController]
+    [AuthorizableController(new []{ RoleID.Volunteer })]
     public class PatronController : ApiController
     {
         [HttpGet]
@@ -35,7 +35,6 @@ namespace SrProj.API
             ApiResponse response = new ApiResponse(Request);
             try
             {
-                patron.CreateDate = DateTime.UtcNow;
                 var patronContext = new Database();
                 patronContext.Patrons.Add(patron);
                 patronContext.SaveChanges();

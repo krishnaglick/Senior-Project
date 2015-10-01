@@ -123,6 +123,7 @@ C:\C#\SrProj\SrProj\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\C#\SrProj\SrProj\bin\System.Web.Http.Owin.xml
 C:\C#\SrProj\SrProj\obj\Debug\SrProj.dll
 C:\C#\SrProj\SrProj\obj\Debug\SrProj.pdb
+C:\C#\SrProj\SrProj\obj\Debug\SrProj.csprojResolveAssemblyReference.cache
 D:\C#\Senior-Project\SrProj\bin\SrProj.dll.config
 D:\C#\Senior-Project\SrProj\bin\SrProj.dll
 D:\C#\Senior-Project\SrProj\bin\SrProj.pdb
@@ -153,8 +154,6 @@ D:\C#\Senior-Project\SrProj\bin\System.Web.Razor.dll
 D:\C#\Senior-Project\SrProj\bin\System.Web.WebPages.Deployment.dll
 D:\C#\Senior-Project\SrProj\bin\System.Web.WebPages.dll
 D:\C#\Senior-Project\SrProj\bin\System.Web.WebPages.Razor.dll
-D:\C#\Senior-Project\SrProj\bin\Antlr3.Runtime.pdb
-D:\C#\Senior-Project\SrProj\bin\Newtonsoft.Json.xml
 D:\C#\Senior-Project\SrProj\bin\System.Net.Http.Formatting.xml
 D:\C#\Senior-Project\SrProj\bin\System.Web.Helpers.xml
 D:\C#\Senior-Project\SrProj\bin\System.Web.Http.xml
@@ -180,7 +179,5 @@ D:\C#\Senior-Project\SrProj\bin\Microsoft.Owin.Security.Google.xml
 D:\C#\Senior-Project\SrProj\bin\Microsoft.Owin.Security.Twitter.xml
 D:\C#\Senior-Project\SrProj\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\C#\Senior-Project\SrProj\bin\System.Web.Http.Owin.xml
-D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.csprojResolveAssemblyReference.cache
 D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.dll
 D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.pdb
-C:\C#\SrProj\SrProj\obj\Debug\SrProj.csprojResolveAssemblyReference.cache

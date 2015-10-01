@@ -1,9 +1,13 @@
+
+using System.Collections.Generic;
 using SrProj.Models;
+using SrProj.Utility.Attribute;
+using SrProj.Utility.ExtensionMethod;
+using SrProj.Utility.Security;
 
 namespace SrProj.Migrations
 {
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -17,24 +21,32 @@ namespace SrProj.Migrations
 
         protected override void Seed(SrProj.Models.Context.Database context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-
-            context.Roles.AddOrUpdate(new []
+            List<Role> roles = new List<Role>();
+            foreach (RoleID role in Enum.GetValues(typeof (RoleID)))
             {
-                new Role() {RoleName = "Admin", RoleDescription = "This role applies to all admin users in the system"},
-                new Role() {RoleName = "Volunteer", RoleDescription = "This role applies to all users in the system"}
-            });
+                roles.Add(new Role {
+                    ID = (int)role,
+                    RoleName = role.GetEnumAttribute<EnumDecorators.Name>().name,
+                    RoleDescription = role.GetEnumAttribute<EnumDecorators.Description>().desc
+                });
+            }
+            context.Roles.AddOrUpdate(roles.ToArray());
+
+            Volunteer defaultUser = new Volunteer
+            {
+                HashedPassword = PasswordHasher.EncryptPassword("swordfish"),
+                Username = "user",
+                Roles = roles.Where(r => r.ID == (int)RoleID.Volunteer).ToList()
+            };
+
+            Volunteer adminUser = new Volunteer
+            {
+                HashedPassword = PasswordHasher.EncryptPassword("swordfish"),
+                Username = "admin",
+                Roles = roles
+            };
+
+            context.Volunteers.AddOrUpdate(defaultUser, adminUser);
         }
     }
 }

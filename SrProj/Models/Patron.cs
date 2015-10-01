@@ -42,8 +42,8 @@ namespace SrProj.Models
         }
         [Required]
         public DateTime DateOfBirth { get; set; }
-        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-        public ICollection<Address> Addresses { get; set; }
-        public ICollection<EmergencyContact> EmergencyContacts { get; set; }
+        public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
     }
 }

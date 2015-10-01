@@ -1,15 +1,25 @@
 ﻿
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SrProj.Models
 {
-    public class AuthenticationToken
+    public class AuthenticationToken : ModelBase
     {
         [Key]
         public Guid Token { get; set; }
-        [Required]
-        public DateTime LastAccessedTime { get; set; }
+        [NotMapped]
+        public DateTime LastAccessedTime
+        {
+            get
+            {
+                var lastAccessedTime = this.ModifyDate ?? this.CreateDate;
+                this.ModifyDate = DateTime.UtcNow;
+                return lastAccessedTime;
+            }
+        }
+
         [Required]
         public Volunteer AssociatedVolunteer { get; set; }
     }

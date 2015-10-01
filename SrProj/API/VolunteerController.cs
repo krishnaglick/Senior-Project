@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using SrProj.API.Responses;
 using SrProj.Models;
@@ -23,7 +22,6 @@ namespace SrProj.API
 
             try
             {
-                volunteer.CreateDate = DateTime.UtcNow;
                 volunteer.SecurePassword();
                 var volunteerContext = new Database();
                 volunteerContext.Volunteers.Add(volunteer);
@@ -77,7 +75,6 @@ namespace SrProj.API
                 var authToken = new AuthenticationToken
                 {
                     Token = authTokenID,
-                    LastAccessedTime = DateTime.UtcNow,
                     AssociatedVolunteer = foundVolunteer
                 };
                 var authTokenContext = volunteerContext;
@@ -91,6 +88,7 @@ namespace SrProj.API
             }
             else
             {
+                //TODO: Put this in its own error.
                 response.errors.Add(new JsonError
                 {
                     code = "Invalid Username or Password",
