@@ -51,8 +51,9 @@ namespace SrProj.API
     {
         public static bool Authorize(HttpRequestMessage request, RoleID[] roles)
         {
+            //TODO: Actually get header values, this doesn't work. T.T
             string authToken = request.Headers.Single(h => h.Key == "authToken")
-                .IfNotNull(kv => kv.Value.ToString());
+                .IfNotNull(kv => kv.Value.ToString()); 
             string activeUser = request.Headers.Single(h => h.Key == "username")
                 .IfNotNull(kv => kv.Value.ToString());
 

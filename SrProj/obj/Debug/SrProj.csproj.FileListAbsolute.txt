@@ -181,3 +181,4 @@ D:\C#\Senior-Project\SrProj\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\C#\Senior-Project\SrProj\bin\System.Web.Http.Owin.xml
 D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.dll
 D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.pdb
+D:\C#\Senior-Project\SrProj\obj\Debug\SrProj.csprojResolveAssemblyReference.cache

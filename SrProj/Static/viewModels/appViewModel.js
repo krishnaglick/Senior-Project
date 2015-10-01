@@ -1,7 +1,7 @@
 function App() {
   this.pageTitle = ko.observable('Home');
 
-  this.apiBase = 'API';
+  this.apiBase = '../API';
 
   this.authToken = '';
   this.username = '';
