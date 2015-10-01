@@ -17,14 +17,9 @@ namespace SrProj.Models
 
         //TODO: There is likely a better place for this.
         [NotMapped]
-        private static readonly string[] authRoles = new []
+        public static readonly string[] authRoles = new []
         {
             "Admin"
         };
-
-        public static List<Role> GetAuthorizedRoles()
-        {
-            return new Database().Roles.Where(r => authRoles.Contains(r.RoleName)).ToList();
-        } 
     }
 }

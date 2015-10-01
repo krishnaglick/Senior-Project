@@ -14,14 +14,14 @@ using SrProj.Models.Context;
 
 namespace SrProj.API
 {
-    //TODO: Test, and it can probably use a refactor.
-    [AttributeUsage(AttributeTargets.Method)]
-    public class AuthorizableRoute : AuthorizeAttribute
+    //TODO: Test!
+    [AttributeUsage(AttributeTargets.Class)]
+    public class AuthorizableController : AuthorizeAttribute
     {
-        public new List<Role> Roles;
-        public AuthorizableRoute(List<Role> roles = null)
+        public new string[] Roles;
+        public AuthorizableController(string[] roles = null)
         {
-            this.Roles = roles ?? Role.GetAuthorizedRoles();
+            this.Roles = roles ?? Role.authRoles;
         }
 
         protected override bool IsAuthorized(HttpActionContext actionContext)
@@ -40,18 +40,21 @@ namespace SrProj.API
             actionContext.Response = response.GenerateResponse(HttpStatusCode.Forbidden);
         }
     }
+    
+    [AttributeUsage(AttributeTargets.Method)]
+    public class AuthorizableAction : AuthorizableController { }
 
-    public class AuthorizableApi : ApiController
+    /*public class AuthorizableApi : ApiController
     {
-        public List<Role> Roles;
-        public AuthorizableApi(List<Role> roles = null)
+        public string[] Roles;
+        public AuthorizableApi(string[] roles = null)
         {
-            this.Roles = roles ?? Role.GetAuthorizedRoles();
+            this.Roles = roles ?? Role.authRoles;
         }
 
         public override Task<HttpResponseMessage> ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
         {
-            /* Add functionality here to secure the API */
+            /* Add functionality here to secure the API 
             var authorized = AuthorizationActions.Authorize(controllerContext.Request, this.Roles);
             if (!authorized)
             {
@@ -67,11 +70,11 @@ namespace SrProj.API
             }
             return base.ExecuteAsync(controllerContext, cancellationToken);
         }
-    }
+    }*/
 
     internal static class AuthorizationActions
     {
-        public static bool Authorize(HttpRequestMessage request, List<Role> roles)
+        public static bool Authorize(HttpRequestMessage request, string[] roles)
         {
             string authToken = request.Headers.Single(h => h.Key == "authToken")
                 .IfNotNull(kv => kv.Value.ToString());
@@ -80,11 +83,14 @@ namespace SrProj.API
 
             if (!string.IsNullOrEmpty(authToken) && !string.IsNullOrEmpty(activeUser))
             {
-                var session = new Database().AuthenticationTokens.Find(authToken);
+                var database = new Database();
+
+                var session = database.AuthenticationTokens.Find(authToken);
+                var authRoles = database.Roles.Where(r => roles.Contains(r.RoleName));
 
                 if (session.LastAccessedTime <= DateTime.UtcNow.AddMinutes(-15) &&
                     session.AssociatedVolunteer.Username == activeUser &&
-                    session.AssociatedVolunteer.Roles.Intersect(roles).Count() == roles.Count
+                    session.AssociatedVolunteer.Roles.Intersect(authRoles).Count() == authRoles.Count()
                     )
                 {
                     return true;

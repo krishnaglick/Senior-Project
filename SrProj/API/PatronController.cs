@@ -11,6 +11,7 @@ using SrProj.Models.Context;
 
 namespace SrProj.API
 {
+    [AuthorizableController]
     public class PatronController : ApiController
     {
         [HttpGet]
