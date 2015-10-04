@@ -15,15 +15,16 @@ namespace SrProj.Models
         [Required]
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }
+        public virtual ICollection<Volunteer> Volunteers { get; set; }
     }
 
     public enum RoleID
     {
         [EnumDecorators.Name("Admin")]
         [EnumDecorators.Description("This role applies to all admin users in the system")]
-        Admin = 0,
+        Admin = 1,
         [EnumDecorators.Name("Volunteer")]
         [EnumDecorators.Description("This role applies to all users in the system")]
-        Volunteer = 1
+        Volunteer = 2
     }
 }

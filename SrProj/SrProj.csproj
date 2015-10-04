@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\AuthorizableApi.cs" />
+    <Compile Include="Utility\ExtensionMethod\HttpRequestHeadersExtentions.cs" />
     <Compile Include="API\PatronController.cs" />
     <Compile Include="API\Responses\ApiResponse.cs" />
     <Compile Include="API\Responses\Errors\InvalidPatron.cs" />

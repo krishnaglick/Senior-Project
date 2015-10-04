@@ -8,7 +8,7 @@ namespace SrProj.Models.Context
     public class ContextBase : DbContext
     {
         //TODO: Make this a config option.
-        public ContextBase() : base("homeNetwork") { }
+        public ContextBase() : base("potato") { }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -27,26 +27,32 @@ namespace SrProj.Migrations
                 roles.Add(new Role {
                     ID = (int)role,
                     RoleName = role.GetEnumAttribute<EnumDecorators.Name>().name,
-                    RoleDescription = role.GetEnumAttribute<EnumDecorators.Description>().desc
+                    RoleDescription = role.GetEnumAttribute<EnumDecorators.Description>().desc,
+                    Volunteers = new List<Volunteer>()
                 });
             }
-            context.Roles.AddOrUpdate(roles.ToArray());
 
             Volunteer defaultUser = new Volunteer
             {
                 HashedPassword = PasswordHasher.EncryptPassword("swordfish"),
                 Username = "user",
-                Roles = roles.Where(r => r.ID == (int)RoleID.Volunteer).ToList()
+                Roles = roles.Where(r => r.ID == (int)RoleID.Volunteer).ToArray()
             };
 
             Volunteer adminUser = new Volunteer
             {
                 HashedPassword = PasswordHasher.EncryptPassword("swordfish"),
                 Username = "admin",
-                Roles = roles
+                Roles = roles.ToArray()
             };
 
-            context.Volunteers.AddOrUpdate(defaultUser, adminUser);
+            roles.First(r => r.ID == (int)RoleID.Volunteer).Volunteers.Add(defaultUser);
+            roles.First(r => r.ID == (int)RoleID.Volunteer).Volunteers.Add(adminUser);
+            roles.First(r => r.ID == (int)RoleID.Admin).Volunteers.Add(adminUser);
+
+            context.Roles.AddOrUpdate(roles.ToArray());
+
+            context.SaveChanges();
         }
     }
 }

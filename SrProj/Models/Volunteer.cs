@@ -18,7 +18,7 @@ namespace SrProj.Models
         [DataType(DataType.Password)]
         public string HashedPassword { get; set; }
         [NotMapped]
-        public string Password;
+        public string Password { get; set; }
 
         public void SecurePassword()
         {
