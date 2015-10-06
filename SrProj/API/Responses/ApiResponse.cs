@@ -8,7 +8,24 @@ namespace SrProj.API.Responses
 {
     public class JsonError
     {
-        public int id { get; set; }
+        private static Dictionary<int, int> idTracker = new Dictionary<int, int>();
+        private int _id = -1;
+        public int id
+        {
+            get { return _id; }
+            set
+            {
+                if (_id == -1)
+                {
+                    _id = value;
+                    if (!idTracker.ContainsKey(value))
+                        idTracker[value] = value;
+                    else
+                        throw new Exception("ID in use!");
+                }
+            }
+        }
+
         public string code { get; set; }
         public string title { get; set; }
         public string detail { get; set; }
