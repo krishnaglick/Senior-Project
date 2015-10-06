@@ -1,10 +1,6 @@
 ﻿
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using SrProj.Models.Context;
-using SrProj.Utility.Attribute;
 
 namespace SrProj.Models
 {
@@ -16,15 +12,5 @@ namespace SrProj.Models
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }
         public virtual ICollection<Volunteer> Volunteers { get; set; }
-    }
-
-    public enum RoleID
-    {
-        [EnumDecorators.Name("Admin")]
-        [EnumDecorators.Description("This role applies to all admin users in the system")]
-        Admin = 1,
-        [EnumDecorators.Name("Volunteer")]
-        [EnumDecorators.Description("This role applies to all users in the system")]
-        Volunteer = 2
     }
 }

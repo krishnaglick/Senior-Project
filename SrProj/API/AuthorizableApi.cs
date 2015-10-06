@@ -7,7 +7,8 @@ using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using SrProj.API.Responses;
-using SrProj.Models;
+using SrProj.API.Responses.Errors;
+using SrProj.Utility.Enum;
 using SrProj.Utility.ExtensionMethod;
 using Database = SrProj.Models.Context.Database;
 
@@ -19,7 +20,6 @@ namespace SrProj.API
         public static readonly int AuthTokenTimeout = 15; //In Minutes
     }
 
-    //TODO: Test!
     [AttributeUsage(AttributeTargets.Class)]
     public class AuthorizableController : AuthorizationFilterAttribute
     {
@@ -35,11 +35,7 @@ namespace SrProj.API
             if(!isAuthorized)
             {
                 ApiResponse response = new ApiResponse(actionContext.Request);
-                //TODO: Put this error in its own error file.
-                response.errors.Add(new JsonError
-                {
-                    id = 28
-                });
+                response.errors.Add(new NoAccess());
                 actionContext.Response = response.GenerateResponse(HttpStatusCode.Forbidden);
             }
 
@@ -60,10 +56,11 @@ namespace SrProj.API
             if (!string.IsNullOrEmpty(authToken) && !string.IsNullOrEmpty(activeUser))
             {
                 var database = new Database();
-                //var session = database.AuthenticationTokens.Include(at => at.).Find(Guid.Parse(authToken));
                 var session =
                     database.AuthenticationTokens.Include(at => at.AssociatedVolunteer).Include(at => at.AssociatedVolunteer.Roles)
-                        .FirstOrDefault(at => at.Token.ToString() == authToken) ?? new AuthenticationToken { CreateDate = DateTime.UtcNow.AddMinutes(-60)};
+                    .FirstOrDefault(at => at.Token.ToString() == authToken);
+
+                if (session == null) return false;
 
                 int[] roleIDs = roles.Select(r => (int) r).ToArray();
                 var lastAccessedTime = session.LastAccessedTime;
@@ -72,10 +69,10 @@ namespace SrProj.API
 
                 var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.ID)).ToList();
 
-                if (lastAccessedTime > DateTime.UtcNow.AddMinutes(-AuthorizationOptions.AuthTokenTimeout) &&
-                    lastAccessedTime < DateTime.UtcNow.AddSeconds(20) &&
-                    session.AssociatedVolunteer.Username == activeUser &&
-                    matchingRoles.Count == roles.Length
+                if (session.AssociatedVolunteer.Username == activeUser &&
+                    matchingRoles.Count == roles.Length &&
+                    lastAccessedTime > DateTime.UtcNow.AddMinutes(-AuthorizationOptions.AuthTokenTimeout) &&
+                    lastAccessedTime < DateTime.UtcNow.AddSeconds(20)
                     )
                 {
                     return true;

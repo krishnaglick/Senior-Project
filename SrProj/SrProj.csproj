@@ -170,6 +170,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\AuthorizableApi.cs" />
+    <Compile Include="API\Responses\Errors\InvalidUsernameOrPassword.cs" />
+    <Compile Include="API\Responses\Errors\InvalidVolunteer.cs" />
+    <Compile Include="API\Responses\Errors\NoAccess.cs" />
+    <Compile Include="Models\ServiceType.cs" />
+    <Compile Include="Models\Visit.cs" />
+    <Compile Include="Utility\Enum\RoleID.cs" />
     <Compile Include="Utility\ExtensionMethod\HttpRequestHeadersExtentions.cs" />
     <Compile Include="API\PatronController.cs" />
     <Compile Include="API\Responses\ApiResponse.cs" />
@@ -1092,7 +1098,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Providers\" />
     <Folder Include="Static\assets\css\" />
     <Folder Include="Static\assets\img\" />
   </ItemGroup>

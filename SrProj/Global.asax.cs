@@ -20,4 +20,10 @@ namespace SrProj
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
+
+    public static class ApplicationConfiguration
+    {
+        //Change me to target a different connection string.
+        public static string TargetConnectionString = "potato";
+    }
 }

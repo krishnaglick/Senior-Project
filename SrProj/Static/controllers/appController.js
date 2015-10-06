@@ -50,4 +50,8 @@ $(function() {
       changeActiveMenuOption();
     });
   })();
+
+  (function loadFooter() {
+    $('#footer').load('partials/footer.html');
+  })();
 });

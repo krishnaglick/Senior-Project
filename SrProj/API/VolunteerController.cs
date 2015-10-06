@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using SrProj.API.Responses;
+using SrProj.API.Responses.Errors;
 using SrProj.Models;
 using SrProj.Models.Context;
 using PasswordHasher = SrProj.Utility.Security.PasswordHasher;
@@ -32,14 +33,7 @@ namespace SrProj.API
             }
             catch (Exception e)
             {
-                //TODO: Put this in its own error.
-                response.errors.Add(new JsonError
-                {
-                    code = "Invalid Input",
-                    detail = "There was something wrong with the provided information",
-                    id = 1,
-                    source = e
-                });
+                response.errors.Add(new InvalidVolunteer { source = e });
                 return response.GenerateResponse(HttpStatusCode.BadRequest);
             }
         }
@@ -53,13 +47,7 @@ namespace SrProj.API
 
             if (foundVolunteer == null)
             {
-                //TODO: Put this in its own error.
-                response.errors.Add(new JsonError
-                {
-                    code = "Invalid Username or Password",
-                    detail = "Your username or password was incorrect!",
-                    id = 2
-                });
+                response.errors.Add(new InvalidUsernameOrPassword());
                 return response.GenerateResponse(HttpStatusCode.BadRequest);
             }
 
@@ -88,13 +76,7 @@ namespace SrProj.API
             }
             else
             {
-                //TODO: Put this in its own error.
-                response.errors.Add(new JsonError
-                {
-                    code = "Invalid Username or Password",
-                    detail = "Your username or password was incorrect!",
-                    id = 2
-                });
+                response.errors.Add(new InvalidUsernameOrPassword());
                 return response.GenerateResponse(HttpStatusCode.BadRequest);
             }
         }

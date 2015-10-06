@@ -8,6 +8,7 @@ using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
 using SrProj.Models;
 using SrProj.Models.Context;
+using SrProj.Utility.Enum;
 
 namespace SrProj.API
 {
