@@ -23,5 +23,7 @@ namespace SrProj.Models.Context
         public DbSet<AuthenticationToken> AuthenticationTokens { get; set; }
         public DbSet<Volunteer> Volunteers { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<ServiceType> Services { get; set; }
+        public DbSet<Visit> Visits { get; set; }
     }
 }

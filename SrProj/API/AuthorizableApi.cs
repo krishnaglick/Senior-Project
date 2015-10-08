@@ -48,7 +48,7 @@ namespace SrProj.API
 
     internal static class AuthorizationActions
     {
-        public static bool Authorize(HttpRequestMessage request, RoleID[] roles)
+        public static bool Authorize(HttpRequestMessage request, RoleID[] roles = null)
         {
             string authToken = request.Headers.GetHeaderValue("authToken");
             string activeUser = request.Headers.GetHeaderValue("username");

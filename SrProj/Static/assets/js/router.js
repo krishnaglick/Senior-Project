@@ -36,8 +36,14 @@ function Router(renderElement, partialContainer) {
       }
 
       function applyBinding() {
-        if(this.routes[route].vm)
-          ko.applyBindings(this.routes[route].vm(), this.contentArea[0]);
+        if(this.routes[route].vm) {
+          if(typeof route === 'function'){
+            ko.applyBindings(this.routes[route].vm(), this.contentArea[0]);
+          }
+          else {
+            ko.applyBindings(this.routes[route].vm, this.contentArea[0]);
+          }
+        }
       }
 
       //If partial is not on page

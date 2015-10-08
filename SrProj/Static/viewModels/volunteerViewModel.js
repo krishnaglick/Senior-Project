@@ -70,9 +70,12 @@ function VolunteerViewModel() {
           else if(Array.isArray(data.responseJSON) && data.responseJSON.length == 1) {
             data.responseJSON = data.responseJSON[0];
           }
-
-          //Handle single error.
-          alert('Please try a different username!');
+          if(data.responseJSON.id === 3) {
+            alert('You don\'t have authorization to do that!');
+          }
+          else {
+            alert('Please try a different username!');
+          }
         }
         //debugger;
       }.bind(this));

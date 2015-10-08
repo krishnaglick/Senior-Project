@@ -12,7 +12,7 @@ using SrProj.Utility.Enum;
 
 namespace SrProj.API
 {
-    [AuthorizableController(new []{ RoleID.Volunteer })]
+    [AuthorizableController(new [] { RoleID.Volunteer })]
     public class PatronController : ApiController
     {
         [HttpGet]

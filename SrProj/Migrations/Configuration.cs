@@ -5,6 +5,7 @@ using SrProj.Utility.Attribute;
 using SrProj.Utility.Enum;
 using SrProj.Utility.ExtensionMethod;
 using SrProj.Utility.Security;
+using ServiceType = SrProj.Models.ServiceType;
 
 namespace SrProj.Migrations
 {
@@ -52,6 +53,19 @@ namespace SrProj.Migrations
             roles.First(r => r.ID == (int)RoleID.Admin).Volunteers.Add(adminUser);
 
             context.Roles.AddOrUpdate(roles.ToArray());
+
+            List<ServiceType> services = new List<ServiceType>();
+            foreach (ServiceTypeID service in Enum.GetValues(typeof(ServiceTypeID)))
+            {
+                services.Add(new ServiceType
+                {
+                    ID = (int)service,
+                    ServiceName = service.GetEnumAttribute<EnumDecorators.Name>().name,
+                    ServiceDescription = service.GetEnumAttribute<EnumDecorators.Description>().desc
+                });
+            }
+
+            context.Services.AddOrUpdate(services.ToArray());
 
             context.SaveChanges();
         }

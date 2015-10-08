@@ -2,7 +2,7 @@
 
 namespace SrProj.Utility.Enum
 {
-    public enum ServiceType
+    public enum ServiceTypeID
     {
         [EnumDecorators.Name("Visit")]
         [EnumDecorators.Description("This service represents when a patron visits for information.")]

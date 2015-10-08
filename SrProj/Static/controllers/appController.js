@@ -7,6 +7,7 @@ $(function() {
   function createRouter() {
     window.router = new Router(renderArea, partials);
 
+    var volunteerVM = new VolunteerViewModel();
     var routes = {
       Home: {
           url: 'partials/mainPage.html',
@@ -19,14 +20,14 @@ $(function() {
         url: 'partials/login.html',
         name: 'Login',
         id: 'login',
-        vm: function() { return new VolunteerViewModel(); }
+        vm: volunteerVM
       },
 
       Register: {
         url: 'partials/register.html',
         name: 'Register',
         id: 'register',
-        vm: function() { return new VolunteerViewModel(); }
+        vm: volunteerVM
       },
 
       default: 'Home'
