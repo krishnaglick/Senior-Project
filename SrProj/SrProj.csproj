@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\AuthorizableApi.cs" />
+    <Compile Include="API\Responses\Errors\InvalidToken.cs" />
     <Compile Include="API\Responses\Errors\InvalidUsernameOrPassword.cs" />
     <Compile Include="API\Responses\Errors\InvalidVolunteer.cs" />
     <Compile Include="API\Responses\Errors\NoAccess.cs" />

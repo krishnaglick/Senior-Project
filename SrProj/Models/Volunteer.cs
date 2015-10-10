@@ -7,7 +7,13 @@ using PasswordHasher = SrProj.Utility.Security.PasswordHasher;
 
 namespace SrProj.Models
 {
-    public class Volunteer : ModelBase
+    public interface ILogin
+    {
+        string Username { get; set; }
+        string Password { get; set; }
+    }
+
+    public class Volunteer : ModelBase, ILogin
     {
         [Key]
         [Required]

@@ -39,7 +39,7 @@ namespace SrProj.API
         }
 
         [HttpPost]
-        public HttpResponseMessage Login([FromBody] Volunteer volunteer)
+        public HttpResponseMessage Login([FromBody] ILogin volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
             var volunteerContext = new Database();
