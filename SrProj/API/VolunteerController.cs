@@ -24,12 +24,14 @@ namespace SrProj.API
             try
             {
                 volunteer.SecurePassword();
-                var volunteerContext = new Database();
-                volunteerContext.Volunteers.Add(volunteer);
-                volunteerContext.SaveChanges();
+                using (var volunteerContext = new Database())
+                {
+                    volunteerContext.Volunteers.Add(volunteer);
+                    volunteerContext.SaveChanges();
 
-                response.data = response.DefaultSuccessResponse;
-                return response.GenerateResponse(HttpStatusCode.Created);
+                    response.data = response.DefaultSuccessResponse;
+                    return response.GenerateResponse(HttpStatusCode.Created);
+                }
             }
             catch (Exception e)
             {
