@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Models;
 using SrProj.API;
-using SrProj.Controllers;
-using SrProj.Models;
 
 namespace SrProj.Tests
 {

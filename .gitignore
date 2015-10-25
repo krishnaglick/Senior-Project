@@ -6,3 +6,4 @@
 /*.user
 *.dll.config
 /SrProj/obj/Debug/SrProj.csproj.FileListAbsolute.txt
+/Utility/obj/Debug

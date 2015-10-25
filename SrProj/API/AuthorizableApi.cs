@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -10,8 +9,8 @@ using System.Web.Http.Filters;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
 using SrProj.Utility.Enum;
-using SrProj.Utility.ExtensionMethod;
-using Database = SrProj.Models.Context.Database;
+using Utility.ExtensionMethod;
+using Database = DataAccess.Database;
 
 namespace SrProj.API
 {

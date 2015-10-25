@@ -1,15 +1,15 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
+using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using SrProj.Models;
-using SrProj.Models.Context;
-using PasswordHasher = SrProj.Utility.Security.PasswordHasher;
+using Database = DataAccess.Database;
 
 namespace SrProj.API
 {
@@ -56,7 +56,7 @@ namespace SrProj.API
             var passwordResult = foundVolunteer.VerifyPassword(volunteer.Password);
             if(passwordResult == PasswordVerificationResult.SuccessRehashNeeded)
             {
-                foundVolunteer.Password = PasswordHasher.EncryptPassword(volunteer.Password);
+                foundVolunteer.Password = Volunteer.hasher.HashPassword(volunteer.Password);
                 passwordResult = PasswordVerificationResult.Success;
             }
             if (passwordResult == PasswordVerificationResult.Success)

@@ -1,0 +1,14 @@
+D:\C#\Senior-Project\Models\obj\Debug\Models.csprojResolveAssemblyReference.cache
+D:\C#\Senior-Project\Models\bin\Debug\Models.dll.config
+D:\C#\Senior-Project\Models\bin\Debug\Models.dll
+D:\C#\Senior-Project\Models\bin\Debug\Models.pdb
+D:\C#\Senior-Project\Models\bin\Debug\EntityFramework.dll
+D:\C#\Senior-Project\Models\bin\Debug\EntityFramework.SqlServer.dll
+D:\C#\Senior-Project\Models\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\C#\Senior-Project\Models\bin\Debug\Utility.dll
+D:\C#\Senior-Project\Models\bin\Debug\Utility.pdb
+D:\C#\Senior-Project\Models\bin\Debug\EntityFramework.xml
+D:\C#\Senior-Project\Models\bin\Debug\EntityFramework.SqlServer.xml
+D:\C#\Senior-Project\Models\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\C#\Senior-Project\Models\obj\Debug\Models.dll
+D:\C#\Senior-Project\Models\obj\Debug\Models.pdb
