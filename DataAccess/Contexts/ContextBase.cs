@@ -2,11 +2,13 @@
 using System.Data.Entity.ModelConfiguration.Conventions;
 using Models;
 
-namespace DataAccess
+namespace DataAccess.Contexts
 {
     public class ContextBase : DbContext
     {
         public ContextBase() : base("homeNetwork") { }
+
+        public ContextBase(string connectionString) : base(connectionString) { }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -18,6 +20,9 @@ namespace DataAccess
     //TODO: Not this.
     public class Database : ContextBase
     {
+        public Database() { }
+        public Database(string connectionString) : base(connectionString) { }
+
         public DbSet<Patron> Patrons { get; set; }
         public DbSet<EmergencyContact> EmergencyContacts { get; set; }
         public DbSet<AuthenticationToken> AuthenticationTokens { get; set; }

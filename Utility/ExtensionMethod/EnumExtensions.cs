@@ -1,5 +1,5 @@
 ﻿
-namespace SrProj.Utility.ExtensionMethod
+namespace Utility.ExtensionMethod
 {
     public static class EnumExtensions
     {

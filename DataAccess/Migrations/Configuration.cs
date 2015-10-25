@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using DataAccess.Contexts;
 using Models;
-using SrProj.Utility.Attribute;
-using SrProj.Utility.Enum;
-using SrProj.Utility.ExtensionMethod;
+using Utility.Attribute;
+using Utility.Enum;
+using Utility.ExtensionMethod;
 using ServiceType = Models.ServiceType;
 
 namespace DataAccess.Migrations

@@ -5,10 +5,11 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DataAccess;
+using DataAccess.Contexts;
 using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using SrProj.Utility.Enum;
+using Utility.Enum;
 
 namespace SrProj.API
 {

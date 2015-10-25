@@ -1,6 +1,6 @@
-﻿using SrProj.Utility.Attribute;
+﻿using Utility.Attribute;
 
-namespace SrProj.Utility.Enum
+namespace Utility.Enum
 {
     public enum ServiceTypeID
     {

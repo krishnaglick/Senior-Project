@@ -8,9 +8,9 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using SrProj.Utility.Enum;
+using Utility.Enum;
 using Utility.ExtensionMethod;
-using Database = DataAccess.Database;
+using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
 {

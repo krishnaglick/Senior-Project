@@ -1,8 +1,7 @@
-﻿
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using Models;
 
-namespace DataAccess
+namespace DataAccess.Contexts
 {
     public class VolunteerContext : ContextBase
     {

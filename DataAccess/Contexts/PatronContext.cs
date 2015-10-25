@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using Models;
 
-namespace DataAccess
+namespace DataAccess.Contexts
 {
     public class PatronContext : ContextBase
     {

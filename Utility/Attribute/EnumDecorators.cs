@@ -1,5 +1,5 @@
 ﻿
-namespace SrProj.Utility.Attribute
+namespace Utility.Attribute
 {
     public class EnumDecorators
     {

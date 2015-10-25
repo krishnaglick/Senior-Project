@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using Database = DataAccess.Database;
+using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
 {
