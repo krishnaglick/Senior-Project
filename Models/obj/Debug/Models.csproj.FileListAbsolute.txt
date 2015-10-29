@@ -12,3 +12,17 @@ D:\C#\Senior-Project\Models\bin\Debug\EntityFramework.SqlServer.xml
 D:\C#\Senior-Project\Models\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 D:\C#\Senior-Project\Models\obj\Debug\Models.dll
 D:\C#\Senior-Project\Models\obj\Debug\Models.pdb
+C:\C#\SrProj\Models\bin\Debug\Models.dll.config
+C:\C#\SrProj\Models\bin\Debug\Models.dll
+C:\C#\SrProj\Models\bin\Debug\Models.pdb
+C:\C#\SrProj\Models\bin\Debug\EntityFramework.dll
+C:\C#\SrProj\Models\bin\Debug\EntityFramework.SqlServer.dll
+C:\C#\SrProj\Models\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\C#\SrProj\Models\bin\Debug\Utility.dll
+C:\C#\SrProj\Models\bin\Debug\Utility.pdb
+C:\C#\SrProj\Models\bin\Debug\EntityFramework.xml
+C:\C#\SrProj\Models\bin\Debug\EntityFramework.SqlServer.xml
+C:\C#\SrProj\Models\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\C#\SrProj\Models\obj\Debug\Models.csprojResolveAssemblyReference.cache
+C:\C#\SrProj\Models\obj\Debug\Models.dll
+C:\C#\SrProj\Models\obj\Debug\Models.pdb
