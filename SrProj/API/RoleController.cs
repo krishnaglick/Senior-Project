@@ -30,10 +30,25 @@ namespace SrProj.API
             return response.GenerateResponse(HttpStatusCode.Created);
         }
 
+        /// <summary>
+        /// Retrieves all the roles from the database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<Role> GetallRoles()
         {
-            
+            return new RoleContext().Roles.ToList();
+        }
+
+        /// <summary>
+        /// Retrieves a specific role by id
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public Role GetRole(int roleId)
+        {
+            return new RoleContext().Roles.Find(roleId);
         }
 
     }
