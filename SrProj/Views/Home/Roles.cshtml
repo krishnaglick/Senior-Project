@@ -1,0 +1,41 @@
+﻿@model Models.Role
+
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2>Roles</h2>
+
+<div>
+    <h4>Roles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+
+</p>

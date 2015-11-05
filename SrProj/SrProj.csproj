@@ -1076,6 +1076,8 @@
     <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\package.json" />
     <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\README.md" />
     <Content Include="Static\bower_components\semantic\tasks\README.md" />
+    <Content Include="Views\CreateRole.cshtml" />
+    <Content Include="Views\Home\Roles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

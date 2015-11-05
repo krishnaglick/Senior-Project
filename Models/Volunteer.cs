@@ -36,5 +36,10 @@ namespace Models
         {
             return hasher.VerifyHashedPassword(this.HashedPassword, passwordToValidate);
         }
+
+        public object Add(string p)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

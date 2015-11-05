@@ -8,7 +8,7 @@ using System.Web.Security;
 using DataAccess.Contexts;
 using Models;
 using SrProj.API.Responses;
-using 
+
 namespace SrProj.API
 {
     public class RoleController : ApiController
@@ -21,13 +21,21 @@ namespace SrProj.API
         [HttpPost]
         public HttpResponseMessage CreateRole(Role role)
         {
-            ApiResponse response = new ApiResponse(Request);
-            var roleContext = new RoleContext();
-            roleContext.Roles.Add(role);
-            roleContext.SaveChanges();
+            try
+            {
+                var response = new ApiResponse(Request);
+                var roleContext = new RoleContext();
+                roleContext.Roles.Add(role);
+                roleContext.SaveChanges();
 
-            response.data = response.DefaultSuccessResponse;
-            return response.GenerateResponse(HttpStatusCode.Created);
+                response.data = response.DefaultSuccessResponse;
+                return response.GenerateResponse(HttpStatusCode.Created);
+            }
+            catch (Exception)
+            {
+                var response = new ApiResponse(Request);
+                return response.GenerateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         /// <summary>
@@ -35,7 +43,7 @@ namespace SrProj.API
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IEnumerable<Role> GetallRoles()
+        public IEnumerable<Role> GetallRole()
         {
             return new RoleContext().Roles.ToList();
         }
