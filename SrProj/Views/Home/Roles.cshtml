@@ -1,0 +1,62 @@
+﻿@model Models.Role
+
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2>Roles</h2>
+
+<div>
+    <h4>Roles</h4>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleDescription)
+        </dd>
+
+    </dl>
+</div>
+
+<div>
+    <label>Role Id</label>
+    <input type="text" value="RoleId"/>
+    <label>Volunteer Name</label>
+    <input type="text" value="VolunteerName"/>
+    <label>Volunteer Email</label>
+    <input type="text" value="VolunteerEmail"/>
+    <label>Role Name</label>
+    <input type="text" value="RoleName"/>
+    <label>Role Description</label>
+    <input type="text" value="RoleDescription"/>
+</div>
+<p>
+    @Html.ActionLink("Add", "Edit", new {id = Model.ID})
+    @Html.ActionLink("Edit", "Edit", new {id = Model.ID})
+    @Html.ActionLink("Delete", "Delete", new {id = Model.ID})
+    @Html.ActionLink("Details", "Details", new {id = Model.ID})
+</p>
+
+<div>
+    <input type="button" value="Save">
+    <input type="button" value="Cancel">
+</div>

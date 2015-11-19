@@ -26,3 +26,17 @@ C:\C#\SrProj\Models\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\C#\SrProj\Models\obj\Debug\Models.csprojResolveAssemblyReference.cache
 C:\C#\SrProj\Models\obj\Debug\Models.dll
 C:\C#\SrProj\Models\obj\Debug\Models.pdb
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\Models.dll.config
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\Models.dll
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\Models.pdb
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\EntityFramework.dll
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\Utility.dll
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\Utility.pdb
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\EntityFramework.xml
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\obj\Debug\Models.csprojResolveAssemblyReference.cache
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\obj\Debug\Models.dll
+C:\Users\pogicasey\Documents\GitHub\Senior-Project\Models\obj\Debug\Models.pdb
