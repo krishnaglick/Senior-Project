@@ -180,3 +180,16 @@ D:\C#\Senior-Project\TestMVVMLight\obj\Debug\TestMVVMLight.csproj.GenerateResour
 D:\C#\Senior-Project\TestMVVMLight\obj\Debug\TestMVVMLight.exe
 D:\C#\Senior-Project\TestMVVMLight\obj\Debug\TestMVVMLight.pdb
 D:\C#\Senior-Project\TestMVVMLight\bin\Debug\Utility.dll
+C:\C#\SrProj\TestMVVMLight\obj\Debug\TestMVVMLight.csprojResolveAssemblyReference.cache
+C:\C#\SrProj\TestMVVMLight\obj\Debug\MainWindow.baml
+C:\C#\SrProj\TestMVVMLight\obj\Debug\Skins\MainSkin.baml
+C:\C#\SrProj\TestMVVMLight\obj\Debug\Views\LoginView.baml
+C:\C#\SrProj\TestMVVMLight\obj\Debug\Views\ServiceEntryView.baml
+C:\C#\SrProj\TestMVVMLight\obj\Debug\MainWindow.g.cs
+C:\C#\SrProj\TestMVVMLight\obj\Debug\Views\LoginView.g.cs
+C:\C#\SrProj\TestMVVMLight\obj\Debug\Views\ServiceEntryView.g.cs
+C:\C#\SrProj\TestMVVMLight\obj\Debug\App.g.cs
+C:\C#\SrProj\TestMVVMLight\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\C#\SrProj\TestMVVMLight\obj\Debug\TestMVVMLight_MarkupCompile.cache
+C:\C#\SrProj\TestMVVMLight\obj\Debug\TestMVVMLight_MarkupCompile.lref
+C:\C#\SrProj\TestMVVMLight\obj\Debug\TestMVVMLight.exe

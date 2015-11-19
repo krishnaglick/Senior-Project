@@ -23,7 +23,6 @@ namespace Models
                         ((Patron)obj).FirstName == this.FirstName &&
                         ((Patron)obj).LastName == this.LastName   &&
                         ((Patron)obj).DateOfBirth == this.DateOfBirth
-
                     )
                 );
         }
@@ -39,10 +38,14 @@ namespace Models
         {
             get { return string.Format("{0} {1}", this.FirstName, this.LastName); }
         }
+        public short NumberInHousehold { get; set; }
+        public bool Banned { get; set; }
+        //Marital Status
         [Required]
         public DateTime DateOfBirth { get; set; }
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
+        public virtual ICollection<ServiceEligibility> ServicesUsed { get; set; }
     }
 }
