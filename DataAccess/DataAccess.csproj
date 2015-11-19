@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Contexts\AuthenticationTokenContext.cs" />
     <Compile Include="Contexts\ContextBase.cs" />
+    <Compile Include="Contexts\VisitContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Contexts\PatronContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
