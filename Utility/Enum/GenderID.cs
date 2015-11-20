@@ -7,7 +7,7 @@ using Utility.Attribute;
 
 namespace Utility.Enum
 {
-    public enum Gender
+    public enum GenderID
     {
         [EnumDecorators.Name("Male")]
         [EnumDecorators.Description("Male")]

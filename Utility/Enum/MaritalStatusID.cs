@@ -7,7 +7,7 @@ using Utility.Attribute;
 
 namespace Utility.Enum
 {
-    public enum MaritalStatus
+    public enum MaritalStatusID
     {
         [EnumDecorators.Name("Single")]
         [EnumDecorators.Description("Patron has never been married")]

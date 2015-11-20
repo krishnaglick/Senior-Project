@@ -64,7 +64,7 @@ namespace DataAccess.Migrations
                 });
             }
 
-            context.Services.AddOrUpdate(services.ToArray());
+            context.ServiceTypes.AddOrUpdate(services.ToArray());
 
             context.SaveChanges();
         }

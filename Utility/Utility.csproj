@@ -41,11 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\EnumDecorators.cs" />
-    <Compile Include="Enum\Ethnicity.cs" />
-    <Compile Include="Enum\Gender.cs" />
-    <Compile Include="Enum\MaritalStatus.cs" />
-    <Compile Include="Enum\Race.cs" />
-    <Compile Include="Enum\ResidenceStatus.cs" />
+    <Compile Include="Enum\EthnicityID.cs" />
+    <Compile Include="Enum\GenderID.cs" />
+    <Compile Include="Enum\MaritalStatusID.cs" />
+    <Compile Include="Enum\RaceID.cs" />
+    <Compile Include="Enum\ResidenceStatusID.cs" />
     <Compile Include="Enum\RoleID.cs" />
     <Compile Include="Enum\ServiceTypeID.cs" />
     <Compile Include="ExtensionMethod\EnumExtensions.cs" />
