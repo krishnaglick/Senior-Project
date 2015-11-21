@@ -16,7 +16,7 @@ namespace SrProj.API
     public class VolunteerController : ApiController
     {
         [HttpPost]
-        [AuthorizableAction]
+        //[AuthorizableAction]
         public HttpResponseMessage CreateVolunteer([FromBody] Volunteer volunteer)
         {
             ApiResponse response = new ApiResponse(Request);

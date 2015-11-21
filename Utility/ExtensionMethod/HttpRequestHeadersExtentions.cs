@@ -10,7 +10,8 @@ namespace Utility.ExtensionMethod
         {
             IEnumerable<string> headerValue;
             headers.TryGetValues(header, out headerValue);
-            return  headerValue.SingleOrDefault();
+            if (headerValue == null) return string.Empty;
+            return headerValue.SingleOrDefault();
         }
     }
 }
