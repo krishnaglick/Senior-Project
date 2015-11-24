@@ -35,6 +35,9 @@ function Router(renderElement, partialContainer) {
         ko.cleanNode(this.contentArea[0]);
       }
 
+      var routeAction = this.routes[route].routeAction;
+      if(routeAction) routeAction();
+
       function applyBinding() {
         if(this.routes[route].vm) {
           if(typeof route === 'function'){

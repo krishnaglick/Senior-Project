@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -41,11 +42,11 @@ namespace SrProj.API
         }
 
         [HttpPost]
-        public HttpResponseMessage Login([FromBody] ILogin volunteer)
+        public HttpResponseMessage Login([FromBody] Login volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
             var volunteerContext = new Database();
-            var foundVolunteer = volunteerContext.Volunteers.Find(volunteer.Username);
+            var foundVolunteer = volunteerContext.Volunteers.Include(v => v.Roles).FirstOrDefault(v => v.Username == volunteer.Username);
 
             if (foundVolunteer == null)
             {
@@ -70,6 +71,8 @@ namespace SrProj.API
                 var authTokenContext = volunteerContext;
                 authTokenContext.AuthenticationTokens.Add(authToken);
                 authTokenContext.SaveChanges();
+
+                response.data = new {roles = foundVolunteer.Roles};
 
                 return response.GenerateResponse(HttpStatusCode.OK, new Dictionary<string, string>
                 {

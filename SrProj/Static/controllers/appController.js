@@ -29,6 +29,22 @@ $(function() {
         vm: volunteerVM
       },
 
+      Logout: {
+        url: 'partials/mainPage.html',
+        name: 'Logout',
+        id: 'Logout',
+        routeAction: function() {
+          app.username('');
+        }
+      },
+
+      CreateVolunteer: {
+        url: 'partials/createVolunteer.html',
+        name: 'CreateVolunteer',
+        id: 'CreateVolunteer',
+        vm: volunteerVM
+      },
+
       default: 'Home'
     };
 
@@ -36,7 +52,7 @@ $(function() {
   }
 
   (function loadHeaderAndSetupMenu(){
-    $('#header').load('partials/header.html', function() {
+    $('#menu').load('partials/menu.html', function() {
       function changeActiveMenuOption() {
         var currentPage = window.location.href.split('#')[1];
         if(currentPage == 'Register') currentPage = 'Login';
@@ -48,6 +64,18 @@ $(function() {
 
       window.addEventListener('hashchange', changeActiveMenuOption);
       changeActiveMenuOption();
+      $('.ui.sidebar').sidebar();
+      $('#menuOpener').click(function() {
+        $('.ui.sidebar').sidebar('toggle');
+      });
+
+      (function menuToggleOnOptionSelected() {
+        $('.ui.sidebar.vertical.menu').on('click', 'a.item', function() {
+          $('.ui.sidebar').sidebar('hide');
+        });
+      })();
+
+      ko.applyBindings(app, $('.ui.sidebar')[0]);
     });
   })();
 

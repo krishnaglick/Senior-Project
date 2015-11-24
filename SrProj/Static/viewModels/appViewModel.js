@@ -4,11 +4,16 @@ function App() {
   this.apiBase = '../API';
 
   this.authToken = '';
-  this.username = '';
+  this.username = ko.observable('');
+  this.roles = ko.observableArray([]);
+  this.isAdmin = ko.computed(function() {
+    return this.roles().indexOf('Admin') > -1;
+  }, this);
   this.headers = function() {
     return {
       authToken: this.authToken,
-      username: this.username
+      username: this.username(),
+      roles: this.roles()
     };
   }.bind(this);
 

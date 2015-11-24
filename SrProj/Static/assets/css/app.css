@@ -1,3 +1,12 @@
+
+body.pushable {
+  background: white none repeat scroll 0 0 !important;
+}
+
 .centeredText {
   text-align: center !important;
+}
+
+.topMargin {
+  margin-top: 10px;
 }
