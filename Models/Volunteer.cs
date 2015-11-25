@@ -1,5 +1,7 @@
 ﻿
+using System;
 using System.Collections.Generic;
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNet.Identity;
@@ -10,6 +12,12 @@ namespace Models
     {
         string Username { get; set; }
         string Password { get; set; }
+    }
+
+    public class Login : ILogin
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 
     public class Volunteer : ModelBase, ILogin
