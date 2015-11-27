@@ -1,13 +1,9 @@
 
 <span data-bind="text: username"></span>
 <a class="item" href="#Home">Home</a>
-<!-- ko ifnot: username -->
-<a class="item" href="#Login">Login</a>
-<!-- /ko -->
-<!-- ko if: username -->
-<a class="item" href="#Logout">Logout</a>
-<!-- /ko -->
-<!-- ko if: isAdmin -->
-  <a class="item">Admin Settings</a>
+<a class="item" href="#Login" data-bind="visible: !username">Login</a>
+<a class="item" data-bind="click: loginVM.logout, visible: username">Logout</a>
+<span id="adminMenuSection" data-bind="visible: isAdmin">
+  <span class="item">Admin Settings</span>
   <a class="item" href="#CreateVolunteer">Create A Volunteer</a>
-<!-- /ko -->
+</span>

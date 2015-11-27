@@ -7,10 +7,11 @@ function Router(renderElement, partialContainer) {
 
   this.routes = {
     sampleRoute: {
-      url: 'path/to/partial',
-      name: 'Sample',
-      id: 'sample',
-      vm: function() { throw 'NotImplementedException'; }
+      url: 'path/to/partial', //The html file to load.
+      name: 'Sample', //The slug, needs to be unique
+      id: 'sample', //The partial is cached under this id, needs to be unique
+      vm: function() { throw 'NotImplementedException'; }, //The viewmodel associated with the route
+      routeAction: function() { throw 'NotImplementedException'; } //An action to take upon loading the route
     },
     default: ''
   };

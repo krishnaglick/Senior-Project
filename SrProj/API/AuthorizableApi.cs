@@ -98,7 +98,7 @@ namespace SrProj.API
                 if(matchingRoles.Count != roles.Length)
                     authResult = AuthorizationResult.Unauthorized;
 
-                if (lastAccessedTime > DateTime.UtcNow.AddMinutes(-AuthorizationOptions.AuthTokenTimeout) &&
+                if (lastAccessedTime > DateTime.UtcNow.AddMinutes(AuthorizationOptions.AuthTokenTimeout) &&
                     lastAccessedTime < DateTime.UtcNow.AddSeconds(20))
                 {
                     database.AuthenticationTokens.Remove(session);
@@ -106,6 +106,7 @@ namespace SrProj.API
                 }
 
                 database.SaveChanges();
+                authResult = AuthorizationResult.Success;
             }
 
             return authResult ?? AuthorizationResult.InvalidRequest;
