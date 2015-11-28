@@ -92,21 +92,26 @@ namespace SrProj.API
 
                 var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.ID)).ToList();
 
-                if(session.AssociatedVolunteer.Username != activeUser)
+                if (session.AssociatedVolunteer.Username != activeUser)
+                {
                     authResult = AuthorizationResult.MismatchedUser;
-                
-                if(matchingRoles.Count != roles.Length)
+                }
+                else if (matchingRoles.Count != roles.Length)
+                {
                     authResult = AuthorizationResult.Unauthorized;
-
-                if (lastAccessedTime > DateTime.UtcNow.AddMinutes(AuthorizationOptions.AuthTokenTimeout) &&
-                    lastAccessedTime < DateTime.UtcNow.AddSeconds(20))
+                }
+                else if (lastAccessedTime > DateTime.UtcNow.AddMinutes(AuthorizationOptions.AuthTokenTimeout) &&
+                         lastAccessedTime < DateTime.UtcNow.AddSeconds(20))
                 {
                     database.AuthenticationTokens.Remove(session);
                     authResult = AuthorizationResult.ExpiredToken;
                 }
+                else
+                {
+                    authResult = AuthorizationResult.Success;
+                }
 
                 database.SaveChanges();
-                authResult = AuthorizationResult.Success;
             }
 
             return authResult ?? AuthorizationResult.InvalidRequest;
