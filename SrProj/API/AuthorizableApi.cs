@@ -86,7 +86,7 @@ namespace SrProj.API
 
                 if (session == null) return AuthorizationResult.ExpiredToken;
 
-                int[] roleIDs = roles.Select(r => (int) r).ToArray();
+                RoleID[] roleIDs = roles.Select(r => r).ToArray();
                 var lastAccessedTime = session.LastAccessedTime;
                 //I have to do this so the auth token gets updated in the DB. Probably worth switching up what I'm doing here.
 

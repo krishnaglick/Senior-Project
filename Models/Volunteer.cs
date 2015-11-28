@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml.Serialization;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace Models
 {

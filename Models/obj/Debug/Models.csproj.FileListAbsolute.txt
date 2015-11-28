@@ -26,3 +26,5 @@ C:\C#\SrProj\Models\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\C#\SrProj\Models\obj\Debug\Models.csprojResolveAssemblyReference.cache
 C:\C#\SrProj\Models\obj\Debug\Models.dll
 C:\C#\SrProj\Models\obj\Debug\Models.pdb
+C:\C#\SrProj\Models\bin\Debug\Newtonsoft.Json.dll
+C:\C#\SrProj\Models\bin\Debug\Newtonsoft.Json.xml

@@ -10,6 +10,7 @@ $(function() {
     var loginVM = new LoginViewModel();
     app.loginVM = loginVM;
     var createVolunteerVM = new CreateVolunteerViewModel();
+    var manageVolunteersVM = new ManageVolunteersViewModel();
     var routes = {
       Home: {
           url: 'partials/mainPage.html',
@@ -27,17 +28,24 @@ $(function() {
       Logout: {
         url: 'partials/mainPage.html',
         name: 'Logout',
-        id: 'Logout',
-        routeAction: function() {
-          app.username('');
-        }
+        id: 'logout'
       },
 
       CreateVolunteer: {
-        url: 'partials/createVolunteer.html',
-        name: 'CreateVolunteer',
-        id: 'CreateVolunteer',
+        url: 'partials/admin/createVolunteer.html',
+        name: 'Create Volunteer',
+        id: 'createVolunteer',
         vm: createVolunteerVM
+      },
+
+      ManageVolunteers: {
+        url: 'partials/admin/manageVolunteers.html',
+        name: 'Manage Volunteers',
+        id: 'manageVolunteers',
+        vm: manageVolunteersVM,
+        routeAction: function() {
+          this.loadVolunteers();
+        }.bind(manageVolunteersVM)
       },
 
       default: 'Home'
