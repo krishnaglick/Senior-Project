@@ -21,6 +21,7 @@ namespace SrProj.API
         public HttpResponseMessage Login([FromBody] Login volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
+            //TODO: using
             var volunteerContext = new Database();
             var foundVolunteer = volunteerContext.Volunteers.Include(v => v.Roles).FirstOrDefault(v => v.Username == volunteer.Username);
 
@@ -66,6 +67,7 @@ namespace SrProj.API
         public void Logout()
         {
             Guid authToken = Guid.Parse(Request.Headers.GetHeaderValue("authToken") ?? Guid.Empty.ToString());
+            //TODO: using
             var db = new Database();
             var tokenToRemove = db.AuthenticationTokens.FirstOrDefault(t => t.Token.Equals(authToken));
             if (tokenToRemove == null) return;
