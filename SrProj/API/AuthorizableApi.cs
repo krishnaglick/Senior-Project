@@ -79,39 +79,42 @@ namespace SrProj.API
 
             if (!string.IsNullOrEmpty(authToken) && !string.IsNullOrEmpty(activeUser))
             {
-                var database = new Database();
-                var session =
-                    database.AuthenticationTokens.Include(at => at.AssociatedVolunteer).Include(at => at.AssociatedVolunteer.Roles)
-                    .FirstOrDefault(at => at.Token.ToString() == authToken);
-
-                if (session == null) return AuthorizationResult.ExpiredToken;
-
-                RoleID[] roleIDs = roles.Select(r => r).ToArray();
-                var lastAccessedTime = session.LastAccessedTime;
-                //I have to do this so the auth token gets updated in the DB. Probably worth switching up what I'm doing here.
-
-                var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.ID)).ToList();
-
-                if (session.AssociatedVolunteer.Username != activeUser)
+                using (var database = new Database())
                 {
-                    authResult = AuthorizationResult.MismatchedUser;
-                }
-                else if (matchingRoles.Count != roles.Length)
-                {
-                    authResult = AuthorizationResult.Unauthorized;
-                }
-                else if (lastAccessedTime > DateTime.UtcNow.AddMinutes(AuthorizationOptions.AuthTokenTimeout) &&
-                         lastAccessedTime < DateTime.UtcNow.AddSeconds(20))
-                {
-                    database.AuthenticationTokens.Remove(session);
-                    authResult = AuthorizationResult.ExpiredToken;
-                }
-                else
-                {
-                    authResult = AuthorizationResult.Success;
-                }
+                    var session =
+                        database.AuthenticationTokens.Include(at => at.AssociatedVolunteer)
+                            .Include(at => at.AssociatedVolunteer.Roles)
+                            .FirstOrDefault(at => at.Token.ToString() == authToken);
 
-                database.SaveChanges();
+                    if (session == null) return AuthorizationResult.ExpiredToken;
+
+                    RoleID[] roleIDs = roles.Select(r => r).ToArray();
+                    var lastAccessedTime = session.LastAccessedTime;
+                    //I have to do this so the auth token gets updated in the DB. Probably worth switching up what I'm doing here.
+
+                    var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.ID)).ToList();
+
+                    if (session.AssociatedVolunteer.Username != activeUser)
+                    {
+                        authResult = AuthorizationResult.MismatchedUser;
+                    }
+                    else if (matchingRoles.Count != roles.Length)
+                    {
+                        authResult = AuthorizationResult.Unauthorized;
+                    }
+                    else if (lastAccessedTime > DateTime.UtcNow.AddMinutes(AuthorizationOptions.AuthTokenTimeout) &&
+                             lastAccessedTime < DateTime.UtcNow.AddSeconds(20))
+                    {
+                        database.AuthenticationTokens.Remove(session);
+                        authResult = AuthorizationResult.ExpiredToken;
+                    }
+                    else
+                    {
+                        authResult = AuthorizationResult.Success;
+                    }
+
+                    database.SaveChanges();
+                }
             }
 
             return authResult ?? AuthorizationResult.InvalidRequest;

@@ -46,20 +46,22 @@ namespace SrProj.API
         [AuthorizableAction]
         public HttpResponseMessage GetVolunteers()
         {
-            var volunteerContext = new Database();
-            var volunteers = volunteerContext.Volunteers.Include(v => v.Roles)
-                .Select(v => new { v.Username, v.Roles });
-            var response = new ApiResponse(Request);
+            using(var volunteerContext = new Database())
+            {
+                var volunteers = volunteerContext.Volunteers.Include(v => v.Roles)
+                    .Select(v => new {v.Username, v.Roles});
+                var response = new ApiResponse(Request);
 
-            if (volunteers.Any())
-            {
-                response.data = new { volunteers = volunteers };
-                return response.GenerateResponse(HttpStatusCode.OK);
-            }
-            else
-            {
-                response.errors.Add(new NoRecordsFound());
-                return response.GenerateResponse(HttpStatusCode.InternalServerError);
+                if (volunteers.Any())
+                {
+                    response.data = new {volunteers = volunteers};
+                    return response.GenerateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    response.errors.Add(new NoRecordsFound());
+                    return response.GenerateResponse(HttpStatusCode.InternalServerError);
+                }
             }
         }
     }
