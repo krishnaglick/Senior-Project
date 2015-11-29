@@ -37,7 +37,7 @@ function CreateVolunteerViewModel() {
       .success(function(data, textStatus, request) {
         var authToken = request.getResponseHeader('authToken');
         if(authToken) {
-          app.authToken = authToken;
+          app.authToken(authToken);
           app.username(this.username());
           this.clearCredentials();
           //TODO: Let user know they logged in.

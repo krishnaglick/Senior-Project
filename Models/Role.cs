@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Utility.Enum;
 
 namespace Models
 {
     public class Role
     {
-        [Key]
-        public RoleID ID { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ID { get; set; }
         [Required]
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }

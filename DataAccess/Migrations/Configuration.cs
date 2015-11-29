@@ -26,7 +26,7 @@ namespace DataAccess.Migrations
             foreach (RoleID role in Enum.GetValues(typeof (RoleID)))
             {
                 roles.Add(new Role {
-                    ID = role,
+                    ID = (int)role,
                     RoleName = role.GetEnumAttribute<EnumDecorators.Name>().name,
                     RoleDescription = role.GetEnumAttribute<EnumDecorators.Description>().desc,
                     Volunteers = new List<Volunteer>()
@@ -37,7 +37,7 @@ namespace DataAccess.Migrations
             {
                 HashedPassword = Volunteer.hasher.HashPassword("swordfish"),
                 Username = "user",
-                Roles = roles.Where(r => r.ID == RoleID.Volunteer).ToArray()
+                Roles = roles.Where(r => r.ID == (int)RoleID.Volunteer).ToArray()
             };
 
             Volunteer adminUser = new Volunteer
@@ -47,9 +47,9 @@ namespace DataAccess.Migrations
                 Roles = roles.ToArray()
             };
 
-            roles.First(r => r.ID == RoleID.Volunteer).Volunteers.Add(defaultUser);
-            roles.First(r => r.ID == RoleID.Volunteer).Volunteers.Add(adminUser);
-            roles.First(r => r.ID == RoleID.Admin).Volunteers.Add(adminUser);
+            roles.First(r => r.ID == (int)RoleID.Volunteer).Volunteers.Add(defaultUser);
+            roles.First(r => r.ID == (int)RoleID.Volunteer).Volunteers.Add(adminUser);
+            roles.First(r => r.ID == (int)RoleID.Admin).Volunteers.Add(adminUser);
 
             context.Roles.AddOrUpdate(roles.ToArray());
 

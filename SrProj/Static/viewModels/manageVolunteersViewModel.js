@@ -11,4 +11,9 @@ function ManageVolunteersViewModel() {
       this.volunteers(data.volunteers);
     }.bind(this));
   }.bind(this);
+
+  this.editVolunteer = function(data, event) {
+    //Switch pages and pass in data.
+    //May need to make router adaptable for this, needs some thinking.
+  }.bind(this);
 }

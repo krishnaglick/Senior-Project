@@ -2,9 +2,50 @@ $(function() {
   window.app = new App();
 
   ko.applyBindings(app, $('title')[0]);
-  createRouter();
 
-  function createRouter() {
+  (function loadHeaderAndSetupMenu(){
+    $('#menu').load('partials/menu.html', function() {
+      function changeActiveMenuOption() {
+        var currentPage = window.location.href.split('#')[1];
+        if(currentPage == 'Register') currentPage = 'Login';
+        var target = currentPage ? $('.ui.menu a:contains(' +  currentPage + ')') : $('.ui.menu a:contains(Home)');
+
+        $('.ui.menu a').removeClass('active');
+        target.addClass('active');
+      }
+
+      window.addEventListener('hashchange', changeActiveMenuOption);
+      changeActiveMenuOption();
+      $('.ui.sidebar').sidebar();
+      $('#menuOpener').click(function() {
+        $('.ui.sidebar').sidebar('toggle');
+      });
+
+      (function menuToggleOnOptionSelected() {
+        $('.ui.sidebar.vertical.menu').on('click', 'a.item', function() {
+          $('.ui.sidebar').sidebar('hide');
+        });
+      })();
+
+      ko.applyBindings(app, $('.ui.sidebar')[0]);
+    });
+  }).call(this);
+
+  (function loadFooter() {
+    $('#footer').load('partials/footer.html');
+  }).call(this);
+
+  (function restoreSession() {
+    var userCookieData = Cookies.get('user');
+    if(!userCookieData) return;
+
+    var user = JSON.parse(userCookieData);
+    app.authToken(user.authToken);
+    app.username(user.username);
+    app.roles(user.roles);
+  }).call(this);
+
+  (function createRouter() {
     window.router = new Router(renderArea, partials);
 
     var loginVM = new LoginViewModel();
@@ -52,37 +93,5 @@ $(function() {
     };
 
     router.registerRouting(app.pageTitle, routes);
-  }
-
-  (function loadHeaderAndSetupMenu(){
-    $('#menu').load('partials/menu.html', function() {
-      function changeActiveMenuOption() {
-        var currentPage = window.location.href.split('#')[1];
-        if(currentPage == 'Register') currentPage = 'Login';
-        var target = currentPage ? $('.ui.menu a:contains(' +  currentPage + ')') : $('.ui.menu a:contains(Home)');
-
-        $('.ui.menu a').removeClass('active');
-        target.addClass('active');
-      }
-
-      window.addEventListener('hashchange', changeActiveMenuOption);
-      changeActiveMenuOption();
-      $('.ui.sidebar').sidebar();
-      $('#menuOpener').click(function() {
-        $('.ui.sidebar').sidebar('toggle');
-      });
-
-      (function menuToggleOnOptionSelected() {
-        $('.ui.sidebar.vertical.menu').on('click', 'a.item', function() {
-          $('.ui.sidebar').sidebar('hide');
-        });
-      })();
-
-      ko.applyBindings(app, $('.ui.sidebar')[0]);
-    });
-  })();
-
-  (function loadFooter() {
-    $('#footer').load('partials/footer.html');
-  })();
+  }).call(this);
 });

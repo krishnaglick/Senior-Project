@@ -54,6 +54,10 @@
   <ItemGroup>
     <Compile Include="Contexts\AuthenticationTokenContext.cs" />
     <Compile Include="Contexts\ContextBase.cs" />
+    <Compile Include="Migrations\201511290231008_Initial.cs" />
+    <Compile Include="Migrations\201511290231008_Initial.Designer.cs">
+      <DependentUpon>201511290231008_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Contexts\PatronContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +77,11 @@
       <Project>{a5f0c2a9-2f99-49f6-824e-62b96a47e1c6}</Project>
       <Name>Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201511290231008_Initial.resx">
+      <DependentUpon>201511290231008_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

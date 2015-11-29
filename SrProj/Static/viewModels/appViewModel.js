@@ -3,9 +3,17 @@ function App() {
 
   this.apiBase = '../API';
 
-  this.authToken = '';
+  this.authToken = ko.observable('');
   this.username = ko.observable('');
   this.roles = ko.observableArray([]);
+
+  this.authToken.subscribe(cookieTracking, this);
+  this.username.subscribe(cookieTracking, this);
+  this.roles.subscribe(cookieTracking, this);
+
+  function cookieTracking() {
+    Cookies.set('user', JSON.stringify(this.headers()));
+  }
 
   this.isAdmin = ko.computed(function() {
     return this.roles().indexOf('Admin') > -1;
@@ -13,14 +21,14 @@ function App() {
 
   this.headers = function() {
     return {
-      authToken: this.authToken,
+      authToken: this.authToken(),
       username: this.username(),
       roles: this.roles()
     };
   }.bind(this);
 
   this.clearCredentials = function() {
-    this.authToken = '';
+    this.authToken('');
     this.username('');
     this.roles([]);
   }.bind(this);

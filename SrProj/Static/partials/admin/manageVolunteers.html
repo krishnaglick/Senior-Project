@@ -1,7 +1,13 @@
 
 <span class="topMargin">
-  <div class="ui centered grid">
-    <!-- ko foreach: volunteers -->
-    <!-- /ko -->
+  <div class="ui centered grid" data-bind="foreach: volunteers">
+    <div class="row">
+      <div class="column">
+        <span data-bind="text: Username"></span>
+      </div>
+      <div class="column">
+        <i class="edit icon" data-bind="click: $parent.editVolunteer"></i>
+      </div>
+    </div>
   </div>
 </span>

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Description;
 using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
@@ -27,7 +26,7 @@ namespace SrProj.API
                 volunteer.SecurePassword();
                 using (var volunteerContext = new Database())
                 {
-                    volunteer.Roles.Add(new Role{ ID = RoleID.Volunteer });
+                    volunteer.Roles.Add(new Role{ ID = (int)RoleID.Volunteer });
                     volunteerContext.Volunteers.Add(volunteer);
                     volunteerContext.SaveChanges();
 
@@ -46,22 +45,22 @@ namespace SrProj.API
         [AuthorizableAction]
         public HttpResponseMessage GetVolunteers()
         {
-            using(var volunteerContext = new Database())
-            {
-                var volunteers = volunteerContext.Volunteers.Include(v => v.Roles)
-                    .Select(v => new {v.Username, v.Roles});
-                var response = new ApiResponse(Request);
+            var volunteerContext = new Database();
+            var volunteers = volunteerContext.Volunteers.Include(v => v.Roles)
+                .Select(v => new {v.Username, v.Roles})
+                .OrderByDescending(v => v.Username);
 
-                if (volunteers.Any())
-                {
-                    response.data = new {volunteers = volunteers};
-                    return response.GenerateResponse(HttpStatusCode.OK);
-                }
-                else
-                {
-                    response.errors.Add(new NoRecordsFound());
-                    return response.GenerateResponse(HttpStatusCode.InternalServerError);
-                }
+            var response = new ApiResponse(Request);
+
+            if (volunteers.Any())
+            {
+                response.data = new {volunteers = volunteers};
+                return response.GenerateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                response.errors.Add(new NoRecordsFound());
+                return response.GenerateResponse(HttpStatusCode.InternalServerError);
             }
         }
     }
