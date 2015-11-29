@@ -102,6 +102,7 @@ namespace SrProj.API
                     {
                         authResult = AuthorizationResult.Unauthorized;
                     }
+                    //TODO: This needs fixing and testing.
                     else if (lastAccessedTime > DateTime.UtcNow.AddMinutes(AuthorizationOptions.AuthTokenTimeout) &&
                              lastAccessedTime < DateTime.UtcNow.AddSeconds(20))
                     {

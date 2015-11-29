@@ -11,3 +11,15 @@
     </div>
   </div>
 </span>
+
+<div class="ui modal editVolunteer" data-bind="with: targetVolunteer">
+  <i class="close icon"></i>
+  <div class="header" data-bind="text: Username"></div>
+  <div class="content">
+    <div data-bind="component: { name: 'multipleSearchSelection', params: { data: app.allRoles, defaultValue: 'Roles', activeSelection: app.roles } }"></div>
+  </div>
+  <div class="actions">
+    <div class="ui button">Cancel</div>
+    <div class="ui button">OK</div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 function ManageVolunteersViewModel() {
   this.volunteers = ko.observableArray([]);
+  this.targetVolunteer = ko.observable();
 
   this.controller = 'Volunteer';
 
@@ -13,7 +14,9 @@ function ManageVolunteersViewModel() {
   }.bind(this);
 
   this.editVolunteer = function(data, event) {
-    //Switch pages and pass in data.
-    //May need to make router adaptable for this, needs some thinking.
+    this.targetVolunteer(data);
+    //TODO: Fix the modal opening twice :/
+    $('.ui.modal.editVolunteer').modal('show');
+    $('.ui.dropdown').dropdown();
   }.bind(this);
 }

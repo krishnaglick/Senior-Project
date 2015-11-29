@@ -2,6 +2,7 @@ function App() {
   this.pageTitle = ko.observable('Home');
 
   this.apiBase = '../API';
+  this.allRoles = ko.observableArray(['Admin', 'Volunteer']);
 
   this.authToken = ko.observable('');
   this.username = ko.observable('');
