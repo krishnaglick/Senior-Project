@@ -86,6 +86,7 @@ $(function() {
         vm: manageVolunteersVM,
         routeAction: function() {
           this.loadVolunteers();
+          this.loadRoles();
         }.bind(manageVolunteersVM)
       },
 
