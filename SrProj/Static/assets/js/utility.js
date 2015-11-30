@@ -5,9 +5,8 @@ Array.prototype.contains = function(eqObj) {
   for (var i = this.length - 1; i >= 0; i--) {
     var doesContain = true;
     for(var key in this[i]) {
-      if(this[i].hasOwnProperty(key) && eqObj.hasOwnProperty(key)){
-        doesContain = this[i][key] === eqObj[key];
-      }
+      doesContain = this[i].hasOwnProperty(key) && eqObj.hasOwnProperty(key) && this[i][key] === eqObj[key];
+      if(!doesContain) break;
     }
     if(doesContain) return true;
   }
