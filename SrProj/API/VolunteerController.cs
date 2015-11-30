@@ -45,10 +45,24 @@ namespace SrProj.API
         [AuthorizableAction]
         public HttpResponseMessage GetVolunteers()
         {
-            var volunteerContext = new Database();
-            var volunteers = volunteerContext.Volunteers.Include(v => v.Roles)
-                .Select(v => new {v.Username, v.Roles})
-                .OrderByDescending(v => v.Username);
+            var databaseContext = new Database();
+
+            var volunteers =
+                from v in databaseContext.Volunteers
+                orderby v.Username descending
+                select new
+                {
+                    username = v.Username,
+                    roles = (
+                        from r in v.Roles
+                        select new
+                        {
+                            id = r.ID,
+                            name = r.RoleName,
+                            description = r.RoleDescription
+                        }
+                        )
+                };
 
             var response = new ApiResponse(Request);
 

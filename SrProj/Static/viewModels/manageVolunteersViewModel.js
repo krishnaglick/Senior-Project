@@ -11,7 +11,12 @@ function ManageVolunteersViewModel() {
     
     app.get(this.controller, action)
     .success(function(data) {
-      this.volunteers(data.volunteers);
+      this.volunteers(
+        data.volunteers.map(function(volunteer) {
+          volunteer.roles = this.parseVolunteerRoles(volunteer.roles);
+          return volunteer;
+        }.bind(this))
+      );
     }.bind(this));
   }.bind(this);
 
@@ -25,9 +30,17 @@ function ManageVolunteersViewModel() {
     }.bind(this));
   }.bind(this);
 
+  this.parseVolunteerRoles = function(roles) {
+    return roles.map(function(role) {
+      return {
+        id: role.ID || role.id,
+        name: role.RoleName || role.roleName || role.name
+      };
+    });
+  };
+
   this.editVolunteer = function(data, event) {
     this.targetVolunteer(data);
-    //TODO: Fix the modal opening twice :/
     $('#editVolunteer').modal('show');
     $('.ui.dropdown').dropdown();
   }.bind(this);

@@ -31,8 +31,10 @@ namespace Models
         public virtual ICollection<Role> Roles { get; set; }
         [Required]
         [DataType(DataType.Password)]
+        [JsonIgnore][XmlIgnore]
         public string HashedPassword { get; set; }
         [NotMapped]
+        [JsonIgnore][XmlIgnore]
         public string Password { get; set; }
         [NotMapped]
         public static readonly PasswordHasher hasher = new PasswordHasher();

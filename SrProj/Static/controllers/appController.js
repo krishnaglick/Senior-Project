@@ -51,7 +51,7 @@ $(function() {
     var loginVM = new LoginViewModel();
     app.loginVM = loginVM;
     var createVolunteerVM = new CreateVolunteerViewModel();
-    var manageVolunteersVM = new ManageVolunteersViewModel();
+    window.manageVolunteersVM = new ManageVolunteersViewModel();
     var routes = {
       Home: {
           url: 'partials/mainPage.html',

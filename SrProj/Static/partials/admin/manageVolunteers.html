@@ -3,7 +3,7 @@
   <div class="ui centered grid" data-bind="foreach: volunteers">
     <div class="row">
       <div class="nine wide column">
-        <span data-bind="text: Username"></span>
+        <span data-bind="text: username"></span>
       </div>
       <div class="nine wide column">
         <i class="edit icon" data-bind="click: $parent.editVolunteer"></i>
@@ -14,9 +14,9 @@
 
 <div class="ui modal" id="editVolunteer" data-bind="with: targetVolunteer">
   <i class="close icon"></i>
-  <div class="header" data-bind="text: Username"></div>
+  <div class="header" data-bind="text: username"></div>
   <div class="content">
-    <div data-bind="component: { name: 'multipleSearchSelection', params: { data: $parent.availableRoles, defaultValue: 'Roles', activeSelection: app.roles } }"></div>
+    <div data-bind="component: { name: 'multipleSearchSelection', params: { data: $parent.availableRoles, defaultValue: 'Roles', activeSelection: $parent.parseVolunteerRoles(roles) } }"></div>
   </div>
   <div class="actions">
     <div class="ui button">Cancel</div>

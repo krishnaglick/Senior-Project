@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using Models;
 using SrProj.API.Responses;
@@ -20,13 +18,18 @@ namespace SrProj.API
         {
             var response = new ApiResponse(Request);
 
-            List<string> roles = new List<string>();
-            foreach (RoleID role in Enum.GetValues(typeof (RoleID)))
+            List<EnumViewModel> roles = new List<EnumViewModel>();
+            foreach (RoleID role in Enum.GetValues(typeof(RoleID)))
             {
-                roles.Add(role.GetEnumAttribute<EnumDecorators.Name>().name);
+                roles.Add(new EnumViewModel
+                {
+                    id = (int)role,
+                    name = role.GetEnumAttribute<EnumDecorators.Name>().name,
+                    description = role.GetEnumAttribute<EnumDecorators.Description>().desc
+                });
             }
 
-            response.data = roles;
+            response.data = new { roles = roles };
 
             return response.GenerateResponse(HttpStatusCode.OK);
         }

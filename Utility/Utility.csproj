@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\EnumDecorators.cs" />
+    <Compile Include="Enum\EnumViewModel.cs" />
     <Compile Include="Enum\EthnicityID.cs" />
     <Compile Include="Enum\GenderID.cs" />
     <Compile Include="Enum\MaritalStatusID.cs" />

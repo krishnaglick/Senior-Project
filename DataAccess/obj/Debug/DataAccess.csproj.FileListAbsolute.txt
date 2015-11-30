@@ -32,3 +32,5 @@ D:\C#\Senior-Project\DataAccess\obj\Debug\DataAccess.dll
 D:\C#\Senior-Project\DataAccess\obj\Debug\DataAccess.pdb
 D:\C#\Senior-Project\DataAccess\obj\Debug\DataAccess.Migrations.Initial.resources
 D:\C#\Senior-Project\DataAccess\obj\Debug\DataAccess.csproj.GenerateResource.Cache
+D:\C#\Senior-Project\DataAccess\bin\Debug\Newtonsoft.Json.dll
+D:\C#\Senior-Project\DataAccess\bin\Debug\Newtonsoft.Json.xml
