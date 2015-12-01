@@ -19,7 +19,7 @@ namespace SrProj.API.Responses
 
     public class ApiResponse
     {
-        public object DefaultSuccessResponse = new { result = "success" };
+        public static object DefaultSuccessResponse = new { result = "success" };
 
         public ApiResponse(HttpRequestMessage Request)
         {

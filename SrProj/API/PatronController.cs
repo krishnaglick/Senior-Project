@@ -41,7 +41,7 @@ namespace SrProj.API
                 patronContext.Patrons.Add(patron);
                 patronContext.SaveChanges();
 
-                response.data = response.DefaultSuccessResponse;
+                response.data = ApiResponse.DefaultSuccessResponse;
                 return response.GenerateResponse(HttpStatusCode.Created);
             }
             catch(Exception e)

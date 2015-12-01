@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -30,7 +31,7 @@ namespace SrProj.API
                     volunteerContext.Volunteers.Add(volunteer);
                     volunteerContext.SaveChanges();
 
-                    response.data = response.DefaultSuccessResponse;
+                    response.data = ApiResponse.DefaultSuccessResponse;
                     return response.GenerateResponse(HttpStatusCode.Created);
                 }
             }
@@ -39,6 +40,23 @@ namespace SrProj.API
                 response.errors.Add(new InvalidVolunteer {source = e});
                 return response.GenerateResponse(HttpStatusCode.BadRequest);
             }
+        }
+
+        [HttpPost]
+        [AuthorizableAction]
+        public HttpResponseMessage ModifyVolunteer([FromBody] Volunteer volunteer)
+        {
+            //Any checks?
+            volunteer.Password = "";
+            volunteer.HashedPassword = "";
+            //Maybe...
+
+            new Database().Volunteers.AddOrUpdate(volunteer);
+
+            return new ApiResponse(Request)
+            {
+                data = ApiResponse.DefaultSuccessResponse
+            }.GenerateResponse(HttpStatusCode.OK);
         }
 
         [HttpGet]
