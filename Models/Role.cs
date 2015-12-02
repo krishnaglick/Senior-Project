@@ -8,7 +8,6 @@ namespace Models
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
-        [Required]
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }
         public virtual ICollection<Volunteer> Volunteers { get; set; }

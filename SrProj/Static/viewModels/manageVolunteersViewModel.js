@@ -33,15 +33,18 @@ function ManageVolunteersViewModel() {
   this.modifyVolunteer = function() {
     var action = 'ModifyVolunteer';
 
-    var chosenRoleIDs = $('div.ui.fluid.search.dropdown')
+    this.targetVolunteer().roles = $('div.ui.fluid.search.dropdown')
     .dropdown('get value')
     .map(function(data) {
       return parseInt(data);
+      return {
+        id: parseInt(data)
+      };
     });
 
-    this.targetVolunteer().roles = this.availableRoles().map(function(role) {
+    /*this.targetVolunteer().roles = this.availableRoles().map(function(role) {
       return chosenRoleIDs.indexOf(role.id) > -1 ? this.roleToRoleModel(role) : null;
-    }.bind(this));
+    }.bind(this));*/
 
     console.log(this.targetVolunteer().roles);
 
