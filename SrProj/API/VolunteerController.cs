@@ -46,17 +46,14 @@ namespace SrProj.API
         [AuthorizableAction]
         public HttpResponseMessage ModifyVolunteer([FromBody] Volunteer volunteer)
         {
-            //Any checks?
-            volunteer.Password = "";
-            volunteer.HashedPassword = "";
-            //Maybe...
 
             new Database().Volunteers.AddOrUpdate(volunteer);
 
             return new ApiResponse(Request)
             {
                 data = ApiResponse.DefaultSuccessResponse
-            }.GenerateResponse(HttpStatusCode.OK);
+            }
+            .GenerateResponse(HttpStatusCode.OK);
         }
 
         [HttpGet]
@@ -79,7 +76,7 @@ namespace SrProj.API
                             name = r.RoleName,
                             description = r.RoleDescription
                         }
-                        )
+                    )
                 };
 
             var response = new ApiResponse(Request);

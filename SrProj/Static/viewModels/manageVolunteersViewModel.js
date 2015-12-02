@@ -30,6 +30,30 @@ function ManageVolunteersViewModel() {
     }.bind(this));
   }.bind(this);
 
+  this.modifyVolunteer = function() {
+    var action = 'ModifyVolunteer';
+
+    var chosenRoleIDs = $('div.ui.fluid.search.dropdown')
+    .dropdown('get value')
+    .map(function(data) {
+      return parseInt(data);
+    });
+
+    this.targetVolunteer().roles = this.availableRoles().map(function(role) {
+      return chosenRoleIDs.indexOf(role.id) > -1 ? this.roleToRoleModel(role) : null;
+    }.bind(this));
+
+    console.log(this.targetVolunteer().roles);
+
+    app.post(this.controller, action, ko.toJSON(this.targetVolunteer))
+    .success(function() {
+      alert('success!');
+    }.bind(this))
+    .error(function() {
+      alert('error');
+    }.bind(this));
+  }.bind(this);
+
   this.parseVolunteerRoles = function(roles) {
     return roles.map(function(role) {
       return {
@@ -37,6 +61,14 @@ function ManageVolunteersViewModel() {
         name: role.RoleName || role.roleName || role.name
       };
     });
+  };
+
+  this.roleToRoleModel = function(role) {
+    return {
+      ID: role.id,
+      RoleName: role.name,
+      RoleDescription: role.description
+    };
   };
 
   this.editVolunteer = function(data, event) {
