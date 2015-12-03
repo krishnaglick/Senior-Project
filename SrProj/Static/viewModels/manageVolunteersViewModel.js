@@ -62,6 +62,5 @@ function ManageVolunteersViewModel() {
   this.editVolunteer = function(data, event) {
     this.targetVolunteer(data);
     $('#editVolunteer').modal('show');
-    $('.ui.dropdown').dropdown();
   }.bind(this);
 }

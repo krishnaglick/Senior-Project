@@ -6,7 +6,7 @@
 </span>
 <a class="item" href="#Home"><i class="home icon"></i> Home</a>
 <a class="item" href="#Login" data-bind="visible: !username()"><i class="sign in icon"></i> Login</a>
-<a class="item" data-bind="click: loginVM.logout, visible: username"><i class="sign out icon"></i> Logout</a>
+<a class="item" data-bind="click: logout, visible: username"><i class="sign out icon"></i> Logout</a>
 <span id="adminMenuSection" data-bind="visible: isAdmin">
   <!-- Need to make this stand out as non-clickable -->
   <span class="item"><i class="wizard icon"></i> Admin Settings</span>

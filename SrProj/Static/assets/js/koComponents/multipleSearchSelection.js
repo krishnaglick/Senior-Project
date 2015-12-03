@@ -22,5 +22,7 @@ ko.components.register('multipleSearchSelection', {
         '<div class="item" data-bind="attr: { \'data-value\': id }, text: name, css: { \'active filtered\': $parent.activeSelection.contains($data)} "></div>' +
       '</div>' +
     '</div>',
-    synchronous: true
+    afterRender: function() {
+      $('.ui.dropdown').dropdown();
+    }
 });

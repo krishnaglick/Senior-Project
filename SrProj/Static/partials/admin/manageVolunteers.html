@@ -1,16 +1,14 @@
 
-<span class="topMargin">
-  <div class="ui centered grid" data-bind="foreach: volunteers">
-    <div class="row">
-      <div class="nine wide column">
-        <span data-bind="text: username"></span>
-      </div>
-      <div class="nine wide column">
-        <i class="edit icon" data-bind="click: $parent.editVolunteer"></i>
-      </div>
+<div class="ui centered grid topMargin" data-bind="foreach: volunteers">
+  <div class="row">
+    <div class="six wide column">
+      <span data-bind="text: username"></span>
+    </div>
+    <div class="column">
+      <i class="edit icon" data-bind="click: $parent.editVolunteer"></i>
     </div>
   </div>
-</span>
+</div>
 
 <div class="ui modal" id="editVolunteer" data-bind="with: targetVolunteer">
   <i class="close icon"></i>

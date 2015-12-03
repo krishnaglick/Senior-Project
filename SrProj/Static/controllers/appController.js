@@ -49,7 +49,7 @@ $(function() {
     window.router = new Router(renderArea, partials);
 
     var loginVM = new LoginViewModel();
-    app.loginVM = loginVM;
+    app.logout = loginVM.logout;
     var createVolunteerVM = new CreateVolunteerViewModel();
     window.manageVolunteersVM = new ManageVolunteersViewModel();
     var routes = {

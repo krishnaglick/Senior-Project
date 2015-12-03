@@ -51,17 +51,17 @@ function Router(renderElement, partialContainer) {
       }
 
       //If partial is not on page
-      if(!$('#' + this.routes[route].id)[0]) {
+      if(true || !window[this.routes[route].id]) {
         this.contentArea.load(this.routes[route].url, function() {
           applyBinding.call(this);
-          this.addPartialToPartialHolder(this.routes[route].id, this.contentArea.html());
+          //this.addPartialToPartialHolder(this.routes[route].id, this.contentArea.html());
           this.routeTransitionEnd();
         }.bind(this));
       }
       else {
-        this.contentArea.html($('#' + this.routes[route].id).html());
+        /*this.contentArea.html($(window[this.routes[route].id]).html());
         applyBinding.call(this);
-        this.routeTransitionEnd();
+        this.routeTransitionEnd();*/
       }
     }
 
