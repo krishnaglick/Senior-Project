@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         fragments: './build/fragments/',
         banner: '/*!\n' +
                 ' * Knockout JavaScript library v<%= pkg.version %>\n' +
-                ' * (c) Steven Sanderson - <%= pkg.homepage %>\n' +
+                ' * (c) The Knockout.js team - <%= pkg.homepage %>\n' +
                 ' * License: <%= pkg.licenses[0].type %> (<%= pkg.licenses[0].url %>)\n' +
                 ' */\n\n',
 
@@ -152,13 +152,8 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('dist', function() {
-        // Update the version in bower.json
-        var bowerConfig = grunt.file.readJSON('bower.json'),
-            version = grunt.config('pkg.version');
-        bowerConfig.version = version;
-        grunt.file.write('bower.json', JSON.stringify(bowerConfig, true, 2));
-
-        var buildConfig = grunt.config('build'),
+        var version = grunt.config('pkg.version'),
+            buildConfig = grunt.config('build'),
             distConfig = grunt.config('dist');
         grunt.file.copy(buildConfig.debug, distConfig.debug);
         grunt.file.copy(buildConfig.min, distConfig.min);

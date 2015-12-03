@@ -34,3 +34,7 @@ D:\C#\Senior-Project\DataAccess\obj\Debug\DataAccess.Migrations.Initial.resource
 D:\C#\Senior-Project\DataAccess\obj\Debug\DataAccess.csproj.GenerateResource.Cache
 D:\C#\Senior-Project\DataAccess\bin\Debug\Newtonsoft.Json.dll
 D:\C#\Senior-Project\DataAccess\bin\Debug\Newtonsoft.Json.xml
+C:\C#\SrProj\DataAccess\bin\Debug\Newtonsoft.Json.dll
+C:\C#\SrProj\DataAccess\bin\Debug\Newtonsoft.Json.xml
+C:\C#\SrProj\DataAccess\obj\Debug\DataAccess.Migrations.Initial.resources
+C:\C#\SrProj\DataAccess\obj\Debug\DataAccess.csproj.GenerateResource.Cache
