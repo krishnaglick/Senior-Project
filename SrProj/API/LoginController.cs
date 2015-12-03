@@ -67,11 +67,14 @@ namespace SrProj.API
         public void Logout()
         {
             Guid authToken = Guid.Parse(Request.Headers.GetHeaderValue("authToken") ?? Guid.Empty.ToString());
-            //TODO: using
-            var db = new Database();
-            var tokenToRemove = db.AuthenticationTokens.FirstOrDefault(t => t.Token.Equals(authToken));
-            if (tokenToRemove == null) return;
-            db.AuthenticationTokens.Remove(tokenToRemove);
+            if (authToken == Guid.Empty) return;
+
+            using (var db = new Database())
+            {
+                var tokenToRemove = db.AuthenticationTokens.FirstOrDefault(t => t.Token.Equals(authToken));
+                if (tokenToRemove == null) return;
+                db.AuthenticationTokens.Remove(tokenToRemove);
+            }
         }
     }
 }

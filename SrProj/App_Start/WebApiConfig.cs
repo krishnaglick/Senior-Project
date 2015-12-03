@@ -13,7 +13,6 @@ namespace SrProj
         {
             
             config.Formatters.Add(new BrowserJsonFormatter());
-            //No!
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             // Web API routes
