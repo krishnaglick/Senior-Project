@@ -28,6 +28,7 @@ namespace DataAccess.Contexts
         public DbSet<AuthenticationToken> AuthenticationTokens { get; set; }
         public DbSet<Volunteer> Volunteers { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<RoleVolunteer> RoleVolunteers { get; set; }
         public DbSet<ServiceType> ServiceTypes { get; set; }
         public DbSet<Visit> Visits { get; set; }
         public DbSet<Gender> Genders { get; set; }

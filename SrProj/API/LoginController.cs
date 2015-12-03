@@ -49,7 +49,7 @@ namespace SrProj.API
                 authTokenContext.AuthenticationTokens.Add(authToken);
                 authTokenContext.SaveChanges();
 
-                response.data = new {roles = foundVolunteer.Roles.Select(r => r.RoleName)};
+                response.data = new {roles = foundVolunteer.Roles.Select(r => r.Role.RoleName)};
 
                 return response.GenerateResponse(HttpStatusCode.OK, new Dictionary<string, string>
                 {

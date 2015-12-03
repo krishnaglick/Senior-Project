@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
@@ -12,6 +13,7 @@ using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
 using Utility.Enum;
+using WebGrease.Css.Extensions;
 using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
@@ -27,11 +29,15 @@ namespace SrProj.API
             try
             {
                 volunteer.SecurePassword();
-                using (var volunteerContext = new Database())
+                using (var dbContext = new Database())
                 {
-                    volunteer.Roles.Add(new Role{ ID = (int)RoleID.Volunteer });
-                    volunteerContext.Volunteers.Add(volunteer);
-                    volunteerContext.SaveChanges();
+                    volunteer.Roles.Add(new RoleVolunteer
+                    {
+                        Role = dbContext.Roles.First(r => r.ID == (int)RoleID.Volunteer),
+                        Volunteer = volunteer
+                    });
+                    dbContext.Volunteers.Add(volunteer);
+                    dbContext.SaveChanges();
 
                     response.data = ApiResponse.DefaultSuccessResponse;
                     return response.GenerateResponse(HttpStatusCode.Created);
@@ -44,22 +50,39 @@ namespace SrProj.API
             }
         }
 
+        public class VolunteerViewModel
+        {
+            public string Username { get; set; }
+            public int[] Roles { get; set; }
+        }
+
         [HttpPost]
         [AuthorizableAction]
-        public HttpResponseMessage ModifyVolunteer([FromBody] Volunteer volunteer)
+        public HttpResponseMessage ModifyVolunteer([FromBody] VolunteerViewModel volunteer)
         {
             //This is not the right way.
             var db = new Database();
-            var vol = db.Volunteers.First(v => v.Username == volunteer.Username);
-            vol.Roles = volunteer.Roles;
+            var dbVolunteer = db.Volunteers.Include(v => v.Roles).First(v => v.Username == volunteer.Username);
+
+            db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username).ForEach(rv => db.RoleVolunteers.Remove(rv));
+            db.Roles.Include(r => r.Volunteers)
+            .Where(r => volunteer.Roles.Contains(r.ID)).ForEach(r =>
+            {
+                r.Volunteers = r.Volunteers ?? new List<RoleVolunteer>();
+                r.Volunteers.Add(new RoleVolunteer
+                    {
+                        Role = r,
+                        Volunteer = dbVolunteer
+                    });
+            });
+
             try
             {
-                db.Volunteers.AddOrUpdate(vol);
                 db.SaveChanges();
             }
-            catch (DbUpdateException e)
+            catch (Exception e)
             {
-                
+                var TT = Convert.ChangeType(e, e.GetType());
             }
 
             return new ApiResponse(Request)
@@ -85,9 +108,9 @@ namespace SrProj.API
                         from r in v.Roles
                         select new
                         {
-                            id = r.ID,
-                            name = r.RoleName,
-                            description = r.RoleDescription
+                            id = r.Role.ID,
+                            name = r.Role.RoleName,
+                            description = r.Role.RoleDescription
                         }
                     )
                 };

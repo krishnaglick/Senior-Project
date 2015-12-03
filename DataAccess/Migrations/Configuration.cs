@@ -29,7 +29,7 @@ namespace DataAccess.Migrations
                     ID = (int)role,
                     RoleName = role.GetEnumAttribute<EnumDecorators.Name>().name,
                     RoleDescription = role.GetEnumAttribute<EnumDecorators.Description>().desc,
-                    Volunteers = new List<Volunteer>()
+                    Volunteers = new List<RoleVolunteer>()
                 });
             }
 
@@ -37,21 +37,42 @@ namespace DataAccess.Migrations
             {
                 HashedPassword = Volunteer.hasher.HashPassword("swordfish"),
                 Username = "user",
-                Roles = roles.Where(r => r.ID == (int)RoleID.Volunteer).ToArray()
+                Roles = new List<RoleVolunteer>()
             };
 
             Volunteer adminUser = new Volunteer
             {
                 HashedPassword = Volunteer.hasher.HashPassword("swordfish"),
                 Username = "admin",
-                Roles = roles.ToArray()
+                Roles = new List<RoleVolunteer>()
             };
 
-            roles.First(r => r.ID == (int)RoleID.Volunteer).Volunteers.Add(defaultUser);
-            roles.First(r => r.ID == (int)RoleID.Volunteer).Volunteers.Add(adminUser);
-            roles.First(r => r.ID == (int)RoleID.Admin).Volunteers.Add(adminUser);
+            List<RoleVolunteer> roleVolunteers = new List<RoleVolunteer>();
+
+            roleVolunteers.Add(
+                new RoleVolunteer
+                {
+                    Role = roles.First(r => r.ID == (int) RoleID.Volunteer),
+                    Volunteer = defaultUser
+                }
+            );
+            roleVolunteers.Add(
+                new RoleVolunteer
+                {
+                    Role = roles.First(r => r.ID == (int)RoleID.Volunteer),
+                    Volunteer = adminUser
+                }
+            );
+            roleVolunteers.Add(
+                new RoleVolunteer
+                {
+                    Role = roles.First(r => r.ID == (int)RoleID.Admin),
+                    Volunteer = adminUser
+                }
+            );
 
             context.Roles.AddOrUpdate(roles.ToArray());
+            context.RoleVolunteers.AddOrUpdate(roleVolunteers.ToArray());
 
             List<ServiceType> services = new List<ServiceType>();
             foreach (ServiceTypeID service in Enum.GetValues(typeof(ServiceTypeID)))

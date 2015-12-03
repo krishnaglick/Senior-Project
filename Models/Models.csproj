@@ -68,6 +68,7 @@
     <Compile Include="Patron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs" />
+    <Compile Include="RoleVolunteer.cs" />
     <Compile Include="ServiceEligibility.cs" />
     <Compile Include="ServiceType.cs" />
     <Compile Include="Visit.cs" />

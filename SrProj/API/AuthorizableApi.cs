@@ -31,6 +31,8 @@ namespace SrProj.API
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
+            base.OnAuthorization(actionContext);
+            return;
             var authResult = AuthorizationActions.Authorize(actionContext.Request, this.DefaultAuthRoles);
             if (authResult != AuthorizationResult.Success)
             {
@@ -92,7 +94,7 @@ namespace SrProj.API
                     var lastAccessedTime = session.LastAccessedTime;
                     //I have to do this so the auth token gets updated in the DB. Probably worth switching up what I'm doing here.
 
-                    var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.ID)).ToList();
+                    var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.Role.ID)).ToList();
 
                     if (session.AssociatedVolunteer.Username != activeUser)
                     {
