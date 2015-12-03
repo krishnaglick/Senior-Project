@@ -33,20 +33,13 @@ function ManageVolunteersViewModel() {
   this.modifyVolunteer = function() {
     var action = 'ModifyVolunteer';
 
-    this.targetVolunteer().roles = $('div.ui.fluid.search.dropdown')
-    .dropdown('get value')
-    .map(function(data) {
-      return parseInt(data);
-      return {
-        id: parseInt(data)
-      };
-    });
+    this.targetVolunteer().roles = [];
 
-    /*this.targetVolunteer().roles = this.availableRoles().map(function(role) {
-      return chosenRoleIDs.indexOf(role.id) > -1 ? this.roleToRoleModel(role) : null;
-    }.bind(this));*/
-
-    console.log(this.targetVolunteer().roles);
+    $('div.ui.fluid.search.dropdown a.ui.label.transition.visible')
+    .each(function(index, element) {
+      this.targetVolunteer().roles.push(parseInt($(element).data('value')));
+      }.bind(this)
+    );
 
     app.post(this.controller, action, ko.toJSON(this.targetVolunteer))
     .success(function() {
@@ -64,14 +57,6 @@ function ManageVolunteersViewModel() {
         name: role.RoleName || role.roleName || role.name
       };
     });
-  };
-
-  this.roleToRoleModel = function(role) {
-    return {
-      ID: role.id,
-      RoleName: role.name,
-      RoleDescription: role.description
-    };
   };
 
   this.editVolunteer = function(data, event) {
