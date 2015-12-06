@@ -31,7 +31,7 @@ namespace SrProj.API
                 volunteer.SecurePassword();
                 using (var dbContext = new Database())
                 {
-                    volunteer.Roles.Add(new RoleVolunteer
+                    dbContext.RoleVolunteers.Add(new RoleVolunteer
                     {
                         Role = dbContext.Roles.First(r => r.ID == (int)RoleID.Volunteer),
                         Volunteer = volunteer

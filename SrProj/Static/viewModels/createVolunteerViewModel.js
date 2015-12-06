@@ -32,21 +32,9 @@ function CreateVolunteerViewModel() {
     }
 
     var action = 'CreateVolunteer';
-
     app.post(this.controller, action, ko.toJSON(this))
       .success(function(data, textStatus, request) {
-        var authToken = request.getResponseHeader('authToken');
-        if(authToken) {
-          app.authToken(authToken);
-          app.username(this.username());
-          this.clearCredentials();
-          //TODO: Let user know they logged in.
-          alert('You\'re logged in!');
-        }
-        else {
-          //Bad things
-          alert('There was a problem logging you in, please try again!');
-        }
+        alert('User Created!');
       }.bind(this))
       .error(function(data) {
         if(data.responseJSON){

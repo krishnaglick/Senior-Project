@@ -23,6 +23,7 @@ ko.components.register('multipleSearchSelection', {
       '</div>' +
     '</div>',
     afterRender: function() {
-      $('.ui.dropdown').dropdown();
+      //$('.ui.dropdown').dropdown();
+      //I'm not as clever as I thought
     }
 });

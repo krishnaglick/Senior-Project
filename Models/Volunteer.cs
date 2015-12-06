@@ -34,7 +34,6 @@ namespace Models
         [JsonIgnore][XmlIgnore]
         public string HashedPassword { get; set; }
         [NotMapped]
-        [JsonIgnore][XmlIgnore]
         public string Password { get; set; }
         [NotMapped]
         public static readonly PasswordHasher hasher = new PasswordHasher();
