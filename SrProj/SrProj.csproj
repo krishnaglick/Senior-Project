@@ -667,7 +667,9 @@
     <Content Include="Static\controllers\appController.js" />
     <Content Include="Static\partials\mainPage.html" />
     <Content Include="Static\viewModels\appViewModel.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

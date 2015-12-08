@@ -41,8 +41,11 @@ namespace Models
         public short NumberInHousehold { get; set; }
         public bool Banned { get; set; }
         //Marital Status
+        public MaritalStatus Marital { get; set; }
         //Residence Status
+        public ResidenceStatus Residence { get; set; }
         //Gender
+        public Gender Gender { get; set; }
         public Ethnicity Ethnicity { get; set; }
         //Race
         [Required]
