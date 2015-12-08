@@ -8,9 +8,9 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using SrProj.Utility.Enum;
-using SrProj.Utility.ExtensionMethod;
-using Database = SrProj.Models.Context.Database;
+using Utility.Enum;
+using Utility.ExtensionMethod;
+using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
 {
@@ -31,11 +31,22 @@ namespace SrProj.API
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            var isAuthorized = AuthorizationActions.Authorize(actionContext.Request, this.DefaultAuthRoles);
-            if(!isAuthorized)
+            base.OnAuthorization(actionContext);
+            return;
+            var authResult = AuthorizationActions.Authorize(actionContext.Request, this.DefaultAuthRoles);
+            if (authResult != AuthorizationResult.Success)
             {
                 ApiResponse response = new ApiResponse(actionContext.Request);
-                response.errors.Add(new NoAccess());
+                if (authResult == AuthorizationResult.MismatchedUser || authResult == AuthorizationResult.ExpiredToken ||
+                    authResult == AuthorizationResult.InvalidRequest)
+                {
+                    response.errors.Add(new InvalidToken());
+                }
+                else if (authResult == AuthorizationResult.Unauthorized)
+                {
+                    response.errors.Add(new NoAccess());
+                }
+
                 actionContext.Response = response.GenerateResponse(HttpStatusCode.Forbidden);
             }
 
@@ -46,40 +57,70 @@ namespace SrProj.API
     [AttributeUsage(AttributeTargets.Method)]
     public class AuthorizableAction : AuthorizableController { }
 
+    public enum AuthorizationResult
+    {
+        Success = 0,
+
+        MismatchedUser = 1,
+
+        Unauthorized = 2,
+
+        ExpiredToken = 3,
+
+        InvalidRequest = 4
+    }
+
     internal static class AuthorizationActions
     {
-        public static bool Authorize(HttpRequestMessage request, RoleID[] roles)
+        public static AuthorizationResult Authorize(HttpRequestMessage request, RoleID[] roles)
         {
             string authToken = request.Headers.GetHeaderValue("authToken");
             string activeUser = request.Headers.GetHeaderValue("username");
 
+            AuthorizationResult? authResult = null;
+
             if (!string.IsNullOrEmpty(authToken) && !string.IsNullOrEmpty(activeUser))
             {
-                var database = new Database();
-                var session =
-                    database.AuthenticationTokens.Include(at => at.AssociatedVolunteer).Include(at => at.AssociatedVolunteer.Roles)
-                    .FirstOrDefault(at => at.Token.ToString() == authToken);
-
-                if (session == null) return false;
-
-                int[] roleIDs = roles.Select(r => (int) r).ToArray();
-                var lastAccessedTime = session.LastAccessedTime;
-                //I have to do this so the auth token gets updated in the DB. Probably worth switching up what I'm doing here.
-                database.SaveChanges();
-
-                var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.ID)).ToList();
-
-                if (session.AssociatedVolunteer.Username == activeUser &&
-                    matchingRoles.Count == roles.Length &&
-                    lastAccessedTime > DateTime.UtcNow.AddMinutes(-AuthorizationOptions.AuthTokenTimeout) &&
-                    lastAccessedTime < DateTime.UtcNow.AddSeconds(20)
-                    )
+                using (var database = new Database())
                 {
-                    return true;
+                    var session =
+                        database.AuthenticationTokens.Include(at => at.AssociatedVolunteer)
+                            .Include(at => at.AssociatedVolunteer.Roles)
+                            .FirstOrDefault(at => at.Token.ToString() == authToken);
+
+                    if (session == null) return AuthorizationResult.ExpiredToken;
+
+                    int[] roleIDs = roles.Select(r => (int)r).ToArray();
+                    var lastAccessedTime = session.LastAccessedTime;
+                    //I have to do this so the auth token gets updated in the DB. Probably worth switching up what I'm doing here.
+
+                    var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.Role.ID)).ToList();
+
+                    if (session.AssociatedVolunteer.Username != activeUser)
+                    {
+                        authResult = AuthorizationResult.MismatchedUser;
+                    }
+                    else if (matchingRoles.Count != roles.Length)
+                    {
+                        authResult = AuthorizationResult.Unauthorized;
+                    }
+                    //TODO: This needs fixing and testing.
+                    else if (lastAccessedTime > DateTime.UtcNow.AddMinutes(AuthorizationOptions.AuthTokenTimeout) &&
+                             lastAccessedTime < DateTime.UtcNow.AddSeconds(20))
+                    {
+                        database.AuthenticationTokens.Remove(session);
+                        authResult = AuthorizationResult.ExpiredToken;
+                    }
+                    else
+                    {
+                        authResult = AuthorizationResult.Success;
+                    }
+
+                    database.SaveChanges();
                 }
             }
 
-            return false;
+            return authResult ?? AuthorizationResult.InvalidRequest;
         }
     }
 }

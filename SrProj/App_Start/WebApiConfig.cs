@@ -3,7 +3,6 @@ using System;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json;
 
 namespace SrProj
@@ -12,7 +11,9 @@ namespace SrProj
     {
         public static void Register(HttpConfiguration config)
         {
+            
             config.Formatters.Add(new BrowserJsonFormatter());
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             // Web API routes
             config.MapHttpAttributeRoutes();

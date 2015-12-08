@@ -170,16 +170,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\AuthorizableApi.cs" />
+    <Compile Include="API\LoginController.cs" />
+    <Compile Include="API\Responses\Errors\InvalidToken.cs" />
     <Compile Include="API\Responses\Errors\InvalidUsernameOrPassword.cs" />
     <Compile Include="API\Responses\Errors\InvalidVolunteer.cs" />
     <Compile Include="API\Responses\Errors\NoAccess.cs" />
-    <Compile Include="Models\ServiceType.cs" />
-    <Compile Include="Models\Visit.cs" />
-    <Compile Include="Utility\Enum\RoleID.cs" />
-    <Compile Include="Utility\ExtensionMethod\HttpRequestHeadersExtentions.cs" />
     <Compile Include="API\PatronController.cs" />
     <Compile Include="API\Responses\ApiResponse.cs" />
     <Compile Include="API\Responses\Errors\InvalidPatron.cs" />
+    <Compile Include="API\Responses\Errors\NoRecordsFound.cs" />
+    <Compile Include="API\RoleController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -217,27 +217,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\AuthenticationToken.cs" />
-    <Compile Include="Models\Context\AuthenticationTokenContext.cs" />
-    <Compile Include="Models\Context\ContextBase.cs" />
-    <Compile Include="Models\Context\PatronContext.cs" />
-    <Compile Include="Models\Context\RoleContext.cs" />
-    <Compile Include="Models\Context\VolunteerContext.cs" />
-    <Compile Include="Models\EmergencyContact.cs" />
-    <Compile Include="Models\ModelBase.cs" />
-    <Compile Include="Models\Patron.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Tests\PatronTest.cs" />
     <Compile Include="Tests\TestTest.cs" />
-    <Compile Include="Utility\Attribute\EnumDecorators.cs" />
-    <Compile Include="Utility\Enum\Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Utility\ExtensionMethod\EnumExtensions.cs" />
-    <Compile Include="Utility\Security\PasswordHasher.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -684,7 +667,9 @@
     <Content Include="Static\controllers\appController.js" />
     <Content Include="Static\partials\mainPage.html" />
     <Content Include="Static\viewModels\appViewModel.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1110,6 +1095,20 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{4b1ec9b6-0361-43bc-ab75-f4698692e585}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{95be6edc-1f3e-4770-bc2e-a3f92311c9b8}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{a5f0c2a9-2f99-49f6-824e-62b96a47e1c6}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

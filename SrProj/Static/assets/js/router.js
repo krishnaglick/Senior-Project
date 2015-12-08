@@ -7,10 +7,11 @@ function Router(renderElement, partialContainer) {
 
   this.routes = {
     sampleRoute: {
-      url: 'path/to/partial',
-      name: 'Sample',
-      id: 'sample',
-      vm: function() { throw 'NotImplementedException'; }
+      url: 'path/to/partial', //The html file to load.
+      name: 'Sample', //This becomes the page title
+      id: 'sample', //The partial is cached under this id, needs to be unique
+      vm: function() { throw 'NotImplementedException'; }, //The viewmodel associated with the route
+      routeAction: function() { throw 'NotImplementedException'; } //An action to take upon loading the route
     },
     default: ''
   };
@@ -35,23 +36,32 @@ function Router(renderElement, partialContainer) {
         ko.cleanNode(this.contentArea[0]);
       }
 
+      var routeAction = this.routes[route].routeAction;
+      if(routeAction) routeAction();
+
       function applyBinding() {
-        if(this.routes[route].vm)
-          ko.applyBindings(this.routes[route].vm(), this.contentArea[0]);
+        if(this.routes[route].vm) {
+          if(typeof route === 'function'){
+            ko.applyBindings(this.routes[route].vm(), this.contentArea[0]);
+          }
+          else {
+            ko.applyBindings(this.routes[route].vm, this.contentArea[0]);
+          }
+        }
       }
 
       //If partial is not on page
-      if(!$('#' + this.routes[route].id)[0]) {
+      if(true || !window[this.routes[route].id]) {
         this.contentArea.load(this.routes[route].url, function() {
           applyBinding.call(this);
-          this.addPartialToPartialHolder(this.routes[route].id, this.contentArea.html());
+          //this.addPartialToPartialHolder(this.routes[route].id, this.contentArea.html());
           this.routeTransitionEnd();
         }.bind(this));
       }
       else {
-        this.contentArea.html($('#' + this.routes[route].id).html());
+        /*this.contentArea.html($(window[this.routes[route].id]).html());
         applyBinding.call(this);
-        this.routeTransitionEnd();
+        this.routeTransitionEnd();*/
       }
     }
 

@@ -4,15 +4,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using DataAccess;
+using DataAccess.Contexts;
+using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using SrProj.Models;
-using SrProj.Models.Context;
-using SrProj.Utility.Enum;
+using Utility.Enum;
 
 namespace SrProj.API
 {
-    [AuthorizableController(new []{ RoleID.Volunteer })]
+    [AuthorizableController(new [] { RoleID.Volunteer })]
     public class PatronController : ApiController
     {
         [HttpGet]
@@ -40,7 +41,7 @@ namespace SrProj.API
                 patronContext.Patrons.Add(patron);
                 patronContext.SaveChanges();
 
-                response.data = response.DefaultSuccessResponse;
+                response.data = ApiResponse.DefaultSuccessResponse;
                 return response.GenerateResponse(HttpStatusCode.Created);
             }
             catch(Exception e)

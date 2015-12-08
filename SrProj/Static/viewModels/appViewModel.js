@@ -3,13 +3,38 @@ function App() {
 
   this.apiBase = '../API';
 
-  this.authToken = '';
-  this.username = '';
+  this.authToken = ko.observable('');
+  this.username = ko.observable('');
+  this.roles = ko.observableArray([]);
+
+  this.authToken.subscribe(cookieTracking, this);
+  this.username.subscribe(cookieTracking, this);
+  this.roles.subscribe(cookieTracking, this);
+
+  function cookieTracking() {
+    Cookies.set('user', JSON.stringify(this.headers()));
+  }
+
+  this.isAdmin = ko.computed(function() {
+    return this.roles().indexOf('Admin') > -1;
+  }, this);
+
   this.headers = function() {
     return {
-      authToken: this.authToken,
-      username: this.username
+      authToken: this.authToken(),
+      username: this.username(),
+      roles: this.roles()
     };
+  }.bind(this);
+
+  this.logout = function() {
+    throw 'Logout function not assigned!';
+  };
+
+  this.clearCredentials = function() {
+    this.authToken('');
+    this.username('');
+    this.roles([]);
   }.bind(this);
 
   this.actionBegin = function() { };
