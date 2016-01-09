@@ -56,7 +56,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\AuthenticationTokenContext.cs" />
     <Compile Include="Contexts\ContextBase.cs" />
     <Compile Include="Migrations\201511290231008_Initial.cs" />
     <Compile Include="Migrations\201511290231008_Initial.Designer.cs">
