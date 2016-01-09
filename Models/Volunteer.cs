@@ -28,7 +28,6 @@ namespace Models
         [Required]
         [Index(IsUnique = true)]
         public string Username { get; set; }
-        public virtual ICollection<RoleVolunteer> Roles { get; set; }
         [Required]
         [DataType(DataType.Password)]
         [JsonIgnore][XmlIgnore]

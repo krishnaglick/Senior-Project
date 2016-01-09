@@ -83,24 +83,23 @@ namespace SrProj.API
             {
                 using (var database = new Database())
                 {
-                    var session =
-                        database.AuthenticationTokens.Include(at => at.AssociatedVolunteer)
-                            .Include(at => at.AssociatedVolunteer.Roles)
-                            .FirstOrDefault(at => at.Token.ToString() == authToken);
-
-                    if (session == null) return AuthorizationResult.ExpiredToken;
-
-                    int[] roleIDs = roles.Select(r => (int)r).ToArray();
-                    var lastAccessedTime = session.LastAccessedTime;
+                    if (Authorization.ValidateToken(authToken, activeUser))
+                    {
+                        //Valid token, need to check roles
+                        var dbRoles = database.RoleVolunteers.Where(rv => rv.Volunteer.Username == activeUser)
+                            .Select(rv => rv.Role.ID).ToArray();
+                    }
+                    //int[] roleIDs = roles.Select(r => (int)r).ToArray();
+                    //var lastAccessedTime = session.LastAccessedTime;
                     //I have to do this so the auth token gets updated in the DB. Probably worth switching up what I'm doing here.
 
-                    var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.Role.ID)).ToList();
+                    //var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.Role.ID)).ToList();
 
                     if (session.AssociatedVolunteer.Username != activeUser)
                     {
                         authResult = AuthorizationResult.MismatchedUser;
                     }
-                    else if (matchingRoles.Count != roles.Length)
+                    else if (/*matchingRoles.Count != roles.Length*/ false)
                     {
                         authResult = AuthorizationResult.Unauthorized;
                     }

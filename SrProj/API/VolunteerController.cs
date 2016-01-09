@@ -60,21 +60,21 @@ namespace SrProj.API
         [AuthorizableAction]
         public HttpResponseMessage ModifyVolunteer([FromBody] VolunteerViewModel volunteer)
         {
-            //This is not the right way.
             var db = new Database();
-            var dbVolunteer = db.Volunteers.Include(v => v.Roles).First(v => v.Username == volunteer.Username);
 
-            db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username).ForEach(rv => db.RoleVolunteers.Remove(rv));
-            db.Roles.Include(r => r.Volunteers)
-            .Where(r => volunteer.Roles.Contains(r.ID)).ForEach(r =>
+            //Get Volunteer
+            var dbVolunteer = db.Volunteers.FirstOrDefault(v => v.Username == volunteer.Username);
+            //Get Roles
+            var dbRoles = db.Roles.Where(r => volunteer.Roles.Contains(r.ID));
+            //Remove all current roles
+            db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username)
+                .ForEach(rv => db.RoleVolunteers.Remove(rv));
+            //Associate user to new roles
+            dbRoles.ForEach(r => db.RoleVolunteers.Add(new RoleVolunteer
             {
-                r.Volunteers = r.Volunteers ?? new List<RoleVolunteer>();
-                r.Volunteers.Add(new RoleVolunteer
-                    {
-                        Role = r,
-                        Volunteer = dbVolunteer
-                    });
-            });
+                Role = r,
+                Volunteer = dbVolunteer
+            }));
 
             try
             {
@@ -82,7 +82,7 @@ namespace SrProj.API
             }
             catch (Exception e)
             {
-                var TT = Convert.ChangeType(e, e.GetType());
+                //var TT = Convert.ChangeType(e, e.GetType());
             }
 
             return new ApiResponse(Request)
@@ -96,24 +96,12 @@ namespace SrProj.API
         [AuthorizableAction]
         public HttpResponseMessage GetVolunteers()
         {
-            var databaseContext = new Database();
+            var db = new Database();
 
-            var volunteers =
-                from v in databaseContext.Volunteers
-                orderby v.Username descending
-                select new
-                {
-                    username = v.Username,
-                    roles = (
-                        from r in v.Roles
-                        select new
-                        {
-                            id = r.Role.ID,
-                            name = r.Role.RoleName,
-                            description = r.Role.RoleDescription
-                        }
-                    )
-                };
+            var volunteers = db.RoleVolunteers
+                .Include(rv => rv.Volunteer)
+                .Include(rv => rv.Role)
+                .ToList();
 
             var response = new ApiResponse(Request);
 

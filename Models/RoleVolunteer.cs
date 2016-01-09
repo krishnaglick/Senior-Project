@@ -1,11 +1,13 @@
 ﻿
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models
 {
     public class RoleVolunteer
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public virtual Role Role { get; set; }
         public virtual Volunteer Volunteer { get; set; }
