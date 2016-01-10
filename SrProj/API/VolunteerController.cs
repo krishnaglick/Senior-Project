@@ -65,21 +65,14 @@ namespace SrProj.API
             //Remove all current roles
             db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username)
                 .ForEach(rv => db.RoleVolunteers.Remove(rv));
+            db.SaveChanges();
             //Associate user to new roles
             dbRoles.ForEach(r => db.RoleVolunteers.Add(new RoleVolunteer
             {
                 Role = r,
                 Volunteer = dbVolunteer
             }));
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                //var TT = Convert.ChangeType(e, e.GetType());
-            }
+            db.SaveChanges();
 
             return new ApiResponse(Request)
             {
@@ -97,7 +90,7 @@ namespace SrProj.API
             var volunteers = db.Volunteers
                 .Include(v => v.Roles)
                 .Select(v => new {
-                    volunteer = v,
+                    username = v.Username,
                     roles = v.Roles.Select(vr => vr.Role)
                 })
                 .ToList();
