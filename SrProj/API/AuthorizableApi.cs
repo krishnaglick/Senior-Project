@@ -32,7 +32,7 @@ namespace SrProj.API
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             base.OnAuthorization(actionContext);
-            return;
+
             var authResult = AuthorizationActions.Authorize(actionContext.Request, this.DefaultAuthRoles);
             if (authResult != AuthorizationResult.Success)
             {
@@ -67,7 +67,9 @@ namespace SrProj.API
 
         ExpiredToken = 3,
 
-        InvalidRequest = 4
+        InvalidRequest = 4,
+
+        InvalidToken = 5
     }
 
     internal static class AuthorizationActions
@@ -77,49 +79,32 @@ namespace SrProj.API
             string authToken = request.Headers.GetHeaderValue("authToken");
             string activeUser = request.Headers.GetHeaderValue("username");
 
-            AuthorizationResult? authResult = null;
-
             if (!string.IsNullOrEmpty(authToken) && !string.IsNullOrEmpty(activeUser))
             {
                 using (var database = new Database())
                 {
-                    if (Authorization.ValidateToken(authToken, activeUser))
-                    {
-                        //Valid token, need to check roles
-                        var dbRoles = database.RoleVolunteers.Where(rv => rv.Volunteer.Username == activeUser)
-                            .Select(rv => rv.Role.ID).ToArray();
-                    }
-                    //int[] roleIDs = roles.Select(r => (int)r).ToArray();
-                    //var lastAccessedTime = session.LastAccessedTime;
-                    //I have to do this so the auth token gets updated in the DB. Probably worth switching up what I'm doing here.
+                    var decodedAuthToken = Authorization.DecodeToken(authToken);
+                    if (decodedAuthToken == null)
+                        return AuthorizationResult.InvalidToken;
 
-                    //var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.Role.ID)).ToList();
+                    if(decodedAuthToken.username != activeUser)
+                        return AuthorizationResult.MismatchedUser;
 
-                    if (session.AssociatedVolunteer.Username != activeUser)
-                    {
-                        authResult = AuthorizationResult.MismatchedUser;
-                    }
-                    else if (/*matchingRoles.Count != roles.Length*/ false)
-                    {
-                        authResult = AuthorizationResult.Unauthorized;
-                    }
-                    //TODO: This needs fixing and testing.
-                    else if (lastAccessedTime > DateTime.UtcNow.AddMinutes(AuthorizationOptions.AuthTokenTimeout) &&
-                             lastAccessedTime < DateTime.UtcNow.AddSeconds(20))
-                    {
-                        database.AuthenticationTokens.Remove(session);
-                        authResult = AuthorizationResult.ExpiredToken;
-                    }
-                    else
-                    {
-                        authResult = AuthorizationResult.Success;
-                    }
+                    if(decodedAuthToken.timeDiff > AuthorizationOptions.AuthTokenTimeout)
+                        return AuthorizationResult.ExpiredToken;
 
-                    database.SaveChanges();
+                    //Valid token, need to check roles
+                    var dbRoles = database.RoleVolunteers.Where(rv => rv.Volunteer.Username == activeUser)
+                        .Select(rv => rv.Role.ID).ToArray();
+
+                    if(roles.Select(r => (int) r).Intersect(dbRoles).Count() == roles.Length)
+                        return AuthorizationResult.Success;
+                    
+                    return AuthorizationResult.Unauthorized;
                 }
             }
 
-            return authResult ?? AuthorizationResult.InvalidRequest;
+            return AuthorizationResult.InvalidRequest;
         }
     }
 }

@@ -39,7 +39,6 @@ C:\Users\kglick\Development\C#\SrProj\Models\bin\Debug\Models.pdb
 C:\Users\kglick\Development\C#\SrProj\Models\bin\Debug\EntityFramework.dll
 C:\Users\kglick\Development\C#\SrProj\Models\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\kglick\Development\C#\SrProj\Models\bin\Debug\Microsoft.AspNet.Identity.Core.dll
-C:\Users\kglick\Development\C#\SrProj\Models\bin\Debug\Newtonsoft.Json.dll
 C:\Users\kglick\Development\C#\SrProj\Models\bin\Debug\Utility.dll
 C:\Users\kglick\Development\C#\SrProj\Models\bin\Debug\Utility.pdb
 C:\Users\kglick\Development\C#\SrProj\Models\bin\Debug\EntityFramework.xml

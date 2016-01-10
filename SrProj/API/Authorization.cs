@@ -7,6 +7,9 @@ namespace SrProj.API
 {
     public class AuthorizationUser
     {
+        public string username { get; set; }
+        public double timeDiff { get; set; }
+
         //string user
         //time stamp diff
     }
@@ -16,7 +19,6 @@ namespace SrProj.API
         //TODO: Something with these...
         private const string _alg = "HMACSHA256";
         private const string _salt = "IPritBFDbXRAoo3u651v";
-        private const int _expirationMinutes = 10;
 
         public static string GenerateToken(string username)
         {
@@ -37,7 +39,7 @@ namespace SrProj.API
         }
 
         //TODO: Improve this.
-        public static bool ValidateToken(string token, string username)
+        public static AuthorizationUser DecodeToken(string token)
         {
             string key = Encoding.UTF8.GetString(Convert.FromBase64String(token));
             string[] parts = key.Split(':');
@@ -47,10 +49,13 @@ namespace SrProj.API
                 string hashedUsername = parts[1];
                 DateTime timeStamp = new DateTime(long.Parse(parts[2]));
 
-                return Math.Abs((DateTime.UtcNow - timeStamp).TotalMinutes) > _expirationMinutes
-                    && username == hashedUsername;
+                return new AuthorizationUser
+                {
+                    username = hashedUsername,
+                    timeDiff = Math.Abs((DateTime.UtcNow - timeStamp).TotalMinutes)
+                };
             }
-            return false;
+            return null;
         }
     }
 }

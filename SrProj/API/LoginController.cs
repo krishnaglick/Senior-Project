@@ -75,15 +75,7 @@ namespace SrProj.API
         [HttpGet]
         public void Logout()
         {
-            Guid authToken = Guid.Parse(Request.Headers.GetHeaderValue("authToken") ?? Guid.Empty.ToString());
-            if (authToken == Guid.Empty) return;
-
-            using (var db = new Database())
-            {
-                var tokenToRemove = db.AuthenticationTokens.FirstOrDefault(t => t.Token.Equals(authToken));
-                if (tokenToRemove == null) return;
-                db.AuthenticationTokens.Remove(tokenToRemove);
-            }
+            //I do nothing right now.
         }
     }
 }
