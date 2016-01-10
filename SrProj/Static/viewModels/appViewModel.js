@@ -50,6 +50,11 @@ function App() {
         headers: this.headers(),
         url: this.apiBase + '/' + controller + '/' + action,
         data: data,
+        success: function(data, textStatus, request) {
+          var authToken = request.getResponseHeader('authToken');
+          if(authToken)
+            app.authToken(authToken);
+        }.bind(this),
         complete: function() {
           this.actionEnd();
         }.bind(this)
@@ -64,6 +69,11 @@ function App() {
         dataType: 'JSON',
         contentType: "application/json",
         headers: this.headers(),
+        success: function(data, textStatus, request) {
+          var authToken = request.getResponseHeader('authToken');
+          if(authToken)
+            app.authToken(authToken);
+        }.bind(this),
         url: this.apiBase + '/' + controller + '/' + action,
         complete: function() {
           this.actionEnd();

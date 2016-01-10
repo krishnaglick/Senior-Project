@@ -65,7 +65,7 @@ namespace SrProj.API
             //Remove all current roles
             db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username)
                 .ForEach(rv => db.RoleVolunteers.Remove(rv));
-            db.SaveChanges();
+
             //Associate user to new roles
             dbRoles.ForEach(r => db.RoleVolunteers.Add(new RoleVolunteer
             {
