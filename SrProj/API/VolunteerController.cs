@@ -1,10 +1,6 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Migrations;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -98,9 +94,12 @@ namespace SrProj.API
         {
             var db = new Database();
 
-            var volunteers = db.RoleVolunteers
-                .Include(rv => rv.Volunteer)
-                .Include(rv => rv.Role)
+            var volunteers = db.Volunteers
+                .Include(v => v.Roles)
+                .Select(v => new {
+                    volunteer = v,
+                    roles = v.Roles.Select(vr => vr.Role)
+                })
                 .ToList();
 
             var response = new ApiResponse(Request);

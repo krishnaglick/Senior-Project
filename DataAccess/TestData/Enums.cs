@@ -35,6 +35,8 @@ namespace DataAccess.TestData
                     ServiceDescription = service.GetEnumAttribute<EnumDecorators.Description>().desc
                 });
             }
+
+            context.SaveChanges();
         }
 
         public static Role[] GetRoles(Database context)

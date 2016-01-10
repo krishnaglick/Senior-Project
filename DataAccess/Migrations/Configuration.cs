@@ -1,4 +1,5 @@
 
+using System;
 using System.Data.Entity.Migrations;
 using DataAccess.Contexts;
 using DataAccess.TestData;
@@ -18,8 +19,14 @@ namespace DataAccess.Migrations
             Enums.Seed(context);
             TestVolunteers.Seed(context);
             VolunteerRoles.Seed(context);
-
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
         }
     }
 }

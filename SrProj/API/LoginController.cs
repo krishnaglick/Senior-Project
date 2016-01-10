@@ -1,5 +1,4 @@
 ﻿
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -10,7 +9,6 @@ using Microsoft.AspNet.Identity;
 using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using Utility.ExtensionMethod;
 using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
@@ -36,7 +34,6 @@ namespace SrProj.API
                 }
 
                 var dbVolunteer = roleVolunteer[0].Volunteer;
-                var roles = roleVolunteer.Select(rv => rv.Role.ID).Distinct().ToArray();
 
                 var passwordResult = dbVolunteer.VerifyPassword(volunteer.Password);
                 if (passwordResult == PasswordVerificationResult.SuccessRehashNeeded)
@@ -46,15 +43,6 @@ namespace SrProj.API
                 }
                 if (passwordResult == PasswordVerificationResult.Success)
                 {
-                    /*var authTokenID = Guid.NewGuid();
-                    var authToken = new AuthenticationToken
-                    {
-                        Token = authTokenID,
-                        AssociatedVolunteer = dbVolunteer
-                    };
-                    var authTokenContext = dbContext;
-                    authTokenContext.AuthenticationTokens.Add(authToken);
-                    authTokenContext.SaveChanges();*/
                     var authToken = Authorization.GenerateToken(volunteer.Username);
 
                     response.data = new {roles = roleVolunteer.Select(rv => rv.Role.RoleName)};

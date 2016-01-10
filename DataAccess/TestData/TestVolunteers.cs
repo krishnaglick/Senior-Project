@@ -14,6 +14,8 @@ namespace DataAccess.TestData
                 testUser,
                 testAdmin
             );
+
+            context.SaveChanges();
         }
 
         public static readonly Volunteer testUser = new Volunteer

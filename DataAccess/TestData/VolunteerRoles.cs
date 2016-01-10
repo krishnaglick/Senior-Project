@@ -11,32 +11,31 @@ namespace DataAccess.TestData
     {
         public static void Seed(Database context)
         {
-            var Roles = Enums.GetRoles(context);
-            var Volunteers = TestData.TestVolunteers.GetTestVolunteers(context);
-
             context.RoleVolunteers.AddOrUpdate(
                 new RoleVolunteer
                 {
-                    Role = Roles.SingleOrDefault(r => r.ID == (int) RoleID.Volunteer),
-                    Volunteer = Volunteers.SingleOrDefault(v => v.Username == "user")
+                    RoleID = (int) RoleID.Volunteer,
+                    VolunteerUsername = "user"
                 }
             );
 
             context.RoleVolunteers.AddOrUpdate(
                 new RoleVolunteer
                 {
-                    Role = Roles.SingleOrDefault(r => r.ID == (int)RoleID.Volunteer),
-                    Volunteer = Volunteers.SingleOrDefault(v => v.Username == "admin")
+                    RoleID = (int)RoleID.Volunteer,
+                    VolunteerUsername = "admin"
                 }
             );
 
             context.RoleVolunteers.AddOrUpdate(
                 new RoleVolunteer
                 {
-                    Role = Roles.SingleOrDefault(r => r.ID == (int)RoleID.Admin),
-                    Volunteer = Volunteers.SingleOrDefault(v => v.Username == "admin")
+                    RoleID = (int)RoleID.Admin,
+                    VolunteerUsername = "admin"
                 }
             );
+
+            context.SaveChanges();
         }
     }
 }

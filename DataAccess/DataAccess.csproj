@@ -57,9 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\ContextBase.cs" />
-    <Compile Include="Migrations\201511290231008_Initial.cs" />
-    <Compile Include="Migrations\201511290231008_Initial.Designer.cs">
-      <DependentUpon>201511290231008_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201601100207313_init.cs" />
+    <Compile Include="Migrations\201601100207313_init.Designer.cs">
+      <DependentUpon>201601100207313_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Contexts\PatronContext.cs" />
@@ -85,8 +85,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511290231008_Initial.resx">
-      <DependentUpon>201511290231008_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601100207313_init.resx">
+      <DependentUpon>201601100207313_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

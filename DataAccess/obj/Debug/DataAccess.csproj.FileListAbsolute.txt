@@ -51,9 +51,9 @@ C:\Users\kglick\Development\C#\SrProj\DataAccess\bin\Debug\EntityFramework.SqlSe
 C:\Users\kglick\Development\C#\SrProj\DataAccess\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\Users\kglick\Development\C#\SrProj\DataAccess\bin\Debug\Newtonsoft.Json.xml
 C:\Users\kglick\Development\C#\SrProj\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
-C:\Users\kglick\Development\C#\SrProj\DataAccess\obj\Debug\DataAccess.Migrations.Initial.resources
-C:\Users\kglick\Development\C#\SrProj\DataAccess\obj\Debug\DataAccess.csproj.GenerateResource.Cache
 C:\Users\kglick\Development\C#\SrProj\DataAccess\obj\Debug\DataAccess.dll
 C:\Users\kglick\Development\C#\SrProj\DataAccess\obj\Debug\DataAccess.pdb
 D:\C#\Senior-Project\DataAccess\bin\Debug\Newtonsoft.Json.dll
 D:\C#\Senior-Project\DataAccess\bin\Debug\Newtonsoft.Json.xml
+C:\Users\kglick\Development\C#\SrProj\DataAccess\obj\Debug\DataAccess.Migrations.init.resources
+C:\Users\kglick\Development\C#\SrProj\DataAccess\obj\Debug\DataAccess.csproj.GenerateResource.Cache
