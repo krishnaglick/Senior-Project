@@ -9,9 +9,6 @@ namespace SrProj.API
     {
         public string username { get; set; }
         public double timeDiff { get; set; }
-
-        //string user
-        //time stamp diff
     }
 
     public class Authorization
