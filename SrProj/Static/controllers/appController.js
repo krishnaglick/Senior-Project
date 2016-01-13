@@ -66,6 +66,17 @@ $(function() {
         vm: loginVM
       },
 
+        PatronCheckIn: {
+            url: 'partials/patronCheckIn.html',
+            name: 'PatronCheckIn',
+            id: 'patronCheckIn',
+            routeAction: function () {
+                $('.ui.dropdown').dropdown();
+             
+                }
+
+        },
+
       Logout: {
         url: 'partials/mainPage.html',
         name: 'Logout',
