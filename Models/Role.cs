@@ -10,6 +10,5 @@ namespace Models
         public int ID { get; set; }
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }
-        public virtual ICollection<RoleVolunteer> Volunteers { get; set; }
     }
 }

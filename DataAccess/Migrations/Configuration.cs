@@ -1,14 +1,8 @@
 
 using System;
-using System.Collections.Generic;
 using System.Data.Entity.Migrations;
-using System.Linq;
 using DataAccess.Contexts;
-using Models;
-using Utility.Attribute;
-using Utility.Enum;
-using Utility.ExtensionMethod;
-using ServiceType = Models.ServiceType;
+using DataAccess.TestData;
 
 namespace DataAccess.Migrations
 {
@@ -22,72 +16,17 @@ namespace DataAccess.Migrations
 
         protected override void Seed(Database context)
         {
-            List<Role> roles = new List<Role>();
-            foreach (RoleID role in Enum.GetValues(typeof (RoleID)))
+            Enums.Seed(context);
+            TestVolunteers.Seed(context);
+            VolunteerRoles.Seed(context);
+            try
             {
-                roles.Add(new Role {
-                    ID = (int)role,
-                    RoleName = role.GetEnumAttribute<EnumDecorators.Name>().name,
-                    RoleDescription = role.GetEnumAttribute<EnumDecorators.Description>().desc,
-                    Volunteers = new List<RoleVolunteer>()
-                });
+                context.SaveChanges();
             }
-
-            Volunteer defaultUser = new Volunteer
+            catch (Exception e)
             {
-                HashedPassword = Volunteer.hasher.HashPassword("swordfish"),
-                Username = "user",
-                Roles = new List<RoleVolunteer>()
-            };
-
-            Volunteer adminUser = new Volunteer
-            {
-                HashedPassword = Volunteer.hasher.HashPassword("swordfish"),
-                Username = "admin",
-                Roles = new List<RoleVolunteer>()
-            };
-
-            List<RoleVolunteer> roleVolunteers = new List<RoleVolunteer>();
-
-            roleVolunteers.Add(
-                new RoleVolunteer
-                {
-                    Role = roles.First(r => r.ID == (int) RoleID.Volunteer),
-                    Volunteer = defaultUser
-                }
-            );
-            roleVolunteers.Add(
-                new RoleVolunteer
-                {
-                    Role = roles.First(r => r.ID == (int)RoleID.Volunteer),
-                    Volunteer = adminUser
-                }
-            );
-            roleVolunteers.Add(
-                new RoleVolunteer
-                {
-                    Role = roles.First(r => r.ID == (int)RoleID.Admin),
-                    Volunteer = adminUser
-                }
-            );
-
-            context.Roles.AddOrUpdate(roles.ToArray());
-            context.RoleVolunteers.AddOrUpdate(roleVolunteers.ToArray());
-
-            List<ServiceType> services = new List<ServiceType>();
-            foreach (ServiceTypeID service in Enum.GetValues(typeof(ServiceTypeID)))
-            {
-                services.Add(new ServiceType
-                {
-                    ID = (int)service,
-                    ServiceName = service.GetEnumAttribute<EnumDecorators.Name>().name,
-                    ServiceDescription = service.GetEnumAttribute<EnumDecorators.Description>().desc
-                });
+                Console.WriteLine(e.StackTrace);
             }
-
-            context.ServiceTypes.AddOrUpdate(services.ToArray());
-
-            context.SaveChanges();
         }
     }
 }

@@ -8,7 +8,7 @@ function ManageVolunteersViewModel() {
 
   this.loadVolunteers = function() {
     var action = 'GetVolunteers';
-    
+
     app.get(this.controller, action)
     .success(function(data) {
       this.volunteers(
@@ -23,7 +23,7 @@ function ManageVolunteersViewModel() {
   this.loadRoles = function() {
     var action = 'GetRoles';
     var controller = 'Role';
-    
+
     app.get(controller, action)
     .success(function(data) {
       this.availableRoles(data.roles);

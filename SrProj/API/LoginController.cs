@@ -1,5 +1,4 @@
 ﻿
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -10,7 +9,6 @@ using Microsoft.AspNet.Identity;
 using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using Utility.ExtensionMethod;
 using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
@@ -21,60 +19,51 @@ namespace SrProj.API
         public HttpResponseMessage Login([FromBody] Login volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
-            //TODO: using
-            var volunteerContext = new Database();
-            var foundVolunteer = volunteerContext.Volunteers.Include(v => v.Roles).FirstOrDefault(v => v.Username == volunteer.Username);
+            using (var dbContext = new Database())
+            {
+                var roleVolunteer = dbContext.RoleVolunteers
+                    .Include(rv => rv.Volunteer)
+                    .Include(rv => rv.Role)
+                    .Where(rv => rv.Volunteer.Username == volunteer.Username)
+                    .ToList();
 
-            if (foundVolunteer == null)
-            {
-                response.errors.Add(new InvalidUsernameOrPassword());
-                return response.GenerateResponse(HttpStatusCode.BadRequest);
-            }
-
-            var passwordResult = foundVolunteer.VerifyPassword(volunteer.Password);
-            if(passwordResult == PasswordVerificationResult.SuccessRehashNeeded)
-            {
-                foundVolunteer.Password = Volunteer.hasher.HashPassword(volunteer.Password);
-                passwordResult = PasswordVerificationResult.Success;
-            }
-            if (passwordResult == PasswordVerificationResult.Success)
-            {
-                var authTokenID = Guid.NewGuid();
-                var authToken = new AuthenticationToken
+                if (roleVolunteer.Count == 0)
                 {
-                    Token = authTokenID,
-                    AssociatedVolunteer = foundVolunteer
-                };
-                var authTokenContext = volunteerContext;
-                authTokenContext.AuthenticationTokens.Add(authToken);
-                authTokenContext.SaveChanges();
+                    response.errors.Add(new InvalidUsernameOrPassword());
+                    return response.GenerateResponse(HttpStatusCode.BadRequest);
+                }
 
-                response.data = new {roles = foundVolunteer.Roles.Select(r => r.Role.RoleName)};
+                var dbVolunteer = roleVolunteer[0].Volunteer;
 
-                return response.GenerateResponse(HttpStatusCode.OK, new Dictionary<string, string>
+                var passwordResult = dbVolunteer.VerifyPassword(volunteer.Password);
+                if (passwordResult == PasswordVerificationResult.SuccessRehashNeeded)
                 {
-                    {"authToken", authTokenID.ToString()}
-                });
-            }
-            else
-            {
-                response.errors.Add(new InvalidUsernameOrPassword());
-                return response.GenerateResponse(HttpStatusCode.BadRequest);
+                    dbVolunteer.Password = Volunteer.hasher.HashPassword(volunteer.Password);
+                    passwordResult = PasswordVerificationResult.Success;
+                }
+                if (passwordResult == PasswordVerificationResult.Success)
+                {
+                    var authToken = Authorization.GenerateToken(volunteer.Username);
+
+                    response.data = new {roles = roleVolunteer.Select(rv => rv.Role.RoleName)};
+
+                    return response.GenerateResponse(HttpStatusCode.OK, new Dictionary<string, string>
+                    {
+                        { "authToken", authToken }
+                    });
+                }
+                else
+                {
+                    response.errors.Add(new InvalidUsernameOrPassword());
+                    return response.GenerateResponse(HttpStatusCode.BadRequest);
+                }
             }
         }
 
         [HttpGet]
         public void Logout()
         {
-            Guid authToken = Guid.Parse(Request.Headers.GetHeaderValue("authToken") ?? Guid.Empty.ToString());
-            if (authToken == Guid.Empty) return;
-
-            using (var db = new Database())
-            {
-                var tokenToRemove = db.AuthenticationTokens.FirstOrDefault(t => t.Token.Equals(authToken));
-                if (tokenToRemove == null) return;
-                db.AuthenticationTokens.Remove(tokenToRemove);
-            }
+            //I do nothing right now.
         }
     }
 }
