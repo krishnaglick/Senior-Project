@@ -1,10 +1,6 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Migrations;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -60,30 +56,23 @@ namespace SrProj.API
         [AuthorizableAction]
         public HttpResponseMessage ModifyVolunteer([FromBody] VolunteerViewModel volunteer)
         {
-            //This is not the right way.
             var db = new Database();
-            var dbVolunteer = db.Volunteers.Include(v => v.Roles).First(v => v.Username == volunteer.Username);
 
-            db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username).ForEach(rv => db.RoleVolunteers.Remove(rv));
-            db.Roles.Include(r => r.Volunteers)
-            .Where(r => volunteer.Roles.Contains(r.ID)).ForEach(r =>
-            {
-                r.Volunteers = r.Volunteers ?? new List<RoleVolunteer>();
-                r.Volunteers.Add(new RoleVolunteer
-                    {
-                        Role = r,
-                        Volunteer = dbVolunteer
-                    });
-            });
+            //Get Volunteer
+            var dbVolunteer = db.Volunteers.FirstOrDefault(v => v.Username == volunteer.Username);
+            //Get Roles
+            var dbRoles = db.Roles.Where(r => volunteer.Roles.Contains(r.ID));
+            //Remove all current roles
+            db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username)
+                .ForEach(rv => db.RoleVolunteers.Remove(rv));
 
-            try
+            //Associate user to new roles
+            dbRoles.ForEach(r => db.RoleVolunteers.Add(new RoleVolunteer
             {
-                db.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                var TT = Convert.ChangeType(e, e.GetType());
-            }
+                Role = r,
+                Volunteer = dbVolunteer
+            }));
+            db.SaveChanges();
 
             return new ApiResponse(Request)
             {
@@ -96,24 +85,15 @@ namespace SrProj.API
         [AuthorizableAction]
         public HttpResponseMessage GetVolunteers()
         {
-            var databaseContext = new Database();
+            var db = new Database();
 
-            var volunteers =
-                from v in databaseContext.Volunteers
-                orderby v.Username descending
-                select new
-                {
+            var volunteers = db.Volunteers
+                .Include(v => v.Roles)
+                .Select(v => new {
                     username = v.Username,
-                    roles = (
-                        from r in v.Roles
-                        select new
-                        {
-                            id = r.Role.ID,
-                            name = r.Role.RoleName,
-                            description = r.Role.RoleDescription
-                        }
-                    )
-                };
+                    roles = v.Roles.Select(vr => vr.Role)
+                })
+                .ToList();
 
             var response = new ApiResponse(Request);
 

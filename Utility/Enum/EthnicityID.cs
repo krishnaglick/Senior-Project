@@ -3,7 +3,7 @@ using Utility.Attribute;
 
 namespace Utility.Enum
 {
-    enum EthnicityID
+    public enum EthnicityID
     {
         [EnumDecorators.Name("Hispanic")]
         [EnumDecorators.Description("For Hispanic Patrons")]
