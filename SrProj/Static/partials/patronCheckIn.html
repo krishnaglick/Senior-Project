@@ -48,32 +48,28 @@
                 </div>
                 <!--Adress & Postal code-->
                 <h4 class="ui dividing header">Address</h4>
-                <div class="two fields">
+                <div class="field">
                    
                     <div class="field">
                         <input type="text" placeholder="Street Address" />
                     </div>
+                </div>
+                    <!-- Apartment number & Postal Code-->
+                <div class="two fields">
                     <div class="field">   
                         <input type="text" placeholder="Apt #" />
                     </div>
                     <div class="field">
                         <input type="text" placeholder="Postal Code" />
                     </div>
-                    <div class="field">
-                        <select class="ui dropdown">
-                            <option value="">Household Occupants</option>
-                            <option value="7">1</option>
-                            <option value="6">2</option>
-                            <option value="5">3</option>
-                            <option value="4">4</option>
-                            <option value="3">5</option>
-                            <option value="2">6</option>
-                            <option value="1">7</option>
-                            <option value="0">8</option>
-                        </select>
-                    </div>
                 </div>
-
+                <!-- Apartment number & Postal Code-->
+                <!--Household occupants-->
+                <div class="field">
+                    <input type="number" placeholder="Houshold Occupants"/>
+                </div>
+                <!--Houshold occupants-->
+           
                 <!--Marital Status-->
                 <div class="field">
                     <label> Marital Status</label>
@@ -99,27 +95,27 @@
                         <option value="0">Banned</option>
                     </select>
                 </div>
+                <div class="field">
+                    <label>Service</label>
+                    <select class="ui dropdown">
+                        <option value="">Service</option>
+                        <option value="1">Medical</option>
+                        <option value="2">Dental</option>
+                        <option value="3">Baby Luv</option>
+                        <option value="4">Lord's Pantry</option>
+                    </select>
+                </div>
 
                 <!--Services Eligable For-->
                 <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label>Eligible for Dental</label>
-                </div>
-
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label>Elible For Medical</label>
-                </div>
-
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label>Eligible for Food Pantry</label>
+                    <input type="checkbox" name="credentials">
+                    <label>Has necessary paperwork to recieve services</label>
                 </div>
                 </div>
-                <button class="ui blue submit button">Submit</button>
+                <button onclick ="$('.ui.modal').modal('show');" class="ui blue submit button">Submit</button>
                <!--modal-->
-                 <div class="ui basic modal">
+                 <div class="ui small basic modal">
                     <i class="close icon"></i>
                     <div class="header">
                         Patron Check In
@@ -134,7 +130,7 @@
                         <button class="ui positive button">No</button>
                     </div>
                 </div>
-
+                <!--alert should pop up stating the patron is checked in-->
         </div>
 
 

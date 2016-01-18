@@ -72,7 +72,7 @@ $(function() {
             id: 'patronCheckIn',
             routeAction: function () {
                 $('.ui.dropdown').dropdown();
-             
+                $('.ui.modal').modal();
                 }
 
         },
