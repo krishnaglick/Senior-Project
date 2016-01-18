@@ -1,13 +1,18 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models
 {
     public class RoleVolunteer
     {
-        [Key]
-        public int ID { get; set; }
+        [Key, Column(Order = 2)]
+        public int RoleID { get; set; }
+        [ForeignKey("RoleID")]
         public virtual Role Role { get; set; }
+        [Key, Column(Order = 1)]
+        public string VolunteerUsername { get; set; }
+        [ForeignKey("VolunteerUsername")]
         public virtual Volunteer Volunteer { get; set; }
 
         public override bool Equals(object obj)
@@ -15,13 +20,13 @@ namespace Models
             var roleVolunteer = obj as RoleVolunteer;
             if(roleVolunteer == null) return false;
 
-            return this.Role.ID == roleVolunteer.Role.ID
-                && this.Volunteer.Username == roleVolunteer.Volunteer.Username;
+            return this.RoleID == roleVolunteer.RoleID
+                && this.VolunteerUsername == roleVolunteer.VolunteerUsername;
         }
 
         public override int GetHashCode()
         {
-            return this.Role.GetHashCode() ^ this.Volunteer.GetHashCode();
+            return this.RoleID.GetHashCode() ^ this.VolunteerUsername.GetHashCode();
         }
     }
 }

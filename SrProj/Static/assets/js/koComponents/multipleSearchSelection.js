@@ -25,5 +25,6 @@ ko.components.register('multipleSearchSelection', {
     afterRender: function() {
       //$('.ui.dropdown').dropdown();
       //I'm not as clever as I thought
-    }
+    },
+    synchronous: true
 });
