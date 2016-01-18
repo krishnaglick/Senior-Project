@@ -1,9 +1,6 @@
 ﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using SrProj.Utility.Attribute;
-using SrProj.Utility.Enum;
-using SrProj.Utility.ExtensionMethod;
 
 namespace SrProj.Tests
 {

@@ -1,15 +1,16 @@
 ﻿
 using System;
-using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Microsoft.AspNet.Identity;
+using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using SrProj.Models;
-using SrProj.Models.Context;
-using PasswordHasher = SrProj.Utility.Security.PasswordHasher;
+using Utility.Enum;
+using WebGrease.Css.Extensions;
+using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
 {
@@ -24,60 +25,87 @@ namespace SrProj.API
             try
             {
                 volunteer.SecurePassword();
-                var volunteerContext = new Database();
-                volunteerContext.Volunteers.Add(volunteer);
-                volunteerContext.SaveChanges();
+                using (var dbContext = new Database())
+                {
+                    dbContext.RoleVolunteers.Add(new RoleVolunteer
+                    {
+                        Role = dbContext.Roles.First(r => r.ID == (int)RoleID.Volunteer),
+                        Volunteer = volunteer
+                    });
+                    dbContext.Volunteers.Add(volunteer);
+                    dbContext.SaveChanges();
 
-                response.data = response.DefaultSuccessResponse;
-                return response.GenerateResponse(HttpStatusCode.Created);
+                    response.data = ApiResponse.DefaultSuccessResponse;
+                    return response.GenerateResponse(HttpStatusCode.Created);
+                }
             }
             catch (Exception e)
             {
-                response.errors.Add(new InvalidVolunteer { source = e });
+                response.errors.Add(new InvalidVolunteer {source = e});
                 return response.GenerateResponse(HttpStatusCode.BadRequest);
             }
         }
 
-        [HttpPost]
-        public HttpResponseMessage Login([FromBody] Volunteer volunteer)
+        public class VolunteerViewModel
         {
-            ApiResponse response = new ApiResponse(Request);
-            var volunteerContext = new Database();
-            var foundVolunteer = volunteerContext.Volunteers.Find(volunteer.Username);
+            public string Username { get; set; }
+            public int[] Roles { get; set; }
+        }
 
-            if (foundVolunteer == null)
+        [HttpPost]
+        [AuthorizableAction]
+        public HttpResponseMessage ModifyVolunteer([FromBody] VolunteerViewModel volunteer)
+        {
+            var db = new Database();
+
+            //Get Volunteer
+            var dbVolunteer = db.Volunteers.FirstOrDefault(v => v.Username == volunteer.Username);
+            //Get Roles
+            var dbRoles = db.Roles.Where(r => volunteer.Roles.Contains(r.ID));
+            //Remove all current roles
+            db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username)
+                .ForEach(rv => db.RoleVolunteers.Remove(rv));
+
+            //Associate user to new roles
+            dbRoles.ForEach(r => db.RoleVolunteers.Add(new RoleVolunteer
             {
-                response.errors.Add(new InvalidUsernameOrPassword());
-                return response.GenerateResponse(HttpStatusCode.BadRequest);
+                Role = r,
+                Volunteer = dbVolunteer
+            }));
+            db.SaveChanges();
+
+            return new ApiResponse(Request)
+            {
+                data = ApiResponse.DefaultSuccessResponse
             }
+            .GenerateResponse(HttpStatusCode.OK);
+        }
 
-            var passwordResult = foundVolunteer.VerifyPassword(volunteer.Password);
-            if(passwordResult == PasswordVerificationResult.SuccessRehashNeeded)
-            {
-                foundVolunteer.Password = PasswordHasher.EncryptPassword(volunteer.Password);
-                passwordResult = PasswordVerificationResult.Success;
-            }
-            if (passwordResult == PasswordVerificationResult.Success)
-            {
-                var authTokenID = Guid.NewGuid();
-                var authToken = new AuthenticationToken
-                {
-                    Token = authTokenID,
-                    AssociatedVolunteer = foundVolunteer
-                };
-                var authTokenContext = volunteerContext;
-                authTokenContext.AuthenticationTokens.Add(authToken);
-                authTokenContext.SaveChanges();
+        [HttpGet]
+        [AuthorizableAction]
+        public HttpResponseMessage GetVolunteers()
+        {
+            var db = new Database();
 
-                return response.GenerateResponse(HttpStatusCode.OK, new Dictionary<string, string>
-                {
-                    {"authToken", authTokenID.ToString()}
-                });
+            var volunteers = db.Volunteers
+                .Include(v => v.Roles)
+                .Select(v => new {
+                    username = v.Username,
+                    roles = v.Roles.Select(vr => vr.Role)
+                })
+                .ToList();
+
+            var response = new ApiResponse(Request);
+
+            if (volunteers.Any())
+            {
+                response.data = new {volunteers = volunteers};
+                return response.GenerateResponse(HttpStatusCode.OK);
             }
             else
             {
-                response.errors.Add(new InvalidUsernameOrPassword());
-                return response.GenerateResponse(HttpStatusCode.BadRequest);
+                response.errors.Add(new NoRecordsFound());
+                return response.GenerateResponse(HttpStatusCode.InternalServerError);
             }
         }
     }

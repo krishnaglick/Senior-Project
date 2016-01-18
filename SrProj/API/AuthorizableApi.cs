@@ -1,6 +1,6 @@
 ﻿
 using System;
-using System.Data.Entity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,9 +8,9 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using SrProj.Utility.Enum;
-using SrProj.Utility.ExtensionMethod;
-using Database = SrProj.Models.Context.Database;
+using Utility.Enum;
+using Utility.ExtensionMethod;
+using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
 {
@@ -31,12 +31,27 @@ namespace SrProj.API
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            var isAuthorized = AuthorizationActions.Authorize(actionContext.Request, this.DefaultAuthRoles);
-            if(!isAuthorized)
+            base.OnAuthorization(actionContext);
+
+            var authResult = AuthorizationActions.Authorize(actionContext.Request, this.DefaultAuthRoles);
+            if (authResult != AuthorizationResult.Success)
             {
                 ApiResponse response = new ApiResponse(actionContext.Request);
-                response.errors.Add(new NoAccess());
-                actionContext.Response = response.GenerateResponse(HttpStatusCode.Forbidden);
+                if (authResult == AuthorizationResult.MismatchedUser || authResult == AuthorizationResult.ExpiredToken ||
+                    authResult == AuthorizationResult.InvalidRequest)
+                {
+                    response.errors.Add(new InvalidToken());
+                }
+                else if (authResult == AuthorizationResult.Unauthorized)
+                {
+                    response.errors.Add(new NoAccess());
+                }
+
+                string activeUser = actionContext.Request.Headers.GetHeaderValue("username");
+                actionContext.Response = response.GenerateResponse(HttpStatusCode.Forbidden, new Dictionary<string, string>
+                {
+                    { "authToken", Authorization.GenerateToken(activeUser) }
+                });
             }
 
             base.OnAuthorization(actionContext);
@@ -46,9 +61,24 @@ namespace SrProj.API
     [AttributeUsage(AttributeTargets.Method)]
     public class AuthorizableAction : AuthorizableController { }
 
+    public enum AuthorizationResult
+    {
+        Success = 0,
+
+        MismatchedUser = 1,
+
+        Unauthorized = 2,
+
+        ExpiredToken = 3,
+
+        InvalidRequest = 4,
+
+        InvalidToken = 5
+    }
+
     internal static class AuthorizationActions
     {
-        public static bool Authorize(HttpRequestMessage request, RoleID[] roles)
+        public static AuthorizationResult Authorize(HttpRequestMessage request, RoleID[] roles)
         {
             string authToken = request.Headers.GetHeaderValue("authToken");
             string activeUser = request.Headers.GetHeaderValue("username");
@@ -56,30 +86,27 @@ namespace SrProj.API
             if (!string.IsNullOrEmpty(authToken) && !string.IsNullOrEmpty(activeUser))
             {
                 var database = new Database();
-                var session =
-                    database.AuthenticationTokens.Include(at => at.AssociatedVolunteer).Include(at => at.AssociatedVolunteer.Roles)
-                    .FirstOrDefault(at => at.Token.ToString() == authToken);
+                var decodedAuthToken = Authorization.DecodeToken(authToken);
+                if (decodedAuthToken == null)
+                    return AuthorizationResult.InvalidToken;
 
-                if (session == null) return false;
+                if(decodedAuthToken.username != activeUser)
+                    return AuthorizationResult.MismatchedUser;
 
-                int[] roleIDs = roles.Select(r => (int) r).ToArray();
-                var lastAccessedTime = session.LastAccessedTime;
-                //I have to do this so the auth token gets updated in the DB. Probably worth switching up what I'm doing here.
-                database.SaveChanges();
+                if(decodedAuthToken.timeDiff > AuthorizationOptions.AuthTokenTimeout)
+                    return AuthorizationResult.ExpiredToken;
 
-                var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.ID)).ToList();
+                //Valid token, need to check roles
+                var dbRoles = database.RoleVolunteers.Where(rv => rv.Volunteer.Username == activeUser)
+                    .Select(rv => rv.Role.ID).ToArray();
 
-                if (session.AssociatedVolunteer.Username == activeUser &&
-                    matchingRoles.Count == roles.Length &&
-                    lastAccessedTime > DateTime.UtcNow.AddMinutes(-AuthorizationOptions.AuthTokenTimeout) &&
-                    lastAccessedTime < DateTime.UtcNow.AddSeconds(20)
-                    )
-                {
-                    return true;
-                }
+                if(roles.Select(r => (int) r).Intersect(dbRoles).Count() == roles.Length)
+                    return AuthorizationResult.Success;
+                    
+                return AuthorizationResult.Unauthorized;
             }
 
-            return false;
+            return AuthorizationResult.InvalidRequest;
         }
     }
 }
