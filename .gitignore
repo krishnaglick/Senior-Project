@@ -231,3 +231,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+/DataAccess/*.csproj
+/SrProj/*.csproj
+/SrProj/Scripts/_references.js
