@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models
 {
+
     public class EmergencyContact : ModelBase, IAddress
     {
         [Key]

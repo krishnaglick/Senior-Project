@@ -19,6 +19,7 @@ namespace DataAccess.Migrations
             Enums.Seed(context);
             TestVolunteers.Seed(context);
             VolunteerRoles.Seed(context);
+            Patrons.Seed(context, 20);
             try
             {
                 context.SaveChanges();

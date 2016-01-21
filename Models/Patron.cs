@@ -40,11 +40,11 @@ namespace Models
         }
         public short NumberInHousehold { get; set; }
         public bool Banned { get; set; }
-        //Marital Status
-        //Residence Status
-        //Gender
+        public MaritalStatus Marital { get; set; }
+        public ResidenceStatus Residence { get; set; }
+        public Gender Gender { get; set; }
         public Ethnicity Ethnicity { get; set; }
-        //Race
+        public Race Race { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
