@@ -1,0 +1,1158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F6DC7144-ED8B-411C-91B2-B9E869886B64}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SrProj</RootNamespace>
+    <AssemblyName>SrProj</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\AuthorizableApi.cs" />
+    <Compile Include="API\Authorization.cs" />
+    <Compile Include="API\LoginController.cs" />
+    <Compile Include="API\Responses\Errors\InvalidToken.cs" />
+    <Compile Include="API\Responses\Errors\InvalidUsernameOrPassword.cs" />
+    <Compile Include="API\Responses\Errors\InvalidVolunteer.cs" />
+    <Compile Include="API\Responses\Errors\NoAccess.cs" />
+    <Compile Include="API\PatronController.cs" />
+    <Compile Include="API\Responses\ApiResponse.cs" />
+    <Compile Include="API\Responses\Errors\InvalidPatron.cs" />
+    <Compile Include="API\Responses\Errors\NoRecordsFound.cs" />
+    <Compile Include="API\RoleController.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumValueDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\IModelDocumentationProvider.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\KeyValuePairModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameAttribute.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameHelper.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
+    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="API\VolunteerController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\PatronTest.cs" />
+    <Compile Include="Tests\TestTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-2.2.0.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Static\app.html" />
+    <Content Include="Static\assets\js\router.js" />
+    <Content Include="Static\bower_components\jquery\dist\jquery.js" />
+    <Content Include="Static\bower_components\jquery\dist\jquery.min.js" />
+    <Content Include="Static\bower_components\jquery\MIT-LICENSE.txt" />
+    <Content Include="Static\bower_components\jquery\src\ajax.js" />
+    <Content Include="Static\bower_components\jquery\src\ajax\jsonp.js" />
+    <Content Include="Static\bower_components\jquery\src\ajax\load.js" />
+    <Content Include="Static\bower_components\jquery\src\ajax\parseJSON.js" />
+    <Content Include="Static\bower_components\jquery\src\ajax\parseXML.js" />
+    <Content Include="Static\bower_components\jquery\src\ajax\script.js" />
+    <Content Include="Static\bower_components\jquery\src\ajax\var\nonce.js" />
+    <Content Include="Static\bower_components\jquery\src\ajax\var\rquery.js" />
+    <Content Include="Static\bower_components\jquery\src\ajax\xhr.js" />
+    <Content Include="Static\bower_components\jquery\src\attributes.js" />
+    <Content Include="Static\bower_components\jquery\src\attributes\attr.js" />
+    <Content Include="Static\bower_components\jquery\src\attributes\classes.js" />
+    <Content Include="Static\bower_components\jquery\src\attributes\prop.js" />
+    <Content Include="Static\bower_components\jquery\src\attributes\support.js" />
+    <Content Include="Static\bower_components\jquery\src\attributes\val.js" />
+    <Content Include="Static\bower_components\jquery\src\callbacks.js" />
+    <Content Include="Static\bower_components\jquery\src\core.js" />
+    <Content Include="Static\bower_components\jquery\src\core\access.js" />
+    <Content Include="Static\bower_components\jquery\src\core\init.js" />
+    <Content Include="Static\bower_components\jquery\src\core\parseHTML.js" />
+    <Content Include="Static\bower_components\jquery\src\core\ready.js" />
+    <Content Include="Static\bower_components\jquery\src\core\var\rsingleTag.js" />
+    <Content Include="Static\bower_components\jquery\src\css.js" />
+    <Content Include="Static\bower_components\jquery\src\css\addGetHookIf.js" />
+    <Content Include="Static\bower_components\jquery\src\css\curCSS.js" />
+    <Content Include="Static\bower_components\jquery\src\css\defaultDisplay.js" />
+    <Content Include="Static\bower_components\jquery\src\css\hiddenVisibleSelectors.js" />
+    <Content Include="Static\bower_components\jquery\src\css\support.js" />
+    <Content Include="Static\bower_components\jquery\src\css\swap.js" />
+    <Content Include="Static\bower_components\jquery\src\css\var\cssExpand.js" />
+    <Content Include="Static\bower_components\jquery\src\css\var\getStyles.js" />
+    <Content Include="Static\bower_components\jquery\src\css\var\isHidden.js" />
+    <Content Include="Static\bower_components\jquery\src\css\var\rmargin.js" />
+    <Content Include="Static\bower_components\jquery\src\css\var\rnumnonpx.js" />
+    <Content Include="Static\bower_components\jquery\src\data.js" />
+    <Content Include="Static\bower_components\jquery\src\data\accepts.js" />
+    <Content Include="Static\bower_components\jquery\src\data\Data.js" />
+    <Content Include="Static\bower_components\jquery\src\data\var\data_priv.js" />
+    <Content Include="Static\bower_components\jquery\src\data\var\data_user.js" />
+    <Content Include="Static\bower_components\jquery\src\deferred.js" />
+    <Content Include="Static\bower_components\jquery\src\deprecated.js" />
+    <Content Include="Static\bower_components\jquery\src\dimensions.js" />
+    <Content Include="Static\bower_components\jquery\src\effects.js" />
+    <Content Include="Static\bower_components\jquery\src\effects\animatedSelector.js" />
+    <Content Include="Static\bower_components\jquery\src\effects\Tween.js" />
+    <Content Include="Static\bower_components\jquery\src\event.js" />
+    <Content Include="Static\bower_components\jquery\src\event\ajax.js" />
+    <Content Include="Static\bower_components\jquery\src\event\alias.js" />
+    <Content Include="Static\bower_components\jquery\src\event\support.js" />
+    <Content Include="Static\bower_components\jquery\src\exports\amd.js" />
+    <Content Include="Static\bower_components\jquery\src\exports\global.js" />
+    <Content Include="Static\bower_components\jquery\src\intro.js" />
+    <Content Include="Static\bower_components\jquery\src\jquery.js" />
+    <Content Include="Static\bower_components\jquery\src\manipulation.js" />
+    <Content Include="Static\bower_components\jquery\src\manipulation\support.js" />
+    <Content Include="Static\bower_components\jquery\src\manipulation\var\rcheckableType.js" />
+    <Content Include="Static\bower_components\jquery\src\manipulation\_evalUrl.js" />
+    <Content Include="Static\bower_components\jquery\src\offset.js" />
+    <Content Include="Static\bower_components\jquery\src\outro.js" />
+    <Content Include="Static\bower_components\jquery\src\queue.js" />
+    <Content Include="Static\bower_components\jquery\src\queue\delay.js" />
+    <Content Include="Static\bower_components\jquery\src\selector-native.js" />
+    <Content Include="Static\bower_components\jquery\src\selector-sizzle.js" />
+    <Content Include="Static\bower_components\jquery\src\selector.js" />
+    <Content Include="Static\bower_components\jquery\src\serialize.js" />
+    <Content Include="Static\bower_components\jquery\src\sizzle\dist\sizzle.js" />
+    <Content Include="Static\bower_components\jquery\src\sizzle\dist\sizzle.min.js" />
+    <Content Include="Static\bower_components\jquery\src\traversing.js" />
+    <Content Include="Static\bower_components\jquery\src\traversing\findFilter.js" />
+    <Content Include="Static\bower_components\jquery\src\traversing\var\rneedsContext.js" />
+    <Content Include="Static\bower_components\jquery\src\var\arr.js" />
+    <Content Include="Static\bower_components\jquery\src\var\class2type.js" />
+    <Content Include="Static\bower_components\jquery\src\var\concat.js" />
+    <Content Include="Static\bower_components\jquery\src\var\hasOwn.js" />
+    <Content Include="Static\bower_components\jquery\src\var\indexOf.js" />
+    <Content Include="Static\bower_components\jquery\src\var\pnum.js" />
+    <Content Include="Static\bower_components\jquery\src\var\push.js" />
+    <Content Include="Static\bower_components\jquery\src\var\rnotwhite.js" />
+    <Content Include="Static\bower_components\jquery\src\var\slice.js" />
+    <Content Include="Static\bower_components\jquery\src\var\strundefined.js" />
+    <Content Include="Static\bower_components\jquery\src\var\support.js" />
+    <Content Include="Static\bower_components\jquery\src\var\toString.js" />
+    <Content Include="Static\bower_components\jquery\src\wrap.js" />
+    <Content Include="Static\bower_components\knockout\build\fragments\amd-post.js" />
+    <Content Include="Static\bower_components\knockout\build\fragments\amd-pre.js" />
+    <Content Include="Static\bower_components\knockout\build\fragments\extern-post.js" />
+    <Content Include="Static\bower_components\knockout\build\fragments\extern-pre.js" />
+    <Content Include="Static\bower_components\knockout\build\fragments\source-references.js" />
+    <Content Include="Static\bower_components\knockout\build\knockout-raw.js" />
+    <Content Include="Static\bower_components\knockout\dist\knockout.debug.js" />
+    <Content Include="Static\bower_components\knockout\dist\knockout.js" />
+    <Content Include="Static\bower_components\knockout\Gruntfile.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\bindingAttributeSyntax.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\bindingProvider.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\attr.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\checked.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\click.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\css.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\enableDisable.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\event.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\foreach.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\hasfocus.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\html.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\ifIfnotWith.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\options.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\selectedOptions.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\style.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\submit.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\text.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\textInput.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\uniqueName.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\value.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\defaultBindings\visible.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\editDetection\arrayToDomNodeChildren.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\editDetection\compareArrays.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\expressionRewriting.js" />
+    <Content Include="Static\bower_components\knockout\src\binding\selectExtensions.js" />
+    <Content Include="Static\bower_components\knockout\src\components\componentBinding.js" />
+    <Content Include="Static\bower_components\knockout\src\components\customElements.js" />
+    <Content Include="Static\bower_components\knockout\src\components\defaultLoader.js" />
+    <Content Include="Static\bower_components\knockout\src\components\loaderRegistry.js" />
+    <Content Include="Static\bower_components\knockout\src\google-closure-compiler-utils.js" />
+    <Content Include="Static\bower_components\knockout\src\memoization.js" />
+    <Content Include="Static\bower_components\knockout\src\namespace.js" />
+    <Content Include="Static\bower_components\knockout\src\subscribables\dependencyDetection.js" />
+    <Content Include="Static\bower_components\knockout\src\subscribables\dependentObservable.js" />
+    <Content Include="Static\bower_components\knockout\src\subscribables\extenders.js" />
+    <Content Include="Static\bower_components\knockout\src\subscribables\mappingHelpers.js" />
+    <Content Include="Static\bower_components\knockout\src\subscribables\observable.js" />
+    <Content Include="Static\bower_components\knockout\src\subscribables\observableArray.changeTracking.js" />
+    <Content Include="Static\bower_components\knockout\src\subscribables\observableArray.js" />
+    <Content Include="Static\bower_components\knockout\src\subscribables\subscribable.js" />
+    <Content Include="Static\bower_components\knockout\src\templating\jquery.tmpl\jqueryTmplTemplateEngine.js" />
+    <Content Include="Static\bower_components\knockout\src\templating\native\nativeTemplateEngine.js" />
+    <Content Include="Static\bower_components\knockout\src\templating\templateEngine.js" />
+    <Content Include="Static\bower_components\knockout\src\templating\templateRewriting.js" />
+    <Content Include="Static\bower_components\knockout\src\templating\templateSources.js" />
+    <Content Include="Static\bower_components\knockout\src\templating\templating.js" />
+    <Content Include="Static\bower_components\knockout\src\utils.domData.js" />
+    <Content Include="Static\bower_components\knockout\src\utils.domManipulation.js" />
+    <Content Include="Static\bower_components\knockout\src\utils.domNodeDisposal.js" />
+    <Content Include="Static\bower_components\knockout\src\utils.js" />
+    <Content Include="Static\bower_components\knockout\src\version.js" />
+    <Content Include="Static\bower_components\knockout\src\virtualElements.js" />
+    <Content Include="Static\bower_components\semantic\.gitignore" />
+    <Content Include="Static\bower_components\semantic\dist\components\accordion.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\accordion.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\accordion.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\accordion.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\ad.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\ad.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\api.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\api.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\breadcrumb.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\breadcrumb.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\button.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\button.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\card.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\card.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\checkbox.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\checkbox.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\checkbox.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\checkbox.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\colorize.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\colorize.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\comment.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\comment.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\container.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\container.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\dimmer.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\dimmer.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\dimmer.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\dimmer.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\divider.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\divider.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\dropdown.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\dropdown.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\dropdown.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\dropdown.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\embed.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\embed.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\embed.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\embed.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\feed.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\feed.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\flag.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\flag.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\form.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\form.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\form.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\form.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\grid.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\grid.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\header.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\header.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\icon.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\icon.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\image.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\image.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\input.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\input.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\item.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\item.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\label.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\label.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\list.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\list.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\loader.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\loader.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\menu.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\menu.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\message.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\message.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\modal.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\modal.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\modal.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\modal.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\nag.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\nag.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\nag.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\nag.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\popup.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\popup.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\popup.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\popup.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\progress.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\progress.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\progress.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\progress.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\rail.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\rail.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\rating.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\rating.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\rating.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\rating.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\reset.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\reset.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\reveal.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\reveal.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\search.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\search.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\search.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\search.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\segment.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\segment.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\shape.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\shape.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\shape.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\shape.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\sidebar.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\sidebar.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\sidebar.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\sidebar.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\site.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\site.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\site.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\site.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\state.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\state.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\statistic.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\statistic.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\step.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\step.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\sticky.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\sticky.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\sticky.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\sticky.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\tab.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\tab.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\tab.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\tab.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\table.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\table.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\transition.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\transition.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\transition.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\transition.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\video.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\video.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\video.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\components\video.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\visibility.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\visibility.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\visit.js" />
+    <Content Include="Static\bower_components\semantic\dist\components\visit.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\semantic.css" />
+    <Content Include="Static\bower_components\semantic\dist\semantic.js" />
+    <Content Include="Static\bower_components\semantic\dist\semantic.min.css" />
+    <Content Include="Static\bower_components\semantic\dist\semantic.min.js" />
+    <Content Include="Static\bower_components\semantic\dist\themes\basic\assets\fonts\icons.svg" />
+    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.svg" />
+    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\images\flags.png" />
+    <Content Include="Static\bower_components\semantic\dist\themes\github\assets\fonts\octicons.svg" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\avatar\nan.jpg" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\avatar\tom.jpg" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\bg.jpg" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\logo.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\centered-paragraph.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\image-square.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\image-text.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\image.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\media-paragraph-alt.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\media-paragraph.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\paragraph.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\short-paragraph.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\square-image.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\text-image.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\images\wireframe\white-image.png" />
+    <Content Include="Static\bower_components\semantic\examples\assets\library\iframe-content.js" />
+    <Content Include="Static\bower_components\semantic\examples\assets\library\iframe.js" />
+    <Content Include="Static\bower_components\semantic\examples\assets\library\jquery.min.js" />
+    <Content Include="Static\bower_components\semantic\examples\assets\show-examples.js" />
+    <Content Include="Static\bower_components\semantic\examples\attached.html" />
+    <Content Include="Static\bower_components\semantic\examples\bootstrap.html" />
+    <Content Include="Static\bower_components\semantic\examples\components\button.html" />
+    <Content Include="Static\bower_components\semantic\examples\components\card.html" />
+    <Content Include="Static\bower_components\semantic\examples\components\input.html" />
+    <Content Include="Static\bower_components\semantic\examples\components\menu.html" />
+    <Content Include="Static\bower_components\semantic\examples\components\site.html" />
+    <Content Include="Static\bower_components\semantic\examples\components\table.html" />
+    <Content Include="Static\bower_components\semantic\examples\fixed.html" />
+    <Content Include="Static\bower_components\semantic\examples\grid.html" />
+    <Content Include="Static\bower_components\semantic\examples\homepage.html" />
+    <Content Include="Static\bower_components\semantic\examples\login.html" />
+    <Content Include="Static\bower_components\semantic\examples\responsive.html" />
+    <Content Include="Static\bower_components\semantic\examples\sticky.html" />
+    <Content Include="Static\bower_components\semantic\examples\theming.html" />
+    <Content Include="Static\bower_components\semantic\gulpfile.js" />
+    <Content Include="Static\bower_components\semantic\karma.conf.js" />
+    <Content Include="Static\bower_components\semantic\logo.png" />
+    <Content Include="Static\bower_components\semantic\src\definitions\behaviors\api.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\behaviors\colorize.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\behaviors\form.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\behaviors\state.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\behaviors\visibility.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\behaviors\visit.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\globals\site.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\accordion.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\checkbox.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\dimmer.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\dropdown.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\embed.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\modal.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\nag.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\popup.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\progress.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\rating.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\search.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\shape.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\sidebar.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\sticky.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\tab.js" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\transition.js" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\assets\fonts\icons.svg" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\assets\fonts\icons.svg" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\assets\images\flags.png" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\assets\fonts\octicons.svg" />
+    <Content Include="Static\bower_components\semantic\tasks\admin\components\create.js" />
+    <Content Include="Static\bower_components\semantic\tasks\admin\components\init.js" />
+    <Content Include="Static\bower_components\semantic\tasks\admin\components\update.js" />
+    <Content Include="Static\bower_components\semantic\tasks\admin\distributions\create.js" />
+    <Content Include="Static\bower_components\semantic\tasks\admin\distributions\init.js" />
+    <Content Include="Static\bower_components\semantic\tasks\admin\distributions\update.js" />
+    <Content Include="Static\bower_components\semantic\tasks\admin\publish.js" />
+    <Content Include="Static\bower_components\semantic\tasks\admin\register.js" />
+    <Content Include="Static\bower_components\semantic\tasks\admin\release.js" />
+    <Content Include="Static\bower_components\semantic\tasks\build.js" />
+    <Content Include="Static\bower_components\semantic\tasks\build\assets.js" />
+    <Content Include="Static\bower_components\semantic\tasks\build\css.js" />
+    <Content Include="Static\bower_components\semantic\tasks\build\javascript.js" />
+    <Content Include="Static\bower_components\semantic\tasks\check-install.js" />
+    <Content Include="Static\bower_components\semantic\tasks\clean.js" />
+    <Content Include="Static\bower_components\semantic\tasks\collections\admin.js" />
+    <Content Include="Static\bower_components\semantic\tasks\collections\build.js" />
+    <Content Include="Static\bower_components\semantic\tasks\collections\internal.js" />
+    <Content Include="Static\bower_components\semantic\tasks\collections\rtl.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\admin\github.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\admin\oauth.example.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\admin\release.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\component-package.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\css-package.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\less-package.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\defaults.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\docs.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\npm\gulpfile.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\project\config.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\project\install.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\project\release.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\tasks.js" />
+    <Content Include="Static\bower_components\semantic\tasks\config\user.js" />
+    <Content Include="Static\bower_components\semantic\tasks\docs\build.js" />
+    <Content Include="Static\bower_components\semantic\tasks\docs\metadata.js" />
+    <Content Include="Static\bower_components\semantic\tasks\docs\serve.js" />
+    <Content Include="Static\bower_components\semantic\tasks\install.js" />
+    <Content Include="Static\bower_components\semantic\tasks\rtl\build.js" />
+    <Content Include="Static\bower_components\semantic\tasks\rtl\watch.js" />
+    <Content Include="Static\bower_components\semantic\tasks\version.js" />
+    <Content Include="Static\bower_components\semantic\tasks\watch.js" />
+    <Content Include="Static\controllers\appController.js" />
+    <Content Include="Static\partials\mainPage.html" />
+    <Content Include="Static\viewModels\appViewModel.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Static\bower_components\jquery\.bower.json" />
+    <Content Include="Static\bower_components\jquery\bower.json" />
+    <Content Include="Static\bower_components\jquery\dist\jquery.min.map" />
+    <Content Include="Static\bower_components\jquery\src\sizzle\dist\sizzle.min.map" />
+    <Content Include="Static\bower_components\knockout\.bower.json" />
+    <Content Include="Static\bower_components\knockout\bower.json" />
+    <Content Include="Static\bower_components\knockout\LICENSE" />
+    <Content Include="Static\bower_components\knockout\package.json" />
+    <Content Include="Static\bower_components\knockout\README.md" />
+    <Content Include="Static\bower_components\semantic\.bower.json" />
+    <Content Include="Static\bower_components\semantic\.csscomb.json" />
+    <Content Include="Static\bower_components\semantic\.csslintrc" />
+    <Content Include="Static\bower_components\semantic\.jshintrc" />
+    <Content Include="Static\bower_components\semantic\bower.json" />
+    <Content Include="Static\bower_components\semantic\composer.json" />
+    <Content Include="Static\bower_components\semantic\CONTRIBUTING.md" />
+    <Content Include="Static\bower_components\semantic\dist\themes\basic\assets\fonts\icons.eot" />
+    <Content Include="Static\bower_components\semantic\dist\themes\basic\assets\fonts\icons.ttf" />
+    <Content Include="Static\bower_components\semantic\dist\themes\basic\assets\fonts\icons.woff" />
+    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.eot" />
+    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.otf" />
+    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.ttf" />
+    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.woff" />
+    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.woff2" />
+    <Content Include="Static\bower_components\semantic\dist\themes\github\assets\fonts\octicons-local.ttf" />
+    <Content Include="Static\bower_components\semantic\dist\themes\github\assets\fonts\octicons.ttf" />
+    <Content Include="Static\bower_components\semantic\dist\themes\github\assets\fonts\octicons.woff" />
+    <Content Include="Static\bower_components\semantic\LICENSE.md" />
+    <Content Include="Static\bower_components\semantic\package.json" />
+    <Content Include="Static\bower_components\semantic\README.md" />
+    <Content Include="Static\bower_components\semantic\RELEASE-NOTES.md" />
+    <Content Include="Static\bower_components\semantic\semantic.json.example" />
+    <Content Include="Static\bower_components\semantic\src\definitions\collections\breadcrumb.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\collections\form.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\collections\grid.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\collections\menu.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\collections\message.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\collections\table.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\button.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\container.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\divider.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\flag.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\header.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\icon.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\image.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\input.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\label.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\list.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\loader.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\rail.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\reveal.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\segment.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\elements\step.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\globals\reset.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\globals\site.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\accordion.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\checkbox.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\dimmer.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\dropdown.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\embed.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\modal.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\nag.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\popup.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\progress.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\rating.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\search.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\shape.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\sidebar.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\sticky.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\tab.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\modules\transition.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\views\ad.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\views\card.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\views\comment.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\views\feed.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\views\item.less" />
+    <Content Include="Static\bower_components\semantic\src\definitions\views\statistic.less" />
+    <Content Include="Static\bower_components\semantic\src\README.md" />
+    <Content Include="Static\bower_components\semantic\src\semantic.less" />
+    <Content Include="Static\bower_components\semantic\src\theme.config.example" />
+    <Content Include="Static\bower_components\semantic\src\theme.less" />
+    <Content Include="Static\bower_components\semantic\src\themes\amazon\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\amazon\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\amazon\globals\site.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\assets\fonts\icons.eot" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\assets\fonts\icons.ttf" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\assets\fonts\icons.woff" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\collections\table.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\collections\table.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\elements\icon.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\elements\icon.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\elements\step.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\elements\step.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\globals\reset.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\globals\reset.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\modules\progress.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\modules\progress.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\views\card.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\basic\views\card.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\bookish\elements\header.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\bookish\elements\header.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\bootstrap3\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\bootstrap3\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\collections\form.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\collections\form.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\collections\menu.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\collections\menu.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\elements\header.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\elements\header.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\modules\accordion.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\modules\accordion.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\views\comment.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\chubby\views\comment.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\classic\collections\table.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\classic\collections\table.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\classic\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\classic\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\classic\elements\header.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\classic\elements\header.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\classic\modules\progress.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\classic\modules\progress.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\classic\views\card.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\classic\views\card.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\colored\modules\checkbox.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\colored\modules\checkbox.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\assets\fonts\icons.eot" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\assets\fonts\icons.ttf" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\assets\fonts\icons.woff" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\assets\fonts\icons.woff2" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\breadcrumb.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\breadcrumb.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\form.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\form.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\grid.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\grid.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\menu.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\menu.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\message.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\message.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\table.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\collections\table.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\container.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\container.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\divider.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\divider.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\flag.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\flag.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\header.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\header.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\icon.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\icon.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\image.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\image.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\input.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\input.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\label.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\label.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\list.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\list.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\loader.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\loader.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\rail.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\rail.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\reveal.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\reveal.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\segment.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\segment.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\step.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\elements\step.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\globals\reset.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\globals\reset.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\globals\site.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\globals\site.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\accordion.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\accordion.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\chatroom.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\chatroom.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\checkbox.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\checkbox.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\dimmer.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\dimmer.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\dropdown.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\dropdown.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\embed.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\embed.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\modal.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\modal.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\nag.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\nag.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\popup.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\popup.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\progress.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\progress.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\rating.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\rating.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\search.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\search.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\shape.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\shape.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\sidebar.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\sidebar.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\sticky.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\sticky.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\tab.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\tab.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\transition.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\modules\transition.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\ad.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\ad.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\card.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\card.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\comment.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\comment.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\feed.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\feed.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\item.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\item.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\statistic.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\default\views\statistic.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\duo\elements\loader.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\duo\elements\loader.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\fixed-width\collections\grid.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\fixed-width\collections\grid.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\fixed-width\modules\modal.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\fixed-width\modules\modal.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\flat\collections\form.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\flat\collections\form.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\flat\globals\site.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\flat\globals\site.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\assets\fonts\octicons-local.ttf" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\assets\fonts\octicons.ttf" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\assets\fonts\octicons.woff" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\collections\breadcrumb.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\collections\form.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\collections\form.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\collections\grid.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\collections\menu.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\collections\menu.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\collections\message.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\collections\message.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\collections\table.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\header.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\icon.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\icon.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\image.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\input.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\input.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\label.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\label.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\segment.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\segment.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\step.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\elements\step.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\globals\site.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\modules\dropdown.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\modules\dropdown.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\github\modules\popup.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\gmail\collections\message.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\gmail\collections\message.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\instagram\views\card.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\instagram\views\card.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\collections\menu.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\collections\menu.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\elements\header.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\elements\header.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\globals\site.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\globals\site.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\modules\dropdown.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\modules\dropdown.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\modules\modal.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\material\modules\modal.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\pulsar\elements\loader.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\pulsar\elements\loader.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\raised\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\raised\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\resetcss\globals\reset.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\resetcss\globals\reset.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\round\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\round\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\rtl\globals\site.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\rtl\globals\site.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\striped\modules\progress.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\striped\modules\progress.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\timeline\views\feed.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\timeline\views\feed.variables" />
+    <Content Include="Static\bower_components\semantic\src\themes\twitter\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\themes\twitter\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\breadcrumb.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\breadcrumb.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\form.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\form.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\grid.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\grid.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\menu.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\menu.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\message.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\message.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\table.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\collections\table.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\button.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\button.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\container.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\container.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\divider.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\divider.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\flag.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\flag.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\header.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\header.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\icon.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\icon.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\image.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\image.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\input.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\input.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\label.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\label.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\list.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\list.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\loader.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\loader.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\rail.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\rail.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\reveal.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\reveal.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\segment.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\segment.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\step.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\elements\step.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\globals\reset.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\globals\reset.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\globals\site.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\globals\site.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\accordion.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\accordion.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\chatroom.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\chatroom.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\checkbox.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\checkbox.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\dimmer.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\dimmer.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\dropdown.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\dropdown.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\embed.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\embed.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\modal.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\modal.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\nag.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\nag.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\popup.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\popup.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\progress.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\progress.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\rating.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\rating.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\search.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\search.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\shape.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\shape.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\sidebar.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\sidebar.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\sticky.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\sticky.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\tab.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\tab.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\transition.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\modules\transition.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\ad.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\ad.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\card.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\card.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\comment.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\comment.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\feed.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\feed.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\item.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\item.variables" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\statistic.overrides" />
+    <Content Include="Static\bower_components\semantic\src\_site\views\statistic.variables" />
+    <Content Include="Static\bower_components\semantic\tasks\collections\README.md" />
+    <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\bower.json" />
+    <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\composer.json" />
+    <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\package.json" />
+    <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\README.md" />
+    <Content Include="Static\bower_components\semantic\tasks\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Static\assets\css\" />
+    <Folder Include="Static\assets\img\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-2.2.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{4b1ec9b6-0361-43bc-ab75-f4698692e585}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{95be6edc-1f3e-4770-bc2e-a3f92311c9b8}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{a5f0c2a9-2f99-49f6-824e-62b96a47e1c6}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>28485</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:28485/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
