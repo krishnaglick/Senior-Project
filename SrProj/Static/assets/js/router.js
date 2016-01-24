@@ -1,5 +1,5 @@
 function Router(renderElement, partialContainer) {
-  
+
   this.contentArea = $(renderElement);
   this.partialHolder = $(partialContainer);
 
@@ -20,7 +20,7 @@ function Router(renderElement, partialContainer) {
   this.routeTransitionEnd = function() {};
 
   this.addPartialToPartialHolder = function(idOfPartial, partialHtml) {
-    this.partialHolder.append('<span id="' + idOfPartial + '">' + 
+    this.partialHolder.append('<span id="' + idOfPartial + '">' +
       partialHtml +
       '</span>');
   }.bind(this);
@@ -28,16 +28,13 @@ function Router(renderElement, partialContainer) {
   this.loadContent = function(route) {
     if(!this.routes[route])
       route = this.routes.default;
-    
+
     function loadRouteContent(route) {
       this.routeTransitionBegin();
 
       if(this.contentArea[0] && !!ko.dataFor(this.contentArea[0])) {
         ko.cleanNode(this.contentArea[0]);
       }
-
-      var routeAction = this.routes[route].routeAction;
-      if(routeAction) routeAction();
 
       function applyBinding() {
         if(this.routes[route].vm) {
@@ -50,10 +47,13 @@ function Router(renderElement, partialContainer) {
         }
       }
 
+      var routeAction = this.routes[route].routeAction;
+
       //If partial is not on page
       if(true || !window[this.routes[route].id]) {
         this.contentArea.load(this.routes[route].url, function() {
           applyBinding.call(this);
+          if(routeAction) routeAction();
           //this.addPartialToPartialHolder(this.routes[route].id, this.contentArea.html());
           this.routeTransitionEnd();
         }.bind(this));
@@ -61,6 +61,7 @@ function Router(renderElement, partialContainer) {
       else {
         /*this.contentArea.html($(window[this.routes[route].id]).html());
         applyBinding.call(this);
+        if(routeAction) routeAction();
         this.routeTransitionEnd();*/
       }
     }
