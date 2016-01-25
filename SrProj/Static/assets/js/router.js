@@ -82,7 +82,7 @@ function Router(renderElement, partialContainer) {
         this.loadContent(this.routes.default);
       }
     }.bind(this));
-    
+
     this.pageTitle = pageTitle;
 
     this.loadDefaultRoute();

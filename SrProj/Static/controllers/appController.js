@@ -69,13 +69,13 @@ $(function() {
       },
 
       PatronCheckIn: {
-          url: 'partials/patronCheckIn.html',
-          name: 'Patron Check In',
-          id: 'patronCheckIn',
-          routeAction: function () {
-            $('.ui.dropdown').dropdown();
-            $('.ui.modal').modal();
-          }
+        url: 'partials/patronCheckIn.html',
+        name: 'Patron Check In',
+        id: 'patronCheckIn',
+        routeAction: function () {
+          $('.ui.dropdown').dropdown();
+          $('.ui.modal').modal();
+        }
       },
 
       Reporting: {
