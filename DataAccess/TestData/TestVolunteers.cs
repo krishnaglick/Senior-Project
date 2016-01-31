@@ -1,8 +1,10 @@
 ﻿
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using DataAccess.Contexts;
 using Models;
+using Utility.Enum;
+using Database = DataAccess.Contexts.Database;
 
 namespace DataAccess.TestData
 {
@@ -10,6 +12,16 @@ namespace DataAccess.TestData
     {
         public static void Seed(Database context)
         {
+            var tempUser = context.Volunteers.FirstOrDefault(v => v.Username == testUser.Username);
+            var tempAdmin = context.Volunteers.FirstOrDefault(v => v.Username == testAdmin.Username);
+            if (tempUser != null && tempAdmin != null) return;
+
+            testUser.ServiceTypes = new List<ServiceType>
+            {
+                context.ServiceTypes.First(st => st.ID == (int) ServiceTypeID.Dental)
+            };
+            testAdmin.ServiceTypes = new List<ServiceType>();
+            context.ServiceTypes.ToList().ForEach(st => testAdmin.ServiceTypes.Add(st));
             context.Volunteers.AddOrUpdate(
                 testUser,
                 testAdmin
@@ -18,16 +30,16 @@ namespace DataAccess.TestData
             context.SaveChanges();
         }
 
-        public static readonly Volunteer testUser = new Volunteer
+        public static Volunteer testUser = new Volunteer
         {
             HashedPassword = Volunteer.hasher.HashPassword("swordfish"),
             Username = "user"
         };
 
-        public static readonly Volunteer testAdmin = new Volunteer
+        public static Volunteer testAdmin = new Volunteer
         {
             HashedPassword = Volunteer.hasher.HashPassword("swordfish"),
-            Username = "admin"
+            Username = "admin",
         };
 
         public static Volunteer[] GetTestVolunteers(Database context)

@@ -15,15 +15,9 @@ function ReportingViewModel() {
   }.bind(this);
 
   this.reportingType = ko.observable();
-  this.serviceTypeSelections = ko.observableArray([
-    { id: 0, name: 'babyLuv' },
-    { id: 1, name: 'foodPantry' }
-  ]);
 
-  this.serviceTypes = ko.observableArray([
-    { id: 0, name: 'babyLuv' },
-    { id: 1, name: 'foodPantry' }
-  ]);
+  this.serviceTypeSelections = ko.observableArray([]);
+  this.serviceTypes = app.services;
 
   //Visibility
   this.patronSectionVisible = ko.computed(function() {
@@ -39,6 +33,8 @@ function ReportingViewModel() {
   this.dateOfBirth =  ko.observable();
 
   //Service Reporting
+  this.andSearch = ko.observable(false);
+  this.zipCode = ko.observable();
   this.timePeriod = ko.observable();
   this.startDate = ko.observable();
   this.endDate = ko.observable();
@@ -61,6 +57,19 @@ function ReportingViewModel() {
       action = 'GetServiceData';
     else
       return alert('Please select a reporting type before trying to get a report!');
+
+    var services = [];
+    $('div.ui.fluid.search.dropdown a.ui.label.transition.visible')
+    .each(function(index, element) {
+      services.push(parseInt($(element).data('value')));
+      }.bind(this)
+    );
+    //The binding for this doesn't work properly. I need to fix it.
+    this.serviceTypeSelections = app.services().filter(function(service) {
+      return services.includes(service.id);
+    });
+    //TODO: Remap this to use this.timePeriod, when it works.
+    this.timePeriod($('.ui.timePeriod.dropdown.selection div.item.active.selected').text());
 
     app.post(this.controller, action, ko.toJSON(this))
       .success(function(data, textStatus, request) {

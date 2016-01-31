@@ -36,6 +36,14 @@
           <div data-bind="component: { name: 'multipleSearchSelection', params: { data: serviceTypes, defaultValue: 'Select Service(s)', activeSelection: serviceTypeSelections } }"></div>
         </div>
         <div class="field">
+          <label>Zip</label>
+          <input type="text" data-bind="textInput: zipCode" />
+        </div>
+        <div class="field ui checkbox">
+          <input type="checkbox" data-bind="checked: andSearch"/>
+          <label>Inclusive Search</label>
+        </div>
+        <div class="field">
           <label>Time Period</label>
           <select class="ui timePeriod dropdown">
             <option value="0">Today</option>

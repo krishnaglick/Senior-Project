@@ -20,6 +20,7 @@ namespace DataAccess.Migrations
             TestVolunteers.Seed(context);
             VolunteerRoles.Seed(context);
             Patrons.Seed(context, 20);
+            Visits.Seed(context, 100);
             try
             {
                 context.SaveChanges();

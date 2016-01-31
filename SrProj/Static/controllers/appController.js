@@ -42,6 +42,7 @@ $(function() {
     var user = JSON.parse(userCookieData);
     app.authToken(user.authToken);
     app.username(user.username);
+    app.services(user.services);
     app.roles(user.roles);
   }).call(this);
 
