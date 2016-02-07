@@ -5,7 +5,7 @@ ko.components.register('multipleSearchSelection', {
     this.activeSelection = params.activeSelection;
   },
   template:
-    '<div class="ui fluid search dropdown selection multiple">' +
+    '<div class="ui fluid search dropdown selection multiple component">' +
       '<select multiple="" data-bind="foreach: data">' +
         '<option data-bind="value: id, text: name"></option>' +
       '</select>' +
@@ -19,7 +19,8 @@ ko.components.register('multipleSearchSelection', {
       '<input class="search" autocomplete="off" tabindex="0" style="width: 2.1428em;" />' +
       '<div class="default text" data-bind="text: defaultValue"></div>' +
       '<div class="menu transition hidden" tabindex="1" data-bind="foreach: data">' +
-        '<div class="item" data-bind="attr: { \'data-value\': id }, text: name, css: { \'active filtered\': $parent.activeSelection.contains($data)} "></div>' +
+        '<div class="item" data-bind="attr: { \'data-value\': id }, text: name, css: { \'active filtered\': ' +
+        '(typeof $parent.activeSelection === \'function\' ? $parent.activeSelection() : $parent.activeSelection).contains($data)} "></div>' +
       '</div>' +
     '</div>',
     afterRender: function() {

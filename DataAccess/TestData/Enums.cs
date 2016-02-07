@@ -36,6 +36,56 @@ namespace DataAccess.TestData
                 });
             }
 
+            foreach (EthnicityID ethnicity in Enum.GetValues(typeof(EthnicityID)))
+            {
+                context.Ethnicities.AddOrUpdate(new Ethnicity
+                {
+                    ID = (int)ethnicity,
+                    Name = ethnicity.GetEnumAttribute<EnumDecorators.Name>().name,
+                    Description = ethnicity.GetEnumAttribute<EnumDecorators.Description>().desc
+                });
+            }
+
+            foreach (GenderID gender in Enum.GetValues(typeof(GenderID)))
+            {
+                context.Genders.AddOrUpdate(new Gender
+                {
+                    ID = (int)gender,
+                    Name = gender.GetEnumAttribute<EnumDecorators.Name>().name,
+                    Description = gender.GetEnumAttribute<EnumDecorators.Description>().desc
+                });
+            }
+
+            foreach (MaritalStatusID marital in Enum.GetValues(typeof(MaritalStatusID)))
+            {
+                context.MaritalStatuses.AddOrUpdate(new MaritalStatus
+                {
+                    ID = (int)marital,
+                    Name = marital.GetEnumAttribute<EnumDecorators.Name>().name,
+                    Description = marital.GetEnumAttribute<EnumDecorators.Description>().desc
+                });
+            }
+
+            foreach (RaceID race in Enum.GetValues(typeof(RaceID)))
+            {
+                context.Races.AddOrUpdate(new Race
+                {
+                    ID = (int)race,
+                    Name = race.GetEnumAttribute<EnumDecorators.Name>().name,
+                    Description = race.GetEnumAttribute<EnumDecorators.Description>().desc
+                });
+            }
+
+            foreach (ResidenceStatusID residence in Enum.GetValues(typeof(ResidenceStatusID)))
+            {
+                context.ResidenceStatuses.AddOrUpdate(new ResidenceStatus
+                {
+                    ID = (int)residence,
+                    Name = residence.GetEnumAttribute<EnumDecorators.Name>().name,
+                    Description = residence.GetEnumAttribute<EnumDecorators.Description>().desc
+                });
+            }
+
             context.SaveChanges();
         }
 
@@ -43,5 +93,36 @@ namespace DataAccess.TestData
         {
             return context.Roles.ToArray();
         }
+
+        public static ServiceType[] GetServiceTypes(Database context)
+        {
+            return context.ServiceTypes.ToArray();
+        }
+
+        public static Ethnicity[] GetEthnicities(Database context)
+        {
+            return context.Ethnicities.ToArray();
+        }
+
+        public static Gender[] GetGenders(Database context)
+        {
+            return context.Genders.ToArray();
+        }
+
+        public static MaritalStatus[] GetMaritalStatuses(Database context)
+        {
+            return context.MaritalStatuses.ToArray();
+        }
+
+        public static Race[] GetRaces(Database context)
+        {
+            return context.Races.ToArray();
+        }
+
+        public static ResidenceStatus[] GetResidenceStatuses(Database context)
+        {
+            return context.ResidenceStatuses.ToArray();
+        }
+
     }
 }

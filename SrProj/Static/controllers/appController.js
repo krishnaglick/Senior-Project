@@ -32,7 +32,7 @@ $(function() {
   }).call(this);
 
   (function loadFooter() {
-    $('#footer').load('partials/footer.html');
+    //$('#footer').load('partials/footer.html');
   }).call(this);
 
   (function restoreSession() {
@@ -42,6 +42,7 @@ $(function() {
     var user = JSON.parse(userCookieData);
     app.authToken(user.authToken);
     app.username(user.username);
+    app.services(user.services);
     app.roles(user.roles);
   }).call(this);
 
@@ -52,6 +53,8 @@ $(function() {
     app.logout = loginVM.logout;
     var createVolunteerVM = new CreateVolunteerViewModel();
     window.manageVolunteersVM = new ManageVolunteersViewModel();
+    var reportingVM = new ReportingViewModel();
+    window.reportingVM = reportingVM;
     var routes = {
       Home: {
           url: 'partials/mainPage.html',
@@ -66,16 +69,40 @@ $(function() {
         vm: loginVM
       },
 
-        PatronCheckIn: {
-            url: 'partials/patronCheckIn.html',
-            name: 'PatronCheckIn',
-            id: 'patronCheckIn',
-            routeAction: function () {
-                $('.ui.dropdown').dropdown();
-                $('.ui.modal').modal();
-                }
+      PatronCheckIn: {
+        url: 'partials/patronCheckIn.html',
+        name: 'Patron Check In',
+        id: 'patronCheckIn',
+        routeAction: function () {
+          $('.ui.dropdown').dropdown();
+          $('.ui.modal').modal();
+        }
+      },
 
-        },
+      Reporting: {
+        url: 'partials/admin/reporting.html',
+        name: 'Reporting',
+        id: 'reporting',
+        vm: reportingVM,
+        routeAction: function() {
+          $('.ui.serviceSelection.dropdown')
+          .dropdown({
+            action: 'activate',
+            onChange: function(value, text) {
+              reportingVM.reportingType(value);
+            }
+          });
+          $('.ui.timePeriod.dropdown')
+          .dropdown({
+            action: 'activate',
+            onChange: function(value, text) {
+              reportingVM.timePeriod(value);
+            }
+          });
+          $('.ui.dropdown.component')
+          .dropdown();
+        }
+      },
 
       Logout: {
         url: 'partials/mainPage.html',

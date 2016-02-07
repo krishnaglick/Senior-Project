@@ -45,7 +45,15 @@ namespace SrProj.API
                 {
                     var authToken = Authorization.GenerateToken(volunteer.Username);
 
-                    response.data = new {roles = roleVolunteer.Select(rv => rv.Role.RoleName)};
+                    response.data = new
+                    {
+                        roles = roleVolunteer.Select(rv => rv.Role.RoleName),
+                        allowedServices = dbVolunteer.ServiceTypes.Select(st =>
+                        new {
+                            id = st.ID,
+                            name = st.ServiceName
+                        })
+                    };
 
                     return response.GenerateResponse(HttpStatusCode.OK, new Dictionary<string, string>
                     {

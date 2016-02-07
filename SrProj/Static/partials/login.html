@@ -1,36 +1,27 @@
 
-      <style>
-       div#login{
-      padding-top:50%;
-    }
-      </style>
-
-        <span class="topMargin">
-           
-                <div class="ui centered grid">
-                    <div class="five wide column">
-                      
-                        <div id="login">
-                        <div class="ui form segment">
-                          
-                            <div class="ui form">
-                                <div class="wide field">
-                                    <label>Username</label>
-                                    <input id="username" placeholder="Username" type="text" data-bind="textInput: username" id="username" autofocus="true" />
-                                </div>
-
-                                <div class="wide field">
-                                    <label>Password</label>
-                                    <input id="password" placeholder="Password" type="text" data-bind="textInput: password" id="password" />
-                                </div>
-
-                                <button type="button" class="ui inverted green button" data-bind="click: login">Login</button>
-                                <a href="#Register">Register</a>
-                            </div>
-                        </div>
-               </div>
-            </div>
+<div class="ui centered grid">
+  <div class="four wide column">
+    <div class="ui form segment">
+      <div class="field">
+        <h2 class="ui inverted blue header">
+        Login
+        </h2>
+      </div>
+      <div class="field">
+        <div class="ui input">
+          <input id="username" placeholder="Username" type="text" data-bind="textInput: username" id="username" autofocus="true" />
         </div>
-</span>
-    
+      </div>
 
+      <div class="field">
+        <div class="ui input">
+          <input id="password" placeholder="Password" type="text" data-bind="textInput: password" id="password" />
+        </div>
+      </div>
+
+      <div class="rightAligned field">
+        <button type="button" class="ui inverted green button" data-bind="click: login">Login</button>
+      </div>
+    </div>
+  </div>
+</div>

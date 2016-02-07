@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations.Schema;
+using Utility.Attribute;
 
 namespace Models
 {
@@ -15,10 +16,15 @@ namespace Models
     [ComplexType]
     public class Address : IAddress
     {
+        [FilterableText]
         public string StreetAddress { get; set; }
+        [FilterableText]
         public string City { get; set; }
+        [FilterableText]
         public string County { get; set; }
+        [FilterableText]
         public string State { get; set; }
+        [FilterableText]
         public string Zip { get; set; }
     }
 }

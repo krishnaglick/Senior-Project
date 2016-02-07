@@ -1,0 +1,71 @@
+
+<div class="ui centered grid topMargin">
+  <div class="nine wide column">
+    <div class="ui form">
+      <div class="field">
+        I want to report on
+        <select class="ui serviceSelection dropdown">
+          <option value="0">Select a Report Type</option>
+          <option value="1">a patron</option>
+          <option value="2">a service</option>
+        </select>
+      </div>
+
+      <div class="patron" data-bind="visible: patronSectionVisible">
+        <div class="field">
+          <div data-bind="component: { name: 'multipleSearchSelection', params: { data: serviceTypes, defaultValue: 'Select Service(s)', activeSelection: serviceTypeSelections } }"></div>
+        </div>
+        <div class="three fields">
+          <div class="field">
+              <label>First Name</label>
+              <input type="text" placeholder="First Name" data-bind="textInput: firstName" />
+          </div>
+          <div class="field">
+              <label>Last Name</label>
+              <input type="text" placeholder="Last Name" data-bind="textInput: lastName" />
+          </div>
+          <div class="field">
+            <label>Date of Birth</label>
+            <input type="date" placeholder="01/01/1984" data-bind="textInput: dateOfBirth" />
+          </div>
+        </div>
+      </div>
+
+      <div class="service" data-bind="visible: serviceSectionVisible">
+        <div class="field">
+          <div data-bind="component: { name: 'multipleSearchSelection', params: { data: serviceTypes, defaultValue: 'Select Service(s)', activeSelection: serviceTypeSelections } }"></div>
+        </div>
+        <div class="field">
+          <label>Zip</label>
+          <input type="text" data-bind="textInput: zipCode" />
+        </div>
+        <div class="field ui checkbox">
+          <input type="checkbox" data-bind="checked: andSearch"/>
+          <label>Inclusive Search</label>
+        </div>
+        <div class="field">
+          <label>Time Period</label>
+          <select class="ui timePeriod dropdown">
+            <option value="0">Today</option>
+            <option value="1">Specific Date</option>
+            <option value="2">Date Range</option>
+            <option value="3">All Time</option>
+          </select>
+        </div>
+        <div class="fields" data-bind="visible: canSelectTimePeriod">
+          <div class="field">
+            <input type="date" data-bind="textInput: startDate" />
+          </div>
+          <div class="field">
+            <input type="date" data-bind="textInput: endDate, visible: timePeriodSelectIsDateRange" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <button class="ui inverted green button" data-bind="click: getReport">Get Report</button>
+        <button class="ui inverted red button" data-bind="click: clear">Clear</button>
+      </div>
+    </div>
+  </div>
+</div>

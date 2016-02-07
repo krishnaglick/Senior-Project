@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Utility.Attribute;
 
 namespace Models
 {
@@ -29,23 +30,31 @@ namespace Models
 
         [Key]
         public int ID { get; set; }
-        [Required]
+        [Required][FilterableText]
         public string FirstName { get; set; }
         [Required]
+        [FilterableText]
         public string LastName { get; set; }
         [NotMapped]
         public string FullName
         {
             get { return string.Format("{0} {1}", this.FirstName, this.LastName); }
         }
+        [FilterableNumber]
         public short NumberInHousehold { get; set; }
+        [FilterableBoolean]
         public bool Banned { get; set; }
-        //Marital Status
-        //Residence Status
-        //Gender
+        [FilterableDropdown]
+        public MaritalStatus Marital { get; set; }
+        [FilterableDropdown]
+        public ResidenceStatus Residence { get; set; }
+        [FilterableDropdown]
+        public Gender Gender { get; set; }
+        [FilterableDropdown]
         public Ethnicity Ethnicity { get; set; }
-        //Race
-        [Required]
+        [FilterableDropdown]
+        public Race Race { get; set; }
+        [Required][FilterableDate]
         public DateTime DateOfBirth { get; set; }
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }

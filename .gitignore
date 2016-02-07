@@ -234,3 +234,9 @@ _Pvt_Extensions
 /DataAccess/*.csproj
 /SrProj/*.csproj
 /SrProj/Scripts/_references.js
+/*.user
+*.dll.config
+/SrProj/obj/Debug/SrProj.csproj.FileListAbsolute.txt
+/Utility/obj/Debug
+DataAccess.csproj.FileListAbsolute.txt
+Models.csproj.FileListAbsolute.txt
