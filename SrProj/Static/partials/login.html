@@ -1,21 +1,36 @@
 
-<span class="topMargin">
-  <div class="ui centered grid">
-    <div class="nine wide column">
-      <div class="ui form">
-        <div class="six wide field">
-          <label>Username</label>
-          <input id="username" placeholder="Username" type="text" data-bind="textInput: username" id="username" autofocus="true" />
-        </div>
+      <style>
+       div#login{
+      padding-top:50%;
+    }
+      </style>
 
-        <div class="six wide field">
-          <label>Password</label>
-          <input id="password" placeholder="Password" type="text" data-bind="textInput: password" id="password" />
-        </div>
+        <span class="topMargin">
+           
+                <div class="ui centered grid">
+                    <div class="five wide column">
+                      
+                        <div id="login">
+                        <div class="ui form segment">
+                          
+                            <div class="ui form">
+                                <div class="wide field">
+                                    <label>Username</label>
+                                    <input id="username" placeholder="Username" type="text" data-bind="textInput: username" id="username" autofocus="true" />
+                                </div>
 
-        <button type="button" class="ui inverted green button" data-bind="click: login">Login</button>
-        <a href="#Register">Register</a>
-      </div>
-    </div>
-  </div>
+                                <div class="wide field">
+                                    <label>Password</label>
+                                    <input id="password" placeholder="Password" type="text" data-bind="textInput: password" id="password" />
+                                </div>
+
+                                <button type="button" class="ui inverted green button" data-bind="click: login">Login</button>
+                                <a href="#Register">Register</a>
+                            </div>
+                        </div>
+               </div>
+            </div>
+        </div>
 </span>
+    
+
