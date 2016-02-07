@@ -1,16 +1,13 @@
 
-<!-- Need to make this stand out as non-clickable -->
-<span id="userInfoMenuSection" class="item" data-bind="visible: username">
-  <i class="user icon"></i>
+<span id="userInfoMenuSection" class="bold item" data-bind="visible: username">
   <span data-bind="text: username"></span>
 </span>
 <a class="item" href="#Home"><i class="home icon"></i> Home</a>
 <a class="item" href="#Login" data-bind="visible: !username()"><i class="sign in icon"></i> Login</a>
 <a class="item" data-bind="click: logout, visible: username"><i class="sign out icon"></i> Logout</a>
+<a class="item" data-bind="visible: username" href="#PatronCheckIn"><i class="home icon"></i> Patron Check In</a>
 <span id="adminMenuSection" data-bind="visible: isAdmin">
-  <!-- Need to make this stand out as non-clickable -->
-  <span class="item"><i class="wizard icon"></i> Admin Settings</span>
-  <a class="item" href="#PatronCheckIn"><i class="home icon"></i> Patron Check In</a>
+  <span class="bold item">Admin Settings</span>
   <a class="item" href="#Reporting"><i class="paper icon"></i> Reporting</a>
   <a class="item" href="#CreateVolunteer"><i class="add user icon"></i> Create A Volunteer</a>
   <a class="item" href="#ManageVolunteers"><i class="configure icon"></i> Manage Volunteers</a>
