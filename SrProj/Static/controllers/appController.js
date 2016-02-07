@@ -32,7 +32,7 @@ $(function() {
   }).call(this);
 
   (function loadFooter() {
-    $('#footer').load('partials/footer.html');
+    //$('#footer').load('partials/footer.html');
   }).call(this);
 
   (function restoreSession() {

@@ -1,21 +1,27 @@
 
-<span class="topMargin">
-  <div class="ui centered grid">
-    <div class="nine wide column">
-      <div class="ui form">
-        <div class="six wide field">
-          <label>Username</label>
+<div class="ui centered grid">
+  <div class="four wide column">
+    <div class="ui form segment">
+      <div class="field">
+        <h2 class="ui inverted blue header">
+        Login
+        </h2>
+      </div>
+      <div class="field">
+        <div class="ui input">
           <input id="username" placeholder="Username" type="text" data-bind="textInput: username" id="username" autofocus="true" />
         </div>
+      </div>
 
-        <div class="six wide field">
-          <label>Password</label>
+      <div class="field">
+        <div class="ui input">
           <input id="password" placeholder="Password" type="text" data-bind="textInput: password" id="password" />
         </div>
+      </div>
 
+      <div class="rightAligned field">
         <button type="button" class="ui inverted green button" data-bind="click: login">Login</button>
-        <a href="#Register">Register</a>
       </div>
     </div>
   </div>
-</span>
+</div>

@@ -8,5 +8,9 @@ body.pushable {
 }
 
 .topMargin {
-  margin-top: 20px !important;
+  margin-top: 20px;
+}
+
+.rightAligned {
+  text-align: right;
 }

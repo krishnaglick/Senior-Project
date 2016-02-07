@@ -11,6 +11,6 @@ namespace Models
         [Required]
         public string ServiceName { get; set; }
         public string ServiceDescription { get; set; }
-        public virtual ICollection<Volunteer> Volunteers { get; set; } 
+        public virtual ICollection<Volunteer> Volunteers { get; set; }
     }
 }
