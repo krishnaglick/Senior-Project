@@ -1,6 +1,10 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
+</head>
 
 <div class="ui centered grid">
   <div class="four wide column">
+    <div id="logIn">
     <div class="ui form segment">
       <div class="field">
         <h2 class="ui inverted blue header">
@@ -12,7 +16,6 @@
           <input id="username" placeholder="Username" type="text" data-bind="textInput: username" id="username" autofocus="true" />
         </div>
       </div>
-
       <div class="field">
         <div class="ui input">
           <input id="password" placeholder="Password" type="text" data-bind="textInput: password" id="password" />
@@ -23,5 +26,6 @@
         <button type="button" class="ui inverted green button" data-bind="click: login">Login</button>
       </div>
     </div>
+        </div>
   </div>
 </div>

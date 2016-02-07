@@ -277,6 +277,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Static\app.html" />
+    <Content Include="Static\assets\css\app.css" />
     <Content Include="Static\assets\js\router.js" />
     <Content Include="Static\bower_components\jquery\dist\jquery.js" />
     <Content Include="Static\bower_components\jquery\dist\jquery.min.js" />
@@ -1097,7 +1098,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Static\assets\css\" />
     <Folder Include="Static\assets\img\" />
   </ItemGroup>
   <ItemGroup>

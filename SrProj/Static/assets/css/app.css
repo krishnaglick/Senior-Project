@@ -14,3 +14,7 @@ body.pushable {
 .rightAligned {
   text-align: right;
 }
+
+div#logIn{
+     padding-top:50%;
+}
