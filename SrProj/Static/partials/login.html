@@ -2,7 +2,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
 </head>
 
-<div class="ui centered grid">
+<div class="topMargin ui centered grid">
   <div class="four wide column">
     <div id="logIn">
     <div class="ui form segment">
@@ -12,13 +12,15 @@
         </h2>
       </div>
       <div class="field">
-        <div class="ui input">
-          <input id="username" placeholder="Username" type="text" data-bind="textInput: username" id="username" autofocus="true" />
+        <div class="ui left icon input user">
+          <input id="username" placeholder="Username" type="text" data-bind="textInput: username, enterKey: login" id="username" autofocus="true" />
+          <i class="user icon"></i>
         </div>
       </div>
       <div class="field">
-        <div class="ui input">
-          <input id="password" placeholder="Password" type="text" data-bind="textInput: password" id="password" />
+        <div class="ui left icon input lock">
+          <input id="password" placeholder="Password" type="text" data-bind="textInput: password, enterKey: login" id="password" />
+          <i class="lock icon"></i>
         </div>
       </div>
 
