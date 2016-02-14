@@ -1,18 +1,33 @@
 
 <div class="ui centered grid topMargin">
-  <div class="nine wide column">
-    <div class="ui form">
-      <div class="six wide field">
+  <div class="four wide column">
+    <div class="ui form segment">
+      <div class="field">
+        <label>First Name</label>
+        <input id="firstname" placeholder="First Name" type="text" data-bind="textInput: firstname"  autofocus="true" />
+      </div>
+
+      <div class="field">
+        <label>Last Name</label>
+        <input id="lastname" placeholder="Last Name" type="text" data-bind="textInput: lastname"  autofocus="true" />
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input id="email" placeholder="Email" type="text" data-bind="textInput: email"  autofocus="true" />
+      </div>
+      
+      <div class="field">
         <label>Username</label>
         <input id="username" placeholder="Username" type="text" data-bind="textInput: username"  autofocus="true" />
       </div>
 
-      <div class="six wide field">
+      <div class="field">
         <label>Password</label>
         <input id="password" placeholder="Password" type="text" data-bind="textInput: password" />
       </div>
 
-      <div class="six wide field">
+      <div class="field">
         <label>Confirm Password</label>
         <input id="confirmPassword" placeholder="Confirm Password" type="text" data-bind="textInput: confirmPassword" />
       </div>

@@ -15,6 +15,9 @@ body.pushable {
   text-align: right;
 }
 
+div#logIn{
+     padding-top:50%;
+}
 .bold {
   font-weight: bold !important;
 }
