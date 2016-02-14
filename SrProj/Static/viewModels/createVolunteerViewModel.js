@@ -20,11 +20,11 @@ function CreateVolunteerViewModel() {
   this.validate = function() {
     var errors = [];
         if(!this.firstname()) {
-      errors.push('You need a firstname!');
+      errors.push('You need a First Name!');
     }
 
     if(!this.lastname()) {
-      errors.push('You need a lastname!');
+      errors.push('You need a Last Name!');
     }
 
     if(!this.email()) {
