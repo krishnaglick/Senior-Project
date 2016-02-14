@@ -13,7 +13,7 @@ function CreateVolunteerViewModel() {
     this.lastname('');
     this.email('');
     this.username('');
-    this.password('');    
+    this.password('');
     this.confirmPassword('');
   }.bind(this);
 
