@@ -33,13 +33,19 @@ namespace DataAccess.TestData
         public static Volunteer testUser = new Volunteer
         {
             HashedPassword = Volunteer.hasher.HashPassword("swordfish"),
-            Username = "user"
+            Username = "user",
+            FirstName = "test",
+            LastName = "user",
+            Email = "test@user.com"
         };
 
         public static Volunteer testAdmin = new Volunteer
         {
             HashedPassword = Volunteer.hasher.HashPassword("swordfish"),
             Username = "admin",
+            FirstName = "test",
+            LastName = "admin",
+            Email = "test@admin.com"
         };
 
         public static Volunteer[] GetTestVolunteers(Database context)

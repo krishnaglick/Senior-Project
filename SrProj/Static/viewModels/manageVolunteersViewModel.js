@@ -4,6 +4,8 @@ function ManageVolunteersViewModel() {
 
   this.availableRoles = ko.observableArray([]);
 
+  this.pageNumber = ko.observable(0);
+
   this.controller = 'Volunteer';
 
   this.loadVolunteers = function() {

@@ -1,15 +1,4 @@
 
-<div class="ui centered grid topMargin" data-bind="foreach: volunteers">
-  <div class="row">
-    <div class="six wide column">
-      <span data-bind="text: username"></span>
-    </div>
-    <div class="column">
-      <i class="edit icon" data-bind="click: $parent.editVolunteer"></i>
-    </div>
-  </div>
-</div>
-
 <div class="ui modal" id="editVolunteer" data-bind="with: targetVolunteer">
   <i class="close icon"></i>
   <div class="header" data-bind="text: username"></div>
@@ -19,5 +8,45 @@
   <div class="actions">
     <div class="ui button">Cancel</div>
     <div class="ui button" data-bind="click: $parent.modifyVolunteer">OK</div>
+  </div>
+</div>
+
+<div class="ui centered grid topMargin">
+  <div class="four wide column">
+    <div class="ui equal width form segment">
+
+      <div class="fields headers">
+        <div class="field">
+          <label>Username</label>
+        </div>
+        <div class="field">
+          <label>First Name</label>
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+        </div>
+        <div class="field">
+          <label>Actions</label>
+        </div>
+      </div>
+
+      <div data-bind="foreach: volunteers">
+        <div class="fields">
+          <div class="field" data-bind="text: username"></div>
+          <div class="field" data-bind="text: firstName"></div>
+          <div class="field" data-bind="text: lastName"></div>
+          <div class="field" data-bind="click: $parent.editVolunteer">
+            <i class="edit icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui buttons">
+        <div class="ui button"><</div>
+        <div class="or" data-bind="attr: { 'data-text': pageNumber }"></div>
+        <div class="ui button">></div>
+      </div>
+
+    </div>
   </div>
 </div>

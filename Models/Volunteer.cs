@@ -26,6 +26,9 @@ namespace Models
     {
         [Key][Required][Index(IsUnique = true)]
         public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
         public virtual ICollection<RoleVolunteer> Roles { get; set; }
         [Required]
         public virtual ICollection<ServiceType> ServiceTypes { get; set; }

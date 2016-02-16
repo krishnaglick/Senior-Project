@@ -91,6 +91,9 @@ namespace SrProj.API
                 .Include(v => v.Roles)
                 .Select(v => new {
                     username = v.Username,
+                    firstName = v.FirstName,
+                    lastName = v.LastName,
+                    email = v.Email,
                     roles = v.Roles.Select(vr => vr.Role)
                 })
                 .ToList();
