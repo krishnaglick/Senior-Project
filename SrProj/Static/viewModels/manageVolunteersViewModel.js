@@ -4,7 +4,7 @@ function ManageVolunteersViewModel() {
 
   this.availableRoles = ko.observableArray([]);
 
-  this.pageNumber = ko.observable(0);
+  this.pageNumber = ko.observable(1);
 
   this.controller = 'Volunteer';
 
@@ -62,6 +62,7 @@ function ManageVolunteersViewModel() {
   };
 
   this.editVolunteer = function(data, event) {
+    data.fullName = data.firstName + ' ' + data.lastName;
     this.targetVolunteer(data);
     $('#editVolunteer').modal('show');
     $('.ui.dropdown').dropdown();
