@@ -1,10 +1,15 @@
+
 function ManageVolunteersViewModel() {
+  this.pageNumber = ko.observable(1);
   this.volunteers = ko.observableArray([]);
+  this.paginatedVolunteers = ko.computed(function() {
+    var lowerBound = (this.pageNumber() - 1) * 10;
+    var upperBound = lowerBound + 10; //Slice grabs the index from lowerBound to upperBound - 1.
+    return this.volunteers().slice(lowerBound, upperBound);
+  }, this);
   this.targetVolunteer = ko.observable();
 
   this.availableRoles = ko.observableArray([]);
-
-  this.pageNumber = ko.observable(1);
 
   this.controller = 'Volunteer';
 
@@ -66,5 +71,9 @@ function ManageVolunteersViewModel() {
     this.targetVolunteer(data);
     $('#editVolunteer').modal('show');
     $('.ui.dropdown').dropdown();
+  }.bind(this);
+
+  this.resetPassword = function() {
+
   }.bind(this);
 }
