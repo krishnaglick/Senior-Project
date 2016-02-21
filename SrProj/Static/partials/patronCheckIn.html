@@ -2,30 +2,42 @@
 <div class="ui centered grid">
   <div class="nine wide column">
     <div class="ui form segment">
+    <!-- Service Selection-->
+       <div class="field">
+            <label>Service Selection</label>
+            <select class="ui dropdown">
+                <option value="">Reason for Visit</option>
+                <option value="1">Medical</option>
+                <option value="2">Dental</option>
+                <option value="3">Baby Luv</option>
+                <option value="4">Lord's Pantry</option>
+            </select>
+      </div>
+    <!-- Patron Name-->
       <div class="three fields">
         <div class="field">
           <label>First name</label>
-          <input type ="text" placeholder="First Name"/>
+          <input type="text" placeholder="First Name" data-bind="textInput: firstName"/>
         </div>
         <div class="field">
           <label>Middle name</label>
-          <input type="text" placeholder="Middle Name" />
+          <input type="text" placeholder="Middle Name" data-bind="textInput: middleName"/>
         </div>
         <div class="field">
           <label>Last name</label>
-          <input type="text" placeholder="Last Name">
+          <input type="text" placeholder="Last Name" data-bind="textInput: lastName">
         </div>
       </div>
       <!--date of birth-->
       <div class="date field">
-        <label>Birthday</label>
-        <input type="text" placeholder="xx/xx/xxxx">
+        <label>DateofBirth</label>
+        <input type="text" placeholder="xx/xx/xxxx" data-bind="date: dateofBirth">
       </div>
       <!--Gender & Ethnicity fields -->
       <div class="two fields">
         <div class="field">
           <label>Gender</label>
-          <select class="ui dropdown">
+          <select class="ui dropdown" data-bind="value: gender">
             <option value="">Gender</option>
             <option value="1">Male</option>
             <option value="0">Female</option>
@@ -34,7 +46,7 @@
         </div>
         <div class="field">
           <label>Ethnicity</label>
-          <select class="ui dropdown">
+          <select class="ui dropdown" data-bind="value: gender">
             <option value="">Ethnicity</option>
             <option value="5">American Indian or Alaska Native</option>
             <option value="4">Asian</option>
@@ -48,30 +60,39 @@
       <!--Adress & Postal code-->
       <h4 class="ui dividing header">Address</h4>
       <div class="field">
-
         <div class="field">
-          <input type="text" placeholder="Street Address" />
+          <input type="text" placeholder="Street Address" data-bind="textInput: streetAdress" />
         </div>
       </div>
       <!-- Apartment number & Postal Code-->
       <div class="two fields">
         <div class="field">
-          <input type="text" placeholder="Apt #" />
+          <input type="text" placeholder="Apt #"  data-bind="textInput: apartmentNumber"/>
         </div>
         <div class="field">
-          <input type="text" placeholder="Postal Code" />
+          <input type="text" placeholder="Postal Code" data-bind="textInput: postalCode" />
         </div>
       </div>
       <!-- Apartment number & Postal Code-->
       <!--Household occupants-->
       <div class="field">
-        <input type="number" placeholder="Houshold Occupants"/>
+        <input type="number" placeholder="Houshold Occupants" data-bind="number: householdOccupants"/>
       </div>
       <!--Houshold occupants-->
+      <!--Veteran Status-->
+        <div class="grouped fields">
+            <label> Veteran Status</label>
+            <div class="field">
+                <div class="ui checkbox" data-bind="checked: veteranStatus">
+                    <input type="checkbox" name="credentials">
+                    <label>Veteran</label>
+                </div> 
+            </div>             
+        </div>
       <!--Marital Status-->
       <div class="field">
         <label> Marital Status</label>
-        <select class="ui dropdown">
+        <select class="ui dropdown" data-bind="value: maritalStatus">
           <option value="">Marital Status</option>
           <option value="4">Single</option>
           <option value="3">Married</option>
@@ -85,26 +106,17 @@
       <!--Service Status-->
       <div class="field">
         <label>Service Status</label>
-        <select class="ui dropdown">
+        <select class="ui dropdown" data-bind="value: serviceStatus">
           <option value="">Service Status</option>
           <option value="1">Approved</option>
           <option value="0">Banned</option>
         </select>
       </div>
-      <div class="field">
-        <label>Service</label>
-        <select class="ui dropdown">
-          <option value="">Service</option>
-          <option value="1">Medical</option>
-          <option value="2">Dental</option>
-          <option value="3">Baby Luv</option>
-          <option value="4">Lord's Pantry</option>
-        </select>
-      </div>
+    
 
       <!--Services Eligible For-->
       <div class="field">
-        <div class="ui checkbox">
+        <div class="ui checkbox" data-bind="checked: neccessaryPaperwork">
           <input type="checkbox" name="credentials">
           <label>Has necessary paperwork to recieve services</label>
         </div>
