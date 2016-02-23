@@ -73,7 +73,15 @@ function ManageVolunteersViewModel() {
     $('.ui.dropdown').dropdown();
   }.bind(this);
 
-  this.resetPassword = function() {
+  this.changePassword = function() {
 
+  }.bind(this);
+
+  this.editPassword = function(data, event) {
+    data.fullName = data.firstName + ' ' + data.lastName;
+    data.password = ko.observable();
+    data.confirmPassword = ko.observable();
+    this.targetVolunteer(data);
+    $('#changePassword').modal('show');
   }.bind(this);
 }
