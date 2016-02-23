@@ -69,6 +69,7 @@
     <Compile Include="TestData\AddressGenerator.cs" />
     <Compile Include="TestData\Enums.cs" />
     <Compile Include="TestData\Patrons.cs" />
+    <Compile Include="TestData\Visits.cs" />
     <Compile Include="TestData\VolunteerRoles.cs" />
     <Compile Include="TestData\TestVolunteers.cs" />
   </ItemGroup>

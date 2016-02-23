@@ -1,12 +1,8 @@
-﻿using Models;
+﻿
+using Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using DataAccess.Contexts;
-using Utility.Enum;
 
 namespace DataAccess.TestData
 {
@@ -20,6 +16,7 @@ namespace DataAccess.TestData
             var residenceStatuses = Enums.GetResidenceStatuses(context);
             var genderStatuses = Enums.GetGenders(context);
             var ethnicityStatuses = Enums.GetEthnicities(context);
+            //TODO: Race id
                 
             return new Patron
             {
@@ -30,7 +27,8 @@ namespace DataAccess.TestData
                 Residence = residenceStatuses[Random.Next(residenceStatuses.Length)],
                 Gender = genderStatuses[Random.Next(genderStatuses.Length)],
                 Ethnicity = ethnicityStatuses[Random.Next(ethnicityStatuses.Length)],
-                Addresses = new AddressGenerator(Random.Next(5), Random).ToArray()
+                Addresses = new AddressGenerator(Random.Next(5), Random).ToArray(),
+                NumberInHousehold = (short) Random.Next(1, 10)
             };
         }
 

@@ -8,5 +8,29 @@ body.pushable {
 }
 
 .topMargin {
+  margin-top: 5% !important;
+}
+
+.rightAligned {
+  text-align: right;
+}
+
+div#logIn{
+ padding-top:50%;
+}
+
+.bold {
+  font-weight: bold !important;
+}
+
+.patronSearchSelection {
+  float: right;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.paginationButtons {
   margin-top: 20px !important;
 }

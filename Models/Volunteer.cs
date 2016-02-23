@@ -24,18 +24,15 @@ namespace Models
 
     public class Volunteer : ModelBase, ILogin
     {
-        [Key]
-        [Required]
-        [Index(IsUnique = true)]
-
+        [Key][Required][Index(IsUnique = true)]
+        public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public string Username { get; set; }
         public virtual ICollection<RoleVolunteer> Roles { get; set; }
         [Required]
-        [DataType(DataType.Password)]
-        [JsonIgnore][XmlIgnore]
+        public virtual ICollection<ServiceType> ServiceTypes { get; set; }
+        [Required][DataType(DataType.Password)][JsonIgnore][XmlIgnore]
         public string HashedPassword { get; set; }
         [NotMapped]
         public string Password { get; set; }

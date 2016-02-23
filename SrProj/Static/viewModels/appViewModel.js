@@ -5,10 +5,12 @@ function App() {
 
   this.authToken = ko.observable('');
   this.username = ko.observable('');
+  this.services = ko.observableArray([]);
   this.roles = ko.observableArray([]);
 
   this.authToken.subscribe(cookieTracking, this);
   this.username.subscribe(cookieTracking, this);
+  this.services.subscribe(cookieTracking, this);
   this.roles.subscribe(cookieTracking, this);
 
   function cookieTracking() {
@@ -23,7 +25,8 @@ function App() {
     return {
       authToken: this.authToken(),
       username: this.username(),
-      roles: this.roles()
+      roles: this.roles(),
+      services: this.services()
     };
   }.bind(this);
 
@@ -34,6 +37,7 @@ function App() {
   this.clearCredentials = function() {
     this.authToken('');
     this.username('');
+    this.services([]);
     this.roles([]);
   }.bind(this);
 

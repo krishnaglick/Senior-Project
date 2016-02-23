@@ -18,6 +18,7 @@ function LoginViewModel() {
         if(authToken) {
           app.authToken(authToken);
           app.username(this.username());
+          app.services(data.allowedServices);
           app.roles(data.roles);
           this.clearCredentials();
           //TODO: Let user know they logged in.

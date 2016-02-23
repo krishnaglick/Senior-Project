@@ -1,4 +1,7 @@
 function CreateVolunteerViewModel() {
+  this.firstname = ko.observable();
+  this.lastname = ko.observable();
+  this.email = ko.observable();
   this.username = ko.observable();
   this.password = ko.observable();
   this.confirmPassword = ko.observable();
@@ -6,6 +9,9 @@ function CreateVolunteerViewModel() {
   this.controller = 'Volunteer';
 
   this.clearCredentials = function() {
+    this.firstname('');
+    this.lastname('');
+    this.email('');
     this.username('');
     this.password('');
     this.confirmPassword('');
@@ -13,6 +19,18 @@ function CreateVolunteerViewModel() {
 
   this.validate = function() {
     var errors = [];
+        if(!this.firstname()) {
+      errors.push('You need a First Name!');
+    }
+
+    if(!this.lastname()) {
+      errors.push('You need a Last Name!');
+    }
+
+    if(!this.email()) {
+      errors.push('You need an email!');
+    }
+
     if(!this.username()) {
       errors.push('You need a username!');
     }
