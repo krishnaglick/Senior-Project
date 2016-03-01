@@ -25,6 +25,7 @@ div#logIn{
 
 .patronSearchSelection {
   float: right;
+  position: fixed;
 }
 
 .clickable {

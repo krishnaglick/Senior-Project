@@ -55,6 +55,8 @@ $(function() {
     window.manageVolunteersVM = new ManageVolunteersViewModel();
     var reportingVM = new ReportingViewModel();
     window.reportingVM = reportingVM;
+    var patronCheckInVM = new PatronCheckInViewModel();
+    window.patronCheckInVM = patronCheckInVM;
     var routes = {
       Home: {
           url: 'partials/mainPage.html',
@@ -73,6 +75,7 @@ $(function() {
         url: 'partials/patronCheckIn.html',
         name: 'Patron Check In',
         id: 'patronCheckIn',
+        vm: patronCheckInVM,
         routeAction: function () {
           $('.ui.dropdown').dropdown();
           $('.ui.modal').modal();
