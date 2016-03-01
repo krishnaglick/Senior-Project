@@ -9,7 +9,16 @@ function LoginViewModel() {
     this.password('');
   }.bind(this);
 
-  this.login = function() {
+  this.enterLogin = function(data, event) {
+      var enterKeyCode = 13;
+      if(event && event.keyCode === enterKeyCode) {
+        this.login();
+        return false;
+      }
+      return true;
+  };
+
+  this.login = function(data, event) {
     var action = 'login';
 
     app.post(this.controller, action, ko.toJSON(this))
@@ -23,6 +32,7 @@ function LoginViewModel() {
           this.clearCredentials();
           //TODO: Let user know they logged in.
           alert('You\'re logged in!');
+          window.location = window.location.href.split('#')[0] + '#PatronCheckIn';
         }
         else {
           //Bad things
