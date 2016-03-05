@@ -6,7 +6,7 @@ namespace DataAccess.Contexts
 {
     public class ContextBase : DbContext
     {
-        public ContextBase() : base("noah") { }
+        public ContextBase() : base("homeDesktop") { }
 
         public ContextBase(string connectionString) : base(connectionString) { }
 

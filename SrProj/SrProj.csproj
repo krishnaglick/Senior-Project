@@ -681,8 +681,10 @@
     <Content Include="Static\bower_components\semantic\tasks\version.js" />
     <Content Include="Static\bower_components\semantic\tasks\watch.js" />
     <Content Include="Static\controllers\appController.js" />
+    <Content Include="Static\partials\admin\createVolunteer.html" />
     <Content Include="Static\partials\mainPage.html" />
     <Content Include="Static\viewModels\appViewModel.js" />
+    <Content Include="Static\viewModels\createVolunteerViewModel.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
