@@ -1,14 +1,4 @@
 ﻿function CheckInViewModel() {
-    this.controller = 'patronCheckIn';
-    
-    this.validate = function() {
-        var errors= [];
-        if (this. patronCheckIn === '1'){
-            //Patron Check In Validation
-        }
-        return errors;
-    }.bind(this);
-
     //Patron Check In
     this.serviceStatus = ko.observable();
     this.firstName = ko.observable();
@@ -25,17 +15,48 @@
     this.maritalStatus = ko.observable();
     this.serviceEligibility = ko.observable();
     this.neccessaryPaperwork = ko.observable(false);
-}.bind(this);
 
-this.validate = function() {
-    var errors = [];
-    if(!this.firstName()){
-        error.push ('Please enter a First Name');
-    }
-    if(!this.lastName()){
-        if(!this.lastName()){
-            error.push ('Please enter a Last Name');
+    this.controller = 'patronCheckIn';
+
+    this.validate = function () {
+        var errors = [];
+        if (!this.firstName()) {
+            error.push('Please enter a First Name');
+        }
+        if (!this.lastName()) {
+            error.push('Please enter a Last Name');
+        }
+        if (!this.dateOfBirth()) {
+            error.push('Please enter Date of Birth');
+        }
+        if (!this.gender()) {
+            error.push('Please specify Gender');
+        }
+        if (!this.ethnicity()) {
+            error.push('Please specify ethnicity');
+        }
+        if (!this.maritalStatus()) {
+            error.push('Please specify Marital Status');
+        }
+        if (!this.streetAddress()) {
+            error.push('Please input Street Address');
+        }
+        if (!this.postalCode()) {
+            error.push('Please enter Postal Code');
+        }
+        if (!this.householdOccupants()) {
+            error.push('Please enter Household Occupants');
+        }
+
+        return errors;
+    }.bind(this);
+
+    this.checkInVolunteer = function () {
+        var validationErrors = this.validate();
+        if (validationErrors.length) {
+            alert(validationErrors);
+            return;
         }
     }
-    if(!)
+
 }
