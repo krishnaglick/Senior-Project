@@ -67,11 +67,5 @@ namespace SrProj.API
                 }
             }
         }
-
-        [HttpGet]
-        public void Logout()
-        {
-            //I do nothing right now.
-        }
     }
 }
