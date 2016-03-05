@@ -31,6 +31,30 @@ namespace SrProj.API
         }
 
         [HttpPost]
+        public HttpResponseMessage FindPatron(Patron searchData)
+        {
+            ApiResponse response = new ApiResponse(Request);
+            try
+            {
+                var patronContext = new Database();
+                var patrons = patronContext.Patrons.Where(
+                    p =>
+                        p.FirstName.ToLower().Contains(searchData.FirstName.ToLower()) ||
+                        p.MiddleName.ToLower().Contains(searchData.MiddleName.ToLower()) ||
+                        p.LastName.ToLower().Contains(searchData.LastName.ToLower()) ||
+                        p.DateOfBirth.ToString().Contains(searchData.DateOfBirth.ToString()));
+
+                response.data = patrons;
+                return response.GenerateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                response.errors.Add(new InvalidPatron { source = e });
+                return response.GenerateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpPost]
         public HttpResponseMessage Create(Patron patron)
         {
             ApiResponse response = new ApiResponse(Request);
@@ -46,6 +70,26 @@ namespace SrProj.API
             catch(Exception e)
             {
                 response.errors.Add(new InvalidPatron { source = e });
+                return response.GenerateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        public class CheckInViewModel
+        {
+            
+        }
+
+        public HttpResponseMessage CheckIn(dynamic visit)
+        {
+            ApiResponse response = new ApiResponse(Request);
+            try
+            {
+                var checkInContext = new Database();
+                return response.GenerateResponse(HttpStatusCode.Created);
+            }
+            catch(Exception e)
+            {
+                response.errors.Add(new InvalidCheckIn { source = e });
                 return response.GenerateResponse(HttpStatusCode.BadRequest);
             }
         }

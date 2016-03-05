@@ -25,17 +25,57 @@ function PatronCheckInViewModel() {
   this.maritalStatus = ko.observable();
   this.serviceEligibility = ko.observable();
   this.neccessaryPaperwork = ko.observable(false);
+  this.serviceSelection = ko.observable();
 
   this.foundPatrons = ko.observableArray([]);
 
-  (function testData() {
-    var testPatron = {
-      firstName: 'Tom',
-      lastName: 'Hardy',
-      dateOfBirth: '12/12/2012',
-      address: '12345 SW 1st St, Apt 783' //This will be aggregate data maybe I don't know
-    };
-    for(var i = 0; i < 5; i++)
-      this.foundPatrons.push(testPatron);
-  }).call(this);
+  this.autoComplete = function() {
+    var action = 'FindPatron';
+    app.post(this.controller, action, ko.toJSON(this))
+    .success(function(data) {
+      this.foundPatrons(data || []);
+    }.bind(this));
+  }.bind(this);
+
+  this.firstName.subscribe(this.autoComplete);
+  this.middleName.subscribe(this.autoComplete);
+  this.lastName.subscribe(this.autoComplete);
+  this.dateOfBirth.subscribe(this.autoComplete);
+
+  this.showCheckInModal = function() {
+    $('.ui.modal').modal('show');
+  }.bind(this);
+
+  this.clear = function() {
+    //Clear out bindings
+  }.bind(this);
+
+  this.checkIn = function() {
+    var action = 'CheckIn';
+    if(app.services().length === 1)
+      this.serviceSelection(app.services()[0]);
+    else {
+      this.serviceSelection($('.ui.dropdown.selection').dropdown('get text')[0]);
+    }
+
+    app.post(this.controller, action, ko.toJSON(this))
+    .success(function(data, textStatus, request) {
+      alert('Patron Checked In!');
+    }.bind(this))
+    .error(function(data) {
+      if(data.responseJSON){
+        if(Array.isArray(data.responseJSON) && data.responseJSON.length > 1) {
+          //Aggregate errors
+
+          return;
+        }
+        else if(Array.isArray(data.responseJSON) && data.responseJSON.length == 1) {
+          data.responseJSON = data.responseJSON[0];
+        }
+
+        //Handle single error.
+        alert('Invalid username or password.');
+      }
+    }.bind(this));
+  }.bind(this);
 }

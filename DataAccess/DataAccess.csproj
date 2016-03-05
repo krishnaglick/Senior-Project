@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contexts\ConnectionString.cs" />
     <Compile Include="Contexts\ContextBase.cs" />
     <Compile Include="Migrations\201601100207313_init.cs" />
     <Compile Include="Migrations\201601100207313_init.Designer.cs">

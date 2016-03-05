@@ -3,35 +3,34 @@
   <div class="nine wide column">
     <div class="ui form segment">
     <!-- Service Selection-->
-       <div class="field">
+       <div class="field" data-bind="if: app.services().length > 1">
           <label>Service Selection</label>
-          <select class="ui dropdown">
+          <select class="serviceSelection ui dropdown" data-bind="value: serviceSelection">
             <option value="">Reason for Visit</option>
-            <option value="1">Medical</option>
-            <option value="2">Dental</option>
-            <option value="3">Baby Luv</option>
-            <option value="4">Lord's Pantry</option>
+            <!-- ko foreach: app.services -->
+              <option data-bind="text: $data.name, value: $data.name"></option>
+            <!-- /ko -->
           </select>
       </div>
     <!-- Patron Name-->
       <div class="three fields">
         <div class="field">
-          <label>First name</label>
+          <label>First Name</label>
           <input type="text" placeholder="First Name" data-bind="textInput: firstName"/>
         </div>
         <div class="field">
-          <label>Middle name</label>
+          <label>Middle Name</label>
           <input type="text" placeholder="Middle Name" data-bind="textInput: middleName"/>
         </div>
         <div class="field">
-          <label>Last name</label>
+          <label>Last Name</label>
           <input type="text" placeholder="Last Name" data-bind="textInput: lastName">
         </div>
       </div>
       <!--date of birth-->
       <div class="date field">
-        <label>DateofBirth</label>
-        <input type="text" placeholder="xx/xx/xxxx" data-bind="date: dateofBirth">
+        <label>Date Of Birth</label>
+        <input type="text" placeholder="MM/DD/YYYY" data-bind="date: dateofBirth">
       </div>
       <!--Gender & Ethnicity fields -->
       <div class="two fields">
@@ -81,13 +80,13 @@
       <!--Houshold occupants-->
       <!--Veteran Status-->
         <div class="grouped fields">
-            <label> Veteran Status</label>
-            <div class="field">
-                <div class="ui checkbox" data-bind="checked: veteranStatus">
-                    <input type="checkbox" name="credentials">
-                    <label>Veteran</label>
-                </div>
+          <label> Veteran Status</label>
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" data-bind="checked: veteranStatus">
+              <label>Veteran</label>
             </div>
+          </div>
         </div>
       <!--Marital Status-->
       <div class="field">
@@ -115,32 +114,31 @@
 
       <!--Services Eligible For-->
       <div class="field">
-        <div class="ui checkbox" data-bind="checked: neccessaryPaperwork">
-          <input type="checkbox" name="credentials">
+        <div class="ui checkbox">
+          <input type="checkbox" data-bind="checked: neccessaryPaperwork">
           <label>Has necessary paperwork to recieve services</label>
         </div>
       </div>
-      <button onclick ="$('.ui.modal').modal('show');" class="ui blue submit button">Submit</button>
-      <!--modal-->
-      <div class="ui small basic modal">
-        <i class="close icon"></i>
-        <div class="header">
-          Patron Check In
-        </div>
-        <div class="description">
-          <div class="left">
-            <p>Are you sure you want to check in this Patron?</p>
-          </div>
-        </div>
-        <div class="actions">
-          <button class="ui negative button">Yes</button>
-          <button class="ui positive button">No</button>
-        </div>
-      </div>
-      <!--alert should pop up stating the patron is checked in-->
+      <button class="ui blue submit button" data-bind="click: showCheckInModal">Submit</button>
+      <button class="ui negative button" data-bind="click: clear">Clear</button>
     </div>
-
   </div>
+
+<div class="ui small basic modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Patron Check In
+  </div>
+  <div class="description">
+    <div class="left">
+      <p>Are you sure you want to check in this Patron?</p>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="ui negative button" data-bind="click: checkIn">Yes</button>
+    <button class="ui positive button">No</button>
+  </div>
+</div>
 
 <div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0">
   <div class="ui form segment" data-bind="foreach: foundPatrons">
@@ -148,7 +146,7 @@
       <div class="field" data-bind="text: firstName"></div>
       <div class="field" data-bind="text: lastName"></div>
       <div class="field" data-bind="text: dateOfBirth"></div>
-      <div class="field" data-bind="text: address"></div>
+      <div class="field" data-bind="text: addresses[0].streetAddress"></div>
     </div>
   </div>
 </div>

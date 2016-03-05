@@ -51,24 +51,23 @@ function CreateVolunteerViewModel() {
 
     var action = 'CreateVolunteer';
     app.post(this.controller, action, ko.toJSON(this))
-      .success(function(data, textStatus, request) {
-        alert('User Created!');
-      }.bind(this))
-      .error(function(data) {
-        if(data.responseJSON){
-          if(Array.isArray(data.responseJSON) && data.responseJSON.length > 1) {
-            //Aggregate errors
+    .success(function(data, textStatus, request) {
+      alert('User Created!');
+    }.bind(this))
+    .error(function(data) {
+      if(data.responseJSON){
+        if(Array.isArray(data.responseJSON) && data.responseJSON.length > 1) {
+          //Aggregate errors
 
-            return;
-          }
-          else if(Array.isArray(data.responseJSON) && data.responseJSON.length == 1) {
-            data.responseJSON = data.responseJSON[0];
-          }
-
-          //Handle single error.
-          alert('Invalid username or password.');
+          return;
         }
-        //debugger;
-      }.bind(this));
+        else if(Array.isArray(data.responseJSON) && data.responseJSON.length == 1) {
+          data.responseJSON = data.responseJSON[0];
+        }
+
+        //Handle single error.
+        alert('Invalid username or password.');
+      }
+    }.bind(this));
   }.bind(this);
 }
