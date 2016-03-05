@@ -26,3 +26,16 @@
     this.serviceEligibility = ko.observable();
     this.neccessaryPaperwork = ko.observable(false);
 }.bind(this);
+
+this.validate = function() {
+    var errors = [];
+    if(!this.firstName()){
+        error.push ('Please enter a First Name');
+    }
+    if(!this.lastName()){
+        if(!this.lastName()){
+            error.push ('Please enter a Last Name');
+        }
+    }
+    if(!)
+}
