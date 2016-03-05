@@ -19,24 +19,25 @@ function CreateVolunteerViewModel() {
 
   this.validate = function() {
     var errors = [];
-        if(!this.firstname()) {
-      errors.push('You need a First Name!');
+    if(!this.firstname()) {
+            errors.push('\nYou need a First Name!');
     }
 
     if(!this.lastname()) {
-      errors.push('You need a Last Name!');
+      errors.push('\nYou need a Last Name!');
     }
 
-    if(!this.email()) {
-      errors.push('You need an email!');
-    }
 
     if(!this.username()) {
-      errors.push('You need a username!');
+      errors.push('\nYou need a Username!');
+    }
+
+    if(!this.password()) {
+      errors.push('\nYou need a Password!');
     }
 
     if(this.password() != this.confirmPassword()) {
-      errors.push('Your passwords don\'t match!');
+      errors.push('\nYour passwords don\'t match!');
     }
 
     return errors;
