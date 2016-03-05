@@ -17,7 +17,7 @@ namespace SrProj.API
     internal sealed class AuthorizationOptions
     {
         public static readonly RoleID[] DefaultAuthRoles = { RoleID.Admin };
-        public static readonly int AuthTokenTimeout = 15; //In Minutes
+        public static readonly int AuthTokenTimeout = 480; //In Minutes
     }
 
     [AttributeUsage(AttributeTargets.Class)]
