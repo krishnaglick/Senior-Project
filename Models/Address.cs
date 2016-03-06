@@ -1,30 +1,22 @@
 ﻿
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using Utility.Attribute;
 
 namespace Models
 {
-    public interface IAddress
+    public class Address
     {
-        string StreetAddress { get; set; }
-        string City { get; set; }
-        string County { get; set; }
-        string State { get; set; }
-        string Zip { get; set; }
-    }
-
-    [ComplexType]
-    public class Address : IAddress
-    {
+        [Key]
+        public int ID { get; set; }
         [FilterableText]
         public string StreetAddress { get; set; }
         [FilterableText]
         public string City { get; set; }
         [FilterableText]
         public string County { get; set; }
-        [FilterableText]
+        [FilterableText][MinLength(2)]
         public string State { get; set; }
-        [FilterableText]
+        [FilterableText][MinLength(5)][MaxLength(5)]
         public string Zip { get; set; }
     }
 }

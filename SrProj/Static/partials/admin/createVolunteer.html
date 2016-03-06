@@ -1,39 +1,52 @@
 
 <div class="ui centered grid topMargin">
   <div class="four wide column">
-    <div class="ui form segment">
+    <div class="ui blue attached massive message">
+      <div class="header">
+        Create a Volunteer
+      </div>
+    </div>
+
+    <form class="ui form attached fluid segment">
       <div class="field">
-        <label>First Name</label>
-        <input id="firstname" placeholder="First Name" type="text" data-bind="textInput: firstName"  autofocus="true" />
+        <label>First Name*</label>
+        <input id="firstname" placeholder="First Name" type="text" data-bind="textInput: firstname"  autofocus="true" />
       </div>
 
       <div class="field">
-        <label>Last Name</label>
-        <input id="lastname" placeholder="Last Name" type="text" data-bind="textInput: lastName"  autofocus="true" />
+        <label>Last Name*</label>
+        <input id="lastname" placeholder="Last Name" type="text" data-bind="textInput: lastname"  autofocus="true" />
       </div>
 
       <div class="field">
-        <label>Email</label>
+        <label>Email <em>(Optional)</em></label>
         <input id="email" placeholder="Email" type="text" data-bind="textInput: email"  autofocus="true" />
       </div>
 
       <div class="field">
-        <label>Username</label>
+        <label>Username*</label>
         <input id="username" placeholder="Username" type="text" data-bind="textInput: username" autofocus="true" />
       </div>
 
+
       <div class="field">
-        <label>Password</label>
-        <input id="password" placeholder="Password" type="text" data-bind="textInput: password" />
+        <label>Password*</label>
+        <input id="password" placeholder="Password" type="password" data-bind="textInput: password" />
       </div>
 
       <div class="field">
-        <label>Confirm Password</label>
-        <input id="confirmPassword" placeholder="Confirm Password" type="text" data-bind="textInput: confirmPassword" />
+        <label>Confirm Password*</label>
+        <input id="confirmPassword" placeholder="Confirm Password" type="password" data-bind="textInput: confirmPassword" />
       </div>
 
-      <button type="button" class="ui inverted green button" data-bind="click: createVolunteer">Create Volunteer</button>
-      <button type="button" class="ui inverted red button" data-bind="click: clearCredentials">Clear</button>
-    </div>
+      <div class"field">
+        <em>* Indicates required field</em>
+      </div>
+
+      <div class = "rightAligned field">
+        <button type="button" class="ui inverted blue button" data-bind="click: createVolunteer">Create Volunteer</button>
+        <button type="button" class="ui inverted red button" data-bind="click: clearCredentials">Clear</button>
+      </div>
+    </form>
   </div>
 </div>

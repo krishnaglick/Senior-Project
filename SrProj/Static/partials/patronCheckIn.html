@@ -1,5 +1,5 @@
 ﻿
-<div class="ui centered grid">
+<div class="ui centered grid topMargin">
     <div class="nine wide column">
         <div class="ui blue attached massive message">
             <div class="header">
@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="ui form attached fluid segment">
-
+            <!--search patron-->
             <div class="ui right aligned category search field">
                 <h4 class="ui dividing header">Search Patron</h4>
                 <div class="ui icon input">
@@ -16,39 +16,36 @@
                 </div>
                 <div class="results"></div>
             </div>
-
             <!-- Service Selection-->
-            <div class="field">
+            <div class="field" data-bind="if: app.services().length > 1">
                 <h4 class="ui dividing header">Service Selection*</h4>
-                <select class="ui dropdown">
+                <select class="serviceSelection ui dropdown" data-bind="value: serviceSelection">
                     <option value="">Reason for Visit</option>
-                    <option value="1">Medical</option>
-                    <option value="2">Dental</option>
-                    <option value="3">Baby Luv</option>
-                    <option value="4">Lord's Pantry</option>
+                    <!-- ko foreach: app.services -->
+                    <option data-bind="text: $data.name, value: $data.name"></option>
+                    <!-- /ko -->
                 </select>
             </div>
-
+            <!-- Patron Information-->
             <h4 class="ui dividing header">Patron Information</h4>
-            <!-- Patron Name-->
             <div class="three fields">
                 <div class="field">
-                    <label>First name*</label>
+                    <label>First Name*</label>
                     <input type="text" placeholder="First Name" data-bind="textInput: firstName" />
                 </div>
                 <div class="field">
-                    <label>Middle name <em>(Optional)</em></label>
+                    <label>Middle Name<em>(Optional)</em></label>
                     <input type="text" placeholder="Middle Name" data-bind="textInput: middleName" />
                 </div>
                 <div class="field">
-                    <label>Last name*</label>
-                    <input type="text" placeholder="Last Name" data-bind="textInput: lastName">
+                    <label>Last Name*</label>
+                    <input type="text" placeholder="Last Name*" data-bind="textInput: lastName">
                 </div>
             </div>
             <!--date of birth-->
             <div class="date field">
-                <label>DateofBirth*</label>
-                <input type="date" placeholder="mm/dd/yyyy" data-bind="date: dateofBirth">
+                <label>Date Of Birth*</label>
+                <input type="date" placeholder="MM/DD/YYYY" data-bind="date: dateofBirth">
             </div>
             <!--Gender & Ethnicity fields -->
             <div class="two fields">
@@ -74,7 +71,6 @@
                     </select>
                 </div>
             </div>
-
             <!--Marital Status-->
             <div class="field">
                 <label>Marital Status*</label>
@@ -88,11 +84,11 @@
                 </select>
             </div>
 
-            <!--Adress & Postal code-->
+            <!--Address & Postal code-->
             <h4 class="ui dividing header">Address*</h4>
             <div class="field">
                 <div class="field">
-                    <input type="text" placeholder="Street Address" data-bind="textInput: streetAdress" />
+                    <input type="text" placeholder="Street Address" data-bind="textInput: streetAddress" />
                 </div>
             </div>
             <!-- Apartment number & Postal Code-->
@@ -109,10 +105,13 @@
             <div class="field">
                 <input type="number" placeholder="Houshold Occupants" data-bind="number: householdOccupants" />
             </div>
-            <!--Houshold occupants-->
 
-            <h4 class="ui dividing header">Service Eligibility</h4>
+
+            
+
+        
             <!--Service Status-->
+            <h4 class="ui dividing header">Service Eligibility</h4>
             <div class="field">
                 <label>Service Status*</label>
                 <select class="ui dropdown" data-bind="value: serviceStatus">
@@ -131,8 +130,8 @@
                     </div>
                 </div>
 
-                <!--Medical Insurance Status-->
-                <div class="field">
+           <!--Medical Insurance Status-->
+           <div class="field">
                     <div class="ui checkbox" data-bind="checked: insuranceStatus">
                         <input type="checkbox" name="credentials">
                         <label>Has Medical Insurance</label>
@@ -142,8 +141,8 @@
 
             <!--Services Eligible For-->
             <div class="field">
-                <div class="ui checkbox" data-bind="checked: neccessaryPaperwork">
-                    <input type="checkbox" name="credentials">
+                <div class="ui checkbox">
+                    <input type="checkbox" data-bind="checked: neccessaryPaperwork">
                     <label>Has necessary paperwork to recieve services</label>
                 </div>
             </div>
@@ -151,30 +150,27 @@
             <div class"field">
                 <em>* Indicates required field</em>
             </div>
-
             <div class="rightAligned field">
-                <button onclick="$('.ui.modal').modal('show');" class="ui blue submit button">Submit</button>
+            <button class="ui blue submit button" data-bind="click: showCheckInModal">Submit</button>
+            <button class="ui negative button" data-bind="click: clear">Clear</button>
             </div>
-            <!--modal-->
-           
-               <div class="ui small basic modal">
-                <i class="close icon"></i>
-                <div class="header">
-                    Patron Check In
-                </div>
-                <div class="description">
-                    <div class="left">
-                        <p>Are you sure you want to check in this Patron?</p>
-                    </div>
-                </div>
-                <div class="actions">
-                    <button class="ui negative button">Yes</button>
-                    <button class="ui positive button">No</button>
-                </div>
-            </div>
-            <!--alert should pop up stating the patron is checked in-->
-       </div>
+        </div>
+    </div>
 
+    <div class="ui small basic modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Patron Check In
+        </div>
+        <div class="description">
+            <div class="left">
+                <p>Are you sure you want to check in this Patron?</p>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="ui negative button" data-bind="click: checkIn">Yes</button>
+            <button class="ui positive button">No</button>
+        </div>
     </div>
 
     <div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0">
@@ -183,6 +179,7 @@
                 <div class="field" data-bind="text: firstName"></div>
                 <div class="field" data-bind="text: lastName"></div>
                 <div class="field" data-bind="text: dateOfBirth"></div>
+                <div class="field" data-bind="text: addresses[0].streetAddress"></div>
             </div>
         </div>
     </div>

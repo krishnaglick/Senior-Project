@@ -16,7 +16,7 @@ namespace DataAccess.TestData
             var residenceStatuses = Enums.GetResidenceStatuses(context);
             var genderStatuses = Enums.GetGenders(context);
             var ethnicityStatuses = Enums.GetEthnicities(context);
-            //TODO: Race id
+            var raceStatuses = Enums.GetRaces(context);
                 
             return new Patron
             {
@@ -27,6 +27,7 @@ namespace DataAccess.TestData
                 Residence = residenceStatuses[Random.Next(residenceStatuses.Length)],
                 Gender = genderStatuses[Random.Next(genderStatuses.Length)],
                 Ethnicity = ethnicityStatuses[Random.Next(ethnicityStatuses.Length)],
+                Race = raceStatuses[Random.Next(raceStatuses.Length)],
                 Addresses = new AddressGenerator(Random.Next(5), Random).ToArray(),
                 NumberInHousehold = (short) Random.Next(1, 10)
             };

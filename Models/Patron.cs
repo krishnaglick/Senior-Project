@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -32,14 +33,13 @@ namespace Models
         public int ID { get; set; }
         [Required][FilterableText]
         public string FirstName { get; set; }
-        [Required]
         [FilterableText]
+        public string MiddleName { get; set; }
+        [Required][FilterableText]
         public string LastName { get; set; }
         [NotMapped]
-        public string FullName
-        {
-            get { return string.Format("{0} {1}", this.FirstName, this.LastName); }
-        }
+        public string FullName => $"{this.FirstName} {this.LastName}";
+
         [FilterableNumber]
         public short NumberInHousehold { get; set; }
         [FilterableBoolean]

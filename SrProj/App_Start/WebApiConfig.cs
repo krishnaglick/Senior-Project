@@ -4,6 +4,7 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace SrProj
 {
@@ -14,6 +15,8 @@ namespace SrProj
             
             config.Formatters.Add(new BrowserJsonFormatter());
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             // Web API routes
             config.MapHttpAttributeRoutes();
