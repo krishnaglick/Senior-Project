@@ -2,10 +2,35 @@
 function PatronCheckInViewModel() {
   this.controller = 'Patron';
 
-  this.validate = function() {
-    var errors = [];
-    //Validation here.
-    if(errors.length)
+  this.validate = function () {
+      var errors = [];
+      if (!this.firstName()) {
+        errors.push('Please enter a First Name');
+      }
+      if (!this.lastName()) {
+          errors.push('Please enter a Last Name');
+      }
+      if (!this.dateOfBirth()) {
+          errors.push('Please enter Date of Birth');
+      }
+      if (!this.gender()) {
+          errors.push('Please specify Gender');
+      }
+      if (!this.ethnicity()) {
+          errors.push('Please specify Ethnicity');
+      }
+      if (!this.maritalStatus()) {
+          errors.push('Please specify Marital Status');
+      }
+      if (!this.streetAddress()) {
+          errors.push('Please input Street Address');
+      }
+      if (!this.postalCode()) {
+          errors.push('Please enter Postal Code');
+      }
+      if (!this.householdOccupants()) {
+          errors.push('Please enter Household Occupants');
+      }
       return errors;
   }.bind(this);
 
@@ -42,8 +67,12 @@ function PatronCheckInViewModel() {
   this.lastName.subscribe(this.autoComplete);
   this.dateOfBirth.subscribe(this.autoComplete);
 
-  this.showCheckInModal = function() {
-    $('.ui.modal').modal('show');
+  this.showCheckInModal = function () {
+    var errors = this.validate();
+    if(!errors.length)
+      $('.ui.modal').modal('show');
+    else
+        alert(errors.join('\n'));
   }.bind(this);
 
   this.clear = function() {
