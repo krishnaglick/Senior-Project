@@ -1,18 +1,22 @@
 ﻿
 <div class="ui centered grid topMargin">
   <div class="nine wide column">
+    <div class="ui blue attached massive message">
+      <div class="header">Patron Check-In</div>
+    </div>
     <div class="ui form segment">
     <!-- Service Selection-->
        <div class="field" data-bind="if: app.services().length > 1">
-          <label>Service Selection</label>
+          <h4 class="ui dividing header">Service Selection</h4>
           <select class="serviceSelection ui dropdown" data-bind="value: serviceSelection">
             <option value="">Reason for Visit</option>
             <!-- ko foreach: app.enums.services -->
-              <option data-bind="text: $data.id, value: $data.name"></option>
+              <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
             <!-- /ko -->
           </select>
       </div>
     <!-- Patron Name-->
+    <h4 class="ui dividing header">Patron Information</h4>
       <div class="three fields">
         <div class="field">
           <label>First Name</label>
@@ -27,10 +31,9 @@
           <input type="text" placeholder="Last Name" data-bind="textInput: lastName">
         </div>
       </div>
-      <!--date of birth-->
       <div class="date field">
         <label>Date Of Birth</label>
-        <input type="text" placeholder="MM/DD/YYYY" data-bind="date: dateofBirth">
+        <input type="date" placeholder="MM/DD/YYYY" data-bind="date: dateofBirth">
       </div>
       <!--Gender & Ethnicity fields -->
       <div class="two fields">
@@ -39,7 +42,7 @@
           <select class="ui dropdown" data-bind="value: gender">
             <option value="">Gender</option>
             <!-- ko foreach: app.enums.genders -->
-              <option data-bind="text: $data.id, value: $data.name"></option>
+              <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
             <!-- /ko -->
           </select>
 
@@ -49,16 +52,25 @@
           <select class="ui dropdown" data-bind="value: gender">
             <option value="">Race</option>
             <!-- ko foreach: app.enums.races -->
-              <option data-bind="text: $data.id, value: $data.name"></option>
+              <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
             <!-- /ko -->
           </select>
         </div>
+      </div>
+      <div class="field">
+        <label> Marital Status</label>
+        <select class="ui dropdown" data-bind="value: maritalStatus">
+          <option value="">Marital Status</option>
+          <!-- ko foreach: app.enums.maritalStatuses -->
+            <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
+          <!-- /ko -->
+        </select>
       </div>
       <!--Adress & Postal code-->
       <h4 class="ui dividing header">Address</h4>
       <div class="field">
         <div class="field">
-          <input type="text" placeholder="Street Address" data-bind="textInput: streetAdress" />
+          <input type="text" placeholder="Street Address" data-bind="textInput: streetAddress" />
         </div>
       </div>
       <!-- Apartment number & Postal Code-->
@@ -76,27 +88,6 @@
         <input type="number" placeholder="Houshold Occupants" data-bind="number: householdOccupants"/>
       </div>
       <!--Houshold occupants-->
-      <!--Veteran Status-->
-        <div class="grouped fields">
-          <label> Veteran Status</label>
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" data-bind="checked: veteranStatus">
-              <label>Veteran</label>
-            </div>
-          </div>
-        </div>
-      <!--Marital Status-->
-      <div class="field">
-        <label> Marital Status</label>
-        <select class="ui dropdown" data-bind="value: maritalStatus">
-          <option value="">Marital Status</option>
-          <!-- ko foreach: app.enums.maritalStatuses -->
-            <option data-bind="text: $data.id, value: $data.name"></option>
-          <!-- /ko -->
-        </select>
-      </div>
-
       <h4 class="ui dividing header">Service Eligibility</h4>
       <!--Service Status-->
       <div class="field">
@@ -107,7 +98,17 @@
           <option value="Banned">Banned</option>
         </select>
       </div>
-
+      <!--Veteran Status-->
+      <div class="grouped fields">
+        <label> Veteran Status</label>
+        <div class="field">
+          <div class="ui checkbox">
+            <input type="checkbox" data-bind="checked: veteranStatus">
+            <label>Veteran</label>
+          </div>
+        </div>
+      </div>
+      <hr>
       <!--Services Eligible For-->
       <div class="field">
         <div class="ui checkbox">

@@ -20,6 +20,7 @@ namespace SrProj.API
             {
                 data = new
                 {
+                    Services = Enum.GetValues(typeof(ServiceTypeID)).ToList().Select(EnumViewModel.ParseEnum),
                     Ethnicities = Enum.GetValues(typeof(EthnicityID)).ToList().Select(EnumViewModel.ParseEnum),
                     Genders = Enum.GetValues(typeof(GenderID)).ToList().Select(EnumViewModel.ParseEnum),
                     MaritalStatuses = Enum.GetValues(typeof(MaritalStatusID)).ToList().Select(EnumViewModel.ParseEnum),

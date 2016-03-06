@@ -42,7 +42,7 @@ function PatronCheckInViewModel() {
   this.dateOfBirth = ko.observable();
   this.gender = ko.observable();
   this.ethnicity = ko.observable();
-  this.streetAdress = ko.observable();
+  this.streetAddress = ko.observable();
   this.apartmentNumber = ko.observable();
   this.postalCode = ko.observable();
   this.householdOccupants = ko.observable();

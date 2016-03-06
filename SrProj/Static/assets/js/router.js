@@ -53,7 +53,7 @@ function Router(renderElement, partialContainer) {
       if(true || !window[this.routes[route].id]) {
         this.contentArea.load(this.routes[route].url, function() {
           applyBinding.call(this);
-          if(routeAction) routeAction();
+          if(routeAction) setTimeout(routeAction, 500);
           //this.addPartialToPartialHolder(this.routes[route].id, this.contentArea.html());
           this.routeTransitionEnd();
         }.bind(this));
