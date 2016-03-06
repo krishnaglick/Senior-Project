@@ -136,4 +136,14 @@ $(function() {
 
     router.registerRouting(app.pageTitle, routes);
   }).call(this);
+
+  (function loadEnums() {
+    window.app.get('Enum', 'GetEnums')
+    .success(function(data) {
+      window.app.enums = data;
+    })
+    .error(function() {
+      alert('There was an error loading enums, please contact your system administrator!');
+    });
+  }).call(this);
 });

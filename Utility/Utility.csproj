@@ -54,6 +54,7 @@
     <Compile Include="Enum\ResidenceStatusID.cs" />
     <Compile Include="Enum\RoleID.cs" />
     <Compile Include="Enum\ServiceTypeID.cs" />
+    <Compile Include="ExtensionMethod\ArrayExtensions.cs" />
     <Compile Include="ExtensionMethod\DateExtensions.cs" />
     <Compile Include="ExtensionMethod\EnumExtensions.cs" />
     <Compile Include="ExtensionMethod\HttpRequestHeadersExtentions.cs" />

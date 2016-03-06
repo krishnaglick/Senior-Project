@@ -7,8 +7,8 @@
           <label>Service Selection</label>
           <select class="serviceSelection ui dropdown" data-bind="value: serviceSelection">
             <option value="">Reason for Visit</option>
-            <!-- ko foreach: app.services -->
-              <option data-bind="text: $data.name, value: $data.name"></option>
+            <!-- ko foreach: app.enums.services -->
+              <option data-bind="text: $data.id, value: $data.name"></option>
             <!-- /ko -->
           </select>
       </div>
@@ -38,21 +38,19 @@
           <label>Gender</label>
           <select class="ui dropdown" data-bind="value: gender">
             <option value="">Gender</option>
-            <option value="1">Male</option>
-            <option value="0">Female</option>
+            <!-- ko foreach: app.enums.genders -->
+              <option data-bind="text: $data.id, value: $data.name"></option>
+            <!-- /ko -->
           </select>
 
         </div>
         <div class="field">
-          <label>Ethnicity</label>
+          <label>Race</label>
           <select class="ui dropdown" data-bind="value: gender">
-            <option value="">Ethnicity</option>
-            <option value="5">American Indian or Alaska Native</option>
-            <option value="4">Asian</option>
-            <option value="3">Black or African American</option>
-            <option value="2">Hispanic or Latino</option>
-            <option value="1">Native Hawaiian or Other Pacfic Islander</option>
-            <option value="0">White</option>
+            <option value="">Race</option>
+            <!-- ko foreach: app.enums.races -->
+              <option data-bind="text: $data.id, value: $data.name"></option>
+            <!-- /ko -->
           </select>
         </div>
       </div>
@@ -93,11 +91,9 @@
         <label> Marital Status</label>
         <select class="ui dropdown" data-bind="value: maritalStatus">
           <option value="">Marital Status</option>
-          <option value="4">Single</option>
-          <option value="3">Married</option>
-          <option value="2">Seprated</option>
-          <option value="1">Divorced</option>
-          <option value="0">Widowed</option>
+          <!-- ko foreach: app.enums.maritalStatuses -->
+            <option data-bind="text: $data.id, value: $data.name"></option>
+          <!-- /ko -->
         </select>
       </div>
 
@@ -107,8 +103,8 @@
         <label>Service Status</label>
         <select class="ui dropdown" data-bind="value: serviceStatus">
           <option value="">Service Status</option>
-          <option value="1">Approved</option>
-          <option value="0">Banned</option>
+          <option value="Approved">Approved</option>
+          <option value="Banned">Banned</option>
         </select>
       </div>
 
