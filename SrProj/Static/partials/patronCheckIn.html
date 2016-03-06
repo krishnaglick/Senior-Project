@@ -5,7 +5,6 @@
       <div class="header">Patron Check-In</div>
     </div>
     <div class="ui form segment">
-    <!-- Service Selection-->
        <div class="field" data-bind="if: app.services().length > 1">
           <h4 class="ui dividing header">Service Selection</h4>
           <select class="serviceSelection ui dropdown" data-bind="value: serviceSelection">
@@ -15,7 +14,6 @@
             <!-- /ko -->
           </select>
       </div>
-    <!-- Patron Name-->
     <h4 class="ui dividing header">Patron Information</h4>
       <div class="three fields">
         <div class="field">
@@ -35,7 +33,6 @@
         <label>Date Of Birth</label>
         <input type="date" placeholder="MM/DD/YYYY" data-bind="date: dateofBirth">
       </div>
-      <!--Gender & Ethnicity fields -->
       <div class="two fields">
         <div class="field">
           <label>Gender</label>
@@ -66,14 +63,12 @@
           <!-- /ko -->
         </select>
       </div>
-      <!--Adress & Postal code-->
       <h4 class="ui dividing header">Address</h4>
       <div class="field">
         <div class="field">
           <input type="text" placeholder="Street Address" data-bind="textInput: streetAddress" />
         </div>
       </div>
-      <!-- Apartment number & Postal Code-->
       <div class="two fields">
         <div class="field">
           <input type="text" placeholder="Apt #"  data-bind="textInput: apartmentNumber"/>
@@ -82,38 +77,31 @@
           <input type="text" placeholder="Postal Code" data-bind="textInput: postalCode" />
         </div>
       </div>
-      <!-- Apartment number & Postal Code-->
-      <!--Household occupants-->
       <div class="field">
         <input type="number" placeholder="Houshold Occupants" data-bind="number: householdOccupants"/>
       </div>
-      <!--Houshold occupants-->
       <h4 class="ui dividing header">Service Eligibility</h4>
-      <!--Service Status-->
-      <div class="field">
-        <label>Service Status</label>
-        <select class="ui dropdown" data-bind="value: serviceStatus">
-          <option value="">Service Status</option>
-          <option value="Approved">Approved</option>
-          <option value="Banned">Banned</option>
-        </select>
-      </div>
-      <!--Veteran Status-->
-      <div class="grouped fields">
-        <label> Veteran Status</label>
+      <div class="fields">
         <div class="field">
+          <label>Banned</label>
           <div class="ui checkbox">
-            <input type="checkbox" data-bind="checked: veteranStatus">
-            <label>Veteran</label>
+            <input type="checkbox" data-bind="checked: banned">
+            <label>Banned</label>
           </div>
         </div>
-      </div>
-      <hr>
-      <!--Services Eligible For-->
-      <div class="field">
-        <div class="ui checkbox">
-          <input type="checkbox" data-bind="checked: neccessaryPaperwork">
-          <label>Has necessary paperwork to recieve services</label>
+        <div class="field">
+          <label>Veteran Status</label>
+            <div class="ui checkbox">
+              <input type="checkbox" data-bind="checked: veteranStatus">
+              <label>Veteran</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Correct Paperwork Provided</label>
+          <div class="ui checkbox">
+            <input type="checkbox" data-bind="checked: neccessaryPaperwork">
+            <label>Eligible</label>
+          </div>
         </div>
       </div>
       <button class="ui blue submit button" data-bind="click: showCheckInModal">Submit</button>
@@ -143,7 +131,7 @@
       <div class="field" data-bind="text: firstName"></div>
       <div class="field" data-bind="text: lastName"></div>
       <div class="field" data-bind="text: dateOfBirth"></div>
-      <div class="field" data-bind="text: addresses[0].streetAddress"></div>
+      <div class="field" data-bind="text: $root.parseAddress(addresses)"></div>
     </div>
   </div>
 </div>

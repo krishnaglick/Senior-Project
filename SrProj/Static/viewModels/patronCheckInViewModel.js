@@ -35,7 +35,7 @@ function PatronCheckInViewModel() {
   }.bind(this);
 
   //Patron Check In
-  this.serviceStatus = ko.observable();
+  this.banned = ko.observable();
   this.firstName = ko.observable();
   this.middleName = ko.observable();
   this.lastName = ko.observable();
@@ -66,6 +66,12 @@ function PatronCheckInViewModel() {
   this.middleName.subscribe(this.autoComplete);
   this.lastName.subscribe(this.autoComplete);
   this.dateOfBirth.subscribe(this.autoComplete);
+
+  this.parseAddress = function(address) {
+    if(address && address[0] && address[0].streetAddress)
+      return address[0].streetAddress;
+    return '';
+  }.bind(this);
 
   this.showCheckInModal = function () {
     var errors = this.validate();
