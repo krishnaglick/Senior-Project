@@ -12,8 +12,6 @@ namespace Models
         public string StreetAddress { get; set; }
         [FilterableText]
         public string City { get; set; }
-        [FilterableText]
-        public string County { get; set; }
         [FilterableText][MinLength(2)]
         public string State { get; set; }
         [FilterableText][MinLength(5)][MaxLength(5)]

@@ -1,9 +1,6 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 using Models;
 
 namespace DataAccess.TestData
@@ -28,8 +25,7 @@ namespace DataAccess.TestData
                 StreetAddress = GenerateStreetAddress(),
                 City = CityNames[_random.Next(CityNames.Length)],
                 State = StateNames[_random.Next(StateNames.Length)],
-                Zip = GetRandomNumberSet(5),
-                County = "United States"
+                Zip = GetRandomNumberSet(5)
             };
         }
 

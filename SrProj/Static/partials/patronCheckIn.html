@@ -31,7 +31,7 @@
       </div>
       <div class="date field">
         <label>Date Of Birth</label>
-        <input type="date" placeholder="MM/DD/YYYY" data-bind="date: dateofBirth">
+        <input type="date" placeholder="MM/DD/YYYY" data-bind="textInput: dateOfBirth">
       </div>
       <div class="two fields">
         <div class="field">
@@ -45,9 +45,9 @@
 
         </div>
         <div class="field">
-          <label>Race</label>
-          <select class="ui dropdown" data-bind="value: gender">
-            <option value="">Race</option>
+          <label>Ethnicity</label>
+          <select class="ui dropdown" data-bind="value: ethnicity">
+            <option value="">Ethnicity</option>
             <!-- ko foreach: app.enums.races -->
               <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
             <!-- /ko -->
@@ -63,22 +63,26 @@
           <!-- /ko -->
         </select>
       </div>
-      <h4 class="ui dividing header">Address</h4>
-      <div class="field">
+      <h4 class="ui dividing header">Addresses <i class="clickable plus icon" data-bind="click: addAddress"></i></h4>
+      <!-- ko foreach: addresses -->
+      <div class="fields">
         <div class="field">
           <input type="text" placeholder="Street Address" data-bind="textInput: streetAddress" />
         </div>
-      </div>
-      <div class="two fields">
         <div class="field">
-          <input type="text" placeholder="Apt #"  data-bind="textInput: apartmentNumber"/>
+          <input type="text" placeholder="City" data-bind="textInput: city">
         </div>
         <div class="field">
-          <input type="text" placeholder="Postal Code" data-bind="textInput: postalCode" />
+          <input type="text" placeholder="State" data-bind="textInput: state"></input>
         </div>
+        <div class="field">
+          <input type="text" placeholder="Zip Code" data-bind="textInput: zip"></input>
+        </div>
+        <i class="clickable close icon" data-bind="click: $root.removeAddress"></i>
       </div>
+      <!-- /ko -->
       <div class="field">
-        <input type="number" placeholder="Houshold Occupants" data-bind="number: householdOccupants"/>
+        <input type="number" placeholder="Houshold Occupants" data-bind="textInput  : householdOccupants"/>
       </div>
       <h4 class="ui dividing header">Service Eligibility</h4>
       <div class="fields">

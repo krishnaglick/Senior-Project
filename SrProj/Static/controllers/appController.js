@@ -138,9 +138,13 @@ $(function() {
   }).call(this);
 
   (function loadEnums() {
+    if(!window.app.enums && Cookies.get('enums')) {
+      return window.app.enums = JSON.parse(Cookies.get('enums'));
+    }
     window.app.get('Enum', 'GetEnums')
     .success(function(data) {
       window.app.enums = data;
+      Cookies.set('enums', JSON.stringify(data));
     })
     .error(function() {
       alert('There was an error loading enums, please contact your system administrator!');

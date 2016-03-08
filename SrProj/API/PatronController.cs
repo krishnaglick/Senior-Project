@@ -76,10 +76,12 @@ namespace SrProj.API
 
         public class CheckInViewModel
         {
-            
+            public bool Banned { get; set; }
+            public string FirstName { get; set; }
+            public string MiddleName { get; set; }
         }
 
-        public HttpResponseMessage CheckIn(dynamic visit)
+        public HttpResponseMessage CheckIn(CheckInViewModel visit)
         {
             ApiResponse response = new ApiResponse(Request);
             try

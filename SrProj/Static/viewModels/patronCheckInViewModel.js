@@ -22,12 +22,14 @@ function PatronCheckInViewModel() {
       if (!this.maritalStatus()) {
           errors.push('Please specify Marital Status');
       }
-      if (!this.streetAddress()) {
-          errors.push('Please input Street Address');
+      if (!this.addresses().length) {
+          errors.push('Please include at least one Address!');
       }
-      if (!this.postalCode()) {
-          errors.push('Please enter Postal Code');
-      }
+
+      this.addresses().forEach(function(address) {
+        address.validate(errors);
+      });
+
       if (!this.householdOccupants()) {
           errors.push('Please enter Household Occupants');
       }
@@ -42,9 +44,15 @@ function PatronCheckInViewModel() {
   this.dateOfBirth = ko.observable();
   this.gender = ko.observable();
   this.ethnicity = ko.observable();
-  this.streetAddress = ko.observable();
-  this.apartmentNumber = ko.observable();
-  this.postalCode = ko.observable();
+
+  this.addresses = ko.observableArray([ new Address() ]);
+  this.addAddress = function() {
+    this.addresses.push(new Address());
+  }.bind(this);
+  this.removeAddress = function(address) {
+    this.addresses.remove(address);
+  }.bind(this);
+
   this.householdOccupants = ko.observable();
   this.veteranStatus = ko.observable(false);
   this.maritalStatus = ko.observable();
@@ -112,5 +120,28 @@ function PatronCheckInViewModel() {
         alert('Invalid username or password.');
       }
     }.bind(this));
+  }.bind(this);
+}
+
+function Address() {
+  this.streetAddress = ko.observable();
+  this.city = ko.observable();
+  this.state = ko.observable();
+  this.zip = ko.observable();
+
+  this.validate = function(errors) {
+    if(!this.streetAddress()) {
+      errors.push('Please include a street address!');
+    }
+    if(!this.city()) {
+      errors.push('Please include a city!');
+    }
+    if(!this.state()) {
+      errors.push('Please include a state!');
+    }
+    if(!this.zip()) {
+      errors.push('Please include a zip code!');
+    }
+    return errors;
   }.bind(this);
 }

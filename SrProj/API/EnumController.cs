@@ -10,7 +10,6 @@ using Utility.ExtensionMethod;
 
 namespace SrProj.API
 {
-    [AuthorizableController(new RoleID[] { RoleID.Volunteer, RoleID.Admin })]
     public class EnumController : ApiController
     {
         [HttpGet]
