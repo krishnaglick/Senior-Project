@@ -1,5 +1,5 @@
 /*!
- * Knockout JavaScript library v3.4.0rc
+ * Knockout JavaScript library v3.4.0
  * (c) Steven Sanderson - http://knockoutjs.com/
  * License: MIT (http://www.opensource.org/licenses/mit-license.php)
  */
@@ -45,7 +45,7 @@ ko.exportSymbol = function(koPath, object) {
 ko.exportProperty = function(owner, publicName, object) {
     owner[publicName] = object;
 };
-ko.version = "3.4.0rc";
+ko.version = "3.4.0";
 
 ko.exportSymbol('version', ko.version);
 // For any options that may affect various areas of Knockout and aren't directly associated with data binding.
@@ -312,8 +312,11 @@ ko.utils = (function () {
             // Rules:
             //   [A] Any leading nodes that have been removed should be ignored
             //       These most likely correspond to memoization nodes that were already removed during binding
-            //       See https://github.com/SteveSanderson/knockout/pull/440
-            //   [B] We want to output a continuous series of nodes. So, ignore any nodes that have already been removed,
+            //       See https://github.com/knockout/knockout/pull/440
+            //   [B] Any trailing nodes that have been remove should be ignored
+            //       This prevents the code here from adding unrelated nodes to the array while processing rule [C]
+            //       See https://github.com/knockout/knockout/pull/1903
+            //   [C] We want to output a continuous series of nodes. So, ignore any nodes that have already been removed,
             //       and include any nodes that have been inserted among the previous collection
 
             if (continuousNodeArray.length) {
@@ -325,6 +328,10 @@ ko.utils = (function () {
                     continuousNodeArray.splice(0, 1);
 
                 // Rule [B]
+                while (continuousNodeArray.length > 1 && continuousNodeArray[continuousNodeArray.length - 1].parentNode !== parentNode)
+                    continuousNodeArray.length--;
+
+                // Rule [C]
                 if (continuousNodeArray.length > 1) {
                     var current = continuousNodeArray[0], last = continuousNodeArray[continuousNodeArray.length - 1];
                     // Replace with the actual new continuous node set
@@ -332,8 +339,6 @@ ko.utils = (function () {
                     while (current !== last) {
                         continuousNodeArray.push(current);
                         current = current.nextSibling;
-                        if (!current) // Won't happen, except if the developer has manually removed some DOM elements (then we're in an undefined scenario)
-                            return;
                     }
                     continuousNodeArray.push(last);
                 }
@@ -2027,24 +2032,19 @@ var computedFn = {
     },
     evaluatePossiblyAsync: function () {
         var computedObservable = this,
-            state = computedObservable[computedState],
             throttleEvaluationTimeout = computedObservable['throttleEvaluation'];
         if (throttleEvaluationTimeout && throttleEvaluationTimeout >= 0) {
-            clearTimeout(state.evaluationTimeoutInstance);
-            state.evaluationTimeoutInstance = ko.utils.setTimeout(function () {
-                if (computedObservable.evaluateImmediate()) {
-                    computedObservable["notifySubscribers"](state.latestValue);
-                }
+            clearTimeout(this[computedState].evaluationTimeoutInstance);
+            this[computedState].evaluationTimeoutInstance = ko.utils.setTimeout(function () {
+                computedObservable.evaluateImmediate(true /*notifyChange*/);
             }, throttleEvaluationTimeout);
         } else if (computedObservable._evalDelayed) {
             computedObservable._evalDelayed();
         } else {
-            if (computedObservable.evaluateImmediate()) {
-                computedObservable["notifySubscribers"](state.latestValue);
-            }
+            computedObservable.evaluateImmediate(true /*notifyChange*/);
         }
     },
-    evaluateImmediate: function () {
+    evaluateImmediate: function (notifyChange) {
         var computedObservable = this,
             state = computedObservable[computedState],
             disposeWhen = state.disposeWhen;
@@ -2075,19 +2075,22 @@ var computedFn = {
 
         state.isBeingEvaluated = true;
         try {
-            return this.evaluateImmediate_CallReadWithDependencyDetection();
+            this.evaluateImmediate_CallReadWithDependencyDetection(notifyChange);
         } finally {
             state.isBeingEvaluated = false;
         }
+
+        if (!state.dependenciesCount) {
+            computedObservable.dispose();
+        }
     },
-    evaluateImmediate_CallReadWithDependencyDetection: function () {
+    evaluateImmediate_CallReadWithDependencyDetection: function (notifyChange) {
         // This function is really just part of the evaluateImmediate logic. You would never call it from anywhere else.
         // Factoring it out into a separate function means it can be independent of the try/catch block in evaluateImmediate,
         // which contributes to saving about 40% off the CPU overhead of computed evaluation (on V8 at least).
 
         var computedObservable = this,
-            state = computedObservable[computedState],
-            valueChanged;
+            state = computedObservable[computedState];
 
         // Initially, we assume that none of the subscriptions are still being used (i.e., all are candidates for disposal).
         // Then, during evaluation, we cross off any that are in fact still being used.
@@ -2111,8 +2114,6 @@ var computedFn = {
         var newValue = this.evaluateImmediate_CallReadThenEndDependencyDetection(state, dependencyDetectionContext);
 
         if (computedObservable.isDifferent(state.latestValue, newValue)) {
-            valueChanged = true;
-
             if (!state.isSleeping) {
                 computedObservable["notifySubscribers"](state.latestValue, "beforeChange");
             }
@@ -2121,18 +2122,14 @@ var computedFn = {
 
             if (state.isSleeping) {
                 computedObservable.updateVersion();
+            } else if (notifyChange) {
+                computedObservable["notifySubscribers"](state.latestValue);
             }
         }
 
         if (isInitial) {
             computedObservable["notifySubscribers"](state.latestValue, "awake");
         }
-
-        if (!state.dependenciesCount) {
-            computedObservable.dispose();
-        }
-
-        return valueChanged;
     },
     evaluateImmediate_CallReadThenEndDependencyDetection: function (state, dependencyDetectionContext) {
         // This function is really part of the evaluateImmediate_CallReadWithDependencyDetection logic.
@@ -2970,7 +2967,7 @@ ko.exportSymbol('bindingProvider', ko.bindingProvider);
         // any child contexts, must be updated when the view model is changed.
         function updateContext() {
             // Most of the time, the context will directly get a view model object, but if a function is given,
-            // we call the function to retrieve the view model. If the function accesses any obsevables or returns
+            // we call the function to retrieve the view model. If the function accesses any observables or returns
             // an observable, the dependency is tracked, and those observables can later cause the binding
             // context to be updated.
             var dataItemOrObservable = isFunc ? dataItemOrAccessor() : dataItemOrAccessor,
@@ -3052,7 +3049,7 @@ ko.exportSymbol('bindingProvider', ko.bindingProvider);
     }
 
     // Extend the binding context hierarchy with a new view model object. If the parent context is watching
-    // any obsevables, the new child context will automatically get a dependency on the parent context.
+    // any observables, the new child context will automatically get a dependency on the parent context.
     // But this does not mean that the $data value of the child context will also get updated. If the child
     // view model also depends on the parent view model, you must provide a function that returns the correct
     // view model on each update.
@@ -3246,7 +3243,7 @@ ko.exportSymbol('bindingProvider', ko.bindingProvider);
             var bindingsUpdater = ko.dependentObservable(
                 function() {
                     bindings = sourceBindings ? sourceBindings(bindingContext, node) : getBindings.call(provider, node, bindingContext);
-                    // Register a dependency on the binding context to support obsevable view models.
+                    // Register a dependency on the binding context to support observable view models.
                     if (bindings && bindingContext._subscribable)
                         bindingContext._subscribable();
                     return bindings;
@@ -5675,12 +5672,18 @@ ko.exportSymbol('utils.compareArrays', ko.utils.compareArrays);
                         }
 
                         // Queue these nodes for later removal
-                        nodesToDelete.push.apply(nodesToDelete, ko.utils.fixUpContinuousNodeArray(mapData.mappedNodes, domNode) || []);
-                        if (options['beforeRemove'] && mapData.mappedNodes.length) {
-                            newMappingResult.push(mapData);
-                            itemsToProcess.push(mapData);
-                            if (mapData.arrayEntry !== deletedItemDummyValue) {
-                                itemsForBeforeRemoveCallbacks[i] = mapData;
+                        if (ko.utils.fixUpContinuousNodeArray(mapData.mappedNodes, domNode).length) {
+                            if (options['beforeRemove']) {
+                                newMappingResult.push(mapData);
+                                itemsToProcess.push(mapData);
+                                if (mapData.arrayEntry === deletedItemDummyValue) {
+                                    mapData = null;
+                                } else {
+                                    itemsForBeforeRemoveCallbacks[i] = mapData;
+                                }
+                            }
+                            if (mapData) {
+                                nodesToDelete.push.apply(nodesToDelete, mapData.mappedNodes);
                             }
                         }
                     }
