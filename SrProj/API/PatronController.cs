@@ -74,11 +74,15 @@ namespace SrProj.API
             }
         }
 
-        public class CheckInViewModel
+        public class CheckInViewModel : Patron
         {
             public bool Banned { get; set; }
             public string FirstName { get; set; }
             public string MiddleName { get; set; }
+            public string LastName { get; set; }
+            public DateTime DateOfBirth { get; set; }
+            public int Gender { get; set; }
+            public int Ethnicity { get; set; }
         }
 
         public HttpResponseMessage CheckIn(CheckInViewModel visit)

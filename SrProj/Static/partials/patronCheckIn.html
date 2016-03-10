@@ -63,24 +63,13 @@
           <!-- /ko -->
         </select>
       </div>
-      <h4 class="ui dividing header">Addresses <i class="clickable plus icon" data-bind="click: addAddress"></i></h4>
-      <!-- ko foreach: addresses -->
-      <div class="fields">
-        <div class="field">
-          <input type="text" placeholder="Street Address" data-bind="textInput: streetAddress" />
-        </div>
-        <div class="field">
-          <input type="text" placeholder="City" data-bind="textInput: city">
-        </div>
-        <div class="field">
-          <input type="text" placeholder="State" data-bind="textInput: state"></input>
-        </div>
-        <div class="field">
-          <input type="text" placeholder="Zip Code" data-bind="textInput: zip"></input>
-        </div>
-        <i class="clickable close icon" data-bind="click: $root.removeAddress"></i>
-      </div>
-      <!-- /ko -->
+      <h4 class="ui dividing header">Addresses</h4>
+      <div data-bind="component: { name: 'addresses', params: { data: addresses} }"></div>
+      <h4 class="ui dividing header">Phone Numbers</h4>
+      <div data-bind="component: { name: 'phoneNumbers', params: { data: phoneNumbers} }"></div>
+      <h4 class="ui dividing header">Emergency Contacts</h4>
+      <div data-bind="component: { name: 'emergencyContacts', params: { data: emergencyContacts} }"></div>
+
       <div class="field">
         <input type="number" placeholder="Houshold Occupants" data-bind="textInput  : householdOccupants"/>
       </div>
@@ -96,7 +85,7 @@
         <div class="field">
           <label>Veteran Status</label>
             <div class="ui checkbox">
-              <input type="checkbox" data-bind="checked: veteranStatus">
+              <input type="checkbox" data-bind="checked: veteran">
               <label>Veteran</label>
           </div>
         </div>

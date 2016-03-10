@@ -147,7 +147,7 @@ $(function() {
       Cookies.set('enums', JSON.stringify(data));
     })
     .error(function() {
-      alert('There was an error loading enums, please contact your system administrator!');
+      //alert('There was an error loading enums, please contact your system administrator!');
     });
   }).call(this);
 });

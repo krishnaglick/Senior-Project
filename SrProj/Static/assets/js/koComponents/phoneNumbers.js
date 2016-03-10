@@ -1,0 +1,19 @@
+ko.components.register('phoneNumbers', {
+  viewModel: function(params) {
+    this.data = params.data;
+  },
+  template:
+  '<button class="ui positive labeled icon button button" data-bind="click: $root.addPhoneNumber">' +
+      '<i class="plus icon"></i>' +
+      'Add A Phone Number' +
+    '</button>' +
+    '<!-- ko foreach: data -->' +
+    '<div class="field">' +
+      '<div class="ui icon input close">' +
+        '<input type="text" placeholder="XXX-XXX-XXXX" data-bind="textInput: phoneNumber" />' +
+        '<i class="clickable link close icon" data-bind="click: $root.removePhoneNumber"></i>' +
+      '</div>' +
+    '</div>' +
+    '<!-- /ko -->',
+  synchronous: true
+});
