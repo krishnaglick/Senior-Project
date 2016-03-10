@@ -16,16 +16,8 @@ namespace SrProj.API
     public class PatronController : ApiController
     {
         [HttpPost]
-        public HttpResponseMessage FindPatron(dynamic data)
+        public HttpResponseMessage FindPatron([FromBody] Patron searchData)
         {
-            //Temp fix until I get C# to stop being literally retarded
-            Patron searchData = new Patron
-            {
-                FirstName = data.firstName,
-                MiddleName = data.middleName,
-                LastName = data.lastName,
-                DateOfBirth = data.dateOfBirth
-            };
             ApiResponse response = new ApiResponse(Request);
             try
             {

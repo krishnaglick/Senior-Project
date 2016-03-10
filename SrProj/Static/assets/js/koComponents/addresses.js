@@ -3,7 +3,10 @@ ko.components.register('addresses', {
     this.data = params.data;
   },
   template:
-    '<div class="clickable" data-bind="click: $root.addAddress">Add An Address <i class="clickable plus icon"></i></div>' +
+    '<button class="ui positive labeled icon button" style="margin-bottom: 10px;" data-bind="click: $root.addAddress">' +
+      '<i class="plus icon"></i>' +
+      'Add An Address' +
+    '</button>' +
     '<!-- ko foreach: data -->' +
     '<div class="fields">' +
       '<div class="field">' +
@@ -18,7 +21,11 @@ ko.components.register('addresses', {
       '<div class="field">' +
         '<input type="text" placeholder="Zip Code" data-bind="textInput: zip"></input>' +
       '</div>' +
-      '<i class="clickable close icon" data-bind="click: $root.removeAddress"></i>' +
+      '<div class="field">' +
+        '<button class="circular red ui icon button" data-bind="click: $root.removeAddress">' +
+          '<i class="close icon"></i>' +
+        '</button>' +
+      '</div>' +
     '</div>' +
     '<!-- /ko -->'
 });

@@ -3,7 +3,7 @@ ko.components.register('phoneNumbers', {
     this.data = params.data;
   },
   template:
-  '<button class="ui positive labeled icon button button" data-bind="click: $root.addPhoneNumber">' +
+  '<button class="ui positive labeled icon button" style="margin-bottom: 10px;" data-bind="click: $root.addPhoneNumber">' +
       '<i class="plus icon"></i>' +
       'Add A Phone Number' +
     '</button>' +

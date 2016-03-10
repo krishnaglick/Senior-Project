@@ -28,6 +28,7 @@ function PatronCheckInViewModel() {
     this.addresses.push(new Address());
   }.bind(this);
   this.removeAddress = function(address) {
+    //Confirm Alert
     this.addresses.remove(address);
   }.bind(this);
 
@@ -36,6 +37,7 @@ function PatronCheckInViewModel() {
     this.phoneNumbers.push(new PhoneNumber());
   }.bind(this);
   this.removePhoneNumber = function(phoneNumber) {
+    //Confirm Alert
     this.phoneNumbers.remove(phoneNumber);
   }.bind(this);
 
@@ -44,6 +46,7 @@ function PatronCheckInViewModel() {
     this.emergencyContacts.push(new EmergencyContact());
   }.bind(this);
   this.removeEmergencyContact = function(emergencyContact) {
+    //Confirm Alert
     this.emergencyContacts.remove(emergencyContact);
   }.bind(this);
   //End Patron Properties
