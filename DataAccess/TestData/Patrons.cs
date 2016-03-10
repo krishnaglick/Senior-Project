@@ -23,13 +23,12 @@ namespace DataAccess.TestData
                 FirstName = Names[Random.Next(namesSize)],
                 LastName = Names[Random.Next(namesSize)],
                 DateOfBirth = new DateTime(Random.Next(1970, 2015), Random.Next(1, 12), Random.Next(1, 28)),
-                Marital = maritalStatuses[Random.Next(maritalStatuses.Length)],
+                MaritalStatus = maritalStatuses[Random.Next(maritalStatuses.Length)],
                 Residence = residenceStatuses[Random.Next(residenceStatuses.Length)],
                 Gender = genderStatuses[Random.Next(genderStatuses.Length)],
                 Ethnicity = ethnicityStatuses[Random.Next(ethnicityStatuses.Length)],
-                Race = raceStatuses[Random.Next(raceStatuses.Length)],
                 Addresses = new AddressGenerator(Random.Next(5), Random).ToArray(),
-                NumberInHousehold = (short) Random.Next(1, 10)
+                HouseholdOccupants = (short) Random.Next(1, 10)
             };
         }
 

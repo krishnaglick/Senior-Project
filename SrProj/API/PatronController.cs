@@ -15,24 +15,17 @@ namespace SrProj.API
     [AuthorizableController(new [] { RoleID.Volunteer })]
     public class PatronController : ApiController
     {
-        [HttpGet]
-        public Patron Get([FromUri] int patronID)
-        {
-            return new PatronContext().Patrons.Find(patronID);
-        }
-
-        [HttpGet]
-        public Patron[] Search([FromUri] string namePartial)
-        {
-            namePartial = namePartial.ToLower();
-            return
-                new PatronContext().Patrons.Where(
-                    p => p.FirstName.ToLower().Contains(namePartial) || p.LastName.ToLower().Contains(namePartial)).ToArray();
-        }
-
         [HttpPost]
-        public HttpResponseMessage FindPatron(Patron searchData)
+        public HttpResponseMessage FindPatron(dynamic data)
         {
+            //Temp fix until I get C# to stop being literally retarded
+            Patron searchData = new Patron
+            {
+                FirstName = data.firstName,
+                MiddleName = data.middleName,
+                LastName = data.lastName,
+                DateOfBirth = data.dateOfBirth
+            };
             ApiResponse response = new ApiResponse(Request);
             try
             {
@@ -76,16 +69,11 @@ namespace SrProj.API
 
         public class CheckInViewModel : Patron
         {
-            public bool Banned { get; set; }
-            public string FirstName { get; set; }
-            public string MiddleName { get; set; }
-            public string LastName { get; set; }
-            public DateTime DateOfBirth { get; set; }
-            public int Gender { get; set; }
-            public int Ethnicity { get; set; }
+
         }
 
-        public HttpResponseMessage CheckIn(CheckInViewModel visit)
+        [HttpPost]
+        public HttpResponseMessage CheckIn(dynamic visit)
         {
             ApiResponse response = new ApiResponse(Request);
             try
