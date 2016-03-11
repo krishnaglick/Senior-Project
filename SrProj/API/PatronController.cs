@@ -54,6 +54,11 @@ namespace SrProj.API
         public HttpResponseMessage CheckIn([FromBody] CheckInViewModel visit)
         {
             ApiResponse response = new ApiResponse(Request);
+            if (visit == null)
+            {
+                response.errors.Add(new NullRequest());
+                return response.GenerateResponse(HttpStatusCode.BadRequest);
+            }
             try
             {
                 var checkInContext = new Database();
