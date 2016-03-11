@@ -9,7 +9,6 @@ namespace SrProj.API.Responses
 {
     public class JsonError
     {
-        public int id { get; set; }
         public string code { get; set; }
         public string title { get; set; }
         public string detail { get; set; }
@@ -35,10 +34,7 @@ namespace SrProj.API.Responses
         {
             HttpResponseMessage res = request.CreateResponse(code, data ?? errors);
 
-            if (headers != null)
-            {
-                headers.ForEach(header => res.Headers.Add(header.Key, header.Value));
-            }
+            headers?.ForEach(header => res.Headers.Add(header.Key, header.Value));
 
             return res;
         }

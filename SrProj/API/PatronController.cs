@@ -1,14 +1,15 @@
 ﻿
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using DataAccess.Contexts;
 using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
 using Utility.Enum;
+using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
 {
@@ -19,6 +20,11 @@ namespace SrProj.API
         public HttpResponseMessage FindPatron([FromBody] Patron searchData)
         {
             ApiResponse response = new ApiResponse(Request);
+            if(searchData == null)
+            {
+                response.errors.Add(new NullRequest());
+                return response.GenerateResponse(HttpStatusCode.BadRequest);
+            }
             try
             {
                 var patronContext = new Database();
@@ -27,32 +33,12 @@ namespace SrProj.API
                         p.FirstName.ToLower().Contains(searchData.FirstName.ToLower()) ||
                         p.MiddleName.ToLower().Contains(searchData.MiddleName.ToLower()) ||
                         p.LastName.ToLower().Contains(searchData.LastName.ToLower()) ||
-                        p.DateOfBirth.ToString().Contains(searchData.DateOfBirth.ToString()));
+                        p.DateOfBirth.ToString(CultureInfo.InvariantCulture).Contains(searchData.DateOfBirth.ToString(CultureInfo.InvariantCulture)));
 
                 response.data = patrons;
                 return response.GenerateResponse(HttpStatusCode.OK);
             }
             catch (Exception e)
-            {
-                response.errors.Add(new InvalidPatron { source = e });
-                return response.GenerateResponse(HttpStatusCode.BadRequest);
-            }
-        }
-
-        [HttpPost]
-        public HttpResponseMessage Create(Patron patron)
-        {
-            ApiResponse response = new ApiResponse(Request);
-            try
-            {
-                var patronContext = new Database();
-                patronContext.Patrons.Add(patron);
-                patronContext.SaveChanges();
-
-                response.data = ApiResponse.DefaultSuccessResponse;
-                return response.GenerateResponse(HttpStatusCode.Created);
-            }
-            catch(Exception e)
             {
                 response.errors.Add(new InvalidPatron { source = e });
                 return response.GenerateResponse(HttpStatusCode.BadRequest);
@@ -65,7 +51,7 @@ namespace SrProj.API
         }
 
         [HttpPost]
-        public HttpResponseMessage CheckIn(dynamic visit)
+        public HttpResponseMessage CheckIn([FromBody] CheckInViewModel visit)
         {
             ApiResponse response = new ApiResponse(Request);
             try

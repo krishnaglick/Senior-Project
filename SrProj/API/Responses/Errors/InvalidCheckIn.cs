@@ -9,7 +9,6 @@ namespace SrProj.API.Responses.Errors
         {
             this.code = "Invalid Check In";
             this.detail = "There was something wrong with the provided information";
-            this.id = 6;
             this.source = e;
         }
     }
