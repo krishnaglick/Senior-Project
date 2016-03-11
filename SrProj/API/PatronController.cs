@@ -17,7 +17,7 @@ namespace SrProj.API
     public class PatronController : ApiController
     {
         [HttpPost]
-        public HttpResponseMessage FindPatron([FromBody] Patron searchData)
+        public HttpResponseMessage FindPatron(Patron searchData)
         {
             ApiResponse response = new ApiResponse(Request);
             if(searchData == null)
@@ -51,7 +51,7 @@ namespace SrProj.API
         }
 
         [HttpPost]
-        public HttpResponseMessage CheckIn([FromBody] CheckInViewModel visit)
+        public HttpResponseMessage CheckIn(CheckInViewModel visit)
         {
             ApiResponse response = new ApiResponse(Request);
             if (visit == null)
