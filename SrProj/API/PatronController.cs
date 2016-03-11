@@ -17,14 +17,17 @@ namespace SrProj.API
     public class PatronController : ApiController
     {
         [HttpPost]
-        public HttpResponseMessage FindPatron(Patron searchData)
+        public HttpResponseMessage FindPatron(dynamic data)
         {
-            ApiResponse response = new ApiResponse(Request);
-            if(searchData == null)
+            //Fuck C#
+            Patron searchData = new Patron
             {
-                response.errors.Add(new NullRequest());
-                return response.GenerateResponse(HttpStatusCode.BadRequest);
-            }
+                FirstName = data.firstName,
+                MiddleName = data.middleName,
+                LastName = data.lastName,
+                DateOfBirth = data.dateOfBirth.HasValues ? data.dateOfBirth : DateTime.MinValue
+            };
+            ApiResponse response = new ApiResponse(Request);
             try
             {
                 var patronContext = new Database();
@@ -33,7 +36,7 @@ namespace SrProj.API
                         p.FirstName.ToLower().Contains(searchData.FirstName.ToLower()) ||
                         p.MiddleName.ToLower().Contains(searchData.MiddleName.ToLower()) ||
                         p.LastName.ToLower().Contains(searchData.LastName.ToLower()) ||
-                        p.DateOfBirth.ToString(CultureInfo.InvariantCulture).Contains(searchData.DateOfBirth.ToString(CultureInfo.InvariantCulture)));
+                        p.DateOfBirth.ToString().Contains(searchData.DateOfBirth.ToString()));
 
                 response.data = patrons;
                 return response.GenerateResponse(HttpStatusCode.OK);
@@ -47,11 +50,11 @@ namespace SrProj.API
 
         public class CheckInViewModel : Patron
         {
-
+            //TODO: Populate this based off of camel-cased visit information. God damnit C#.
         }
 
         [HttpPost]
-        public HttpResponseMessage CheckIn(CheckInViewModel visit)
+        public HttpResponseMessage CheckIn(dynamic visit)
         {
             ApiResponse response = new ApiResponse(Request);
             if (visit == null)
