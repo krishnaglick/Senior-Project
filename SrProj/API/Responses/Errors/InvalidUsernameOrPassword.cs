@@ -7,7 +7,6 @@ namespace SrProj.API.Responses.Errors
         {
             this.code = "Invalid Username or Password";
             this.detail = "The provided username or password was incorrect.";
-            this.id = 2;
         }
     }
 }

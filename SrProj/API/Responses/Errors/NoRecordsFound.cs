@@ -9,7 +9,6 @@ namespace SrProj.API.Responses.Errors
         {
             this.code = "No Records Found";
             this.detail = "No entries found in the system!";
-            this.id = 5;
             this.source = e;
         }
     }

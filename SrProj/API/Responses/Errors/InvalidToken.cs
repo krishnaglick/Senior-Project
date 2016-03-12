@@ -9,7 +9,6 @@ namespace SrProj.API.Responses.Errors
         {
             this.code = "Invalid Token";
             this.detail = "The authentication token information provided in the request was incorrect.";
-            this.id = 4;
         }
     }
 }

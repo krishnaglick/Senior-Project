@@ -6,18 +6,18 @@ function PatronCheckInViewModel() {
   this.serviceSelection = ko.observable();
 
   //Patron Properties
-  this.firstName = ko.observable();
-  this.middleName = ko.observable();
-  this.lastName = ko.observable();
+  this.firstName = ko.observable('');
+  this.middleName = ko.observable('');
+  this.lastName = ko.observable('');
   this.fullName = ko.computed(function() {
     return this.firstName() + ' ' + this.middleName() + ' ' + this.lastName();
   }, this);
 
-  this.dateOfBirth = ko.observable();
-  this.householdOccupants = ko.observable();
+  this.dateOfBirth = ko.observable('');
+  this.householdOccupants = ko.observable(0);
   this.veteran = ko.observable(false);
 
-  this.banned = ko.observable();
+  this.banned = ko.observable(false);
 
   this.maritalStatus = ko.observable();
   this.gender = ko.observable();
@@ -152,10 +152,10 @@ PatronCheckInViewModel.prototype.validate = function() {
 };
 
 function Address() {
-  this.streetAddress = ko.observable();
-  this.city = ko.observable();
-  this.state = ko.observable();
-  this.zip = ko.observable();
+  this.streetAddress = ko.observable('');
+  this.city = ko.observable('');
+  this.state = ko.observable('');
+  this.zip = ko.observable('');
 
   this.validate = function(errors) {
     if(!this.streetAddress()) {
@@ -175,8 +175,8 @@ function Address() {
 }
 
 function EmergencyContact() {
-  this.firstName = ko.observable();
-  this.lastName = ko.observable();
+  this.firstName = ko.observable('');
+  this.lastName = ko.observable('');
   this.fullName = ko.computed(function() {
     return this.firstName() + ' ' + this.lastName();
   }.bind(this));
@@ -196,5 +196,5 @@ function EmergencyContact() {
 }
 
 function PhoneNumber() {
-  this.phoneNumber = ko.observable();
+  this.phoneNumber = ko.observable('');
 }

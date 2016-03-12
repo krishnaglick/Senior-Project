@@ -7,7 +7,6 @@ namespace SrProj.API.Responses.Errors
         {
             this.code = "Invalid Volunteer";
             this.detail = "There was something wrong with the provided volunteer.";
-            this.id = 1;
         }
     }
 }

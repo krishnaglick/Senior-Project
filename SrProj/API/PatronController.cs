@@ -1,14 +1,15 @@
 ﻿
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using DataAccess.Contexts;
 using Models;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
 using Utility.Enum;
+using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
 {
@@ -16,8 +17,16 @@ namespace SrProj.API
     public class PatronController : ApiController
     {
         [HttpPost]
-        public HttpResponseMessage FindPatron([FromBody] Patron searchData)
+        public HttpResponseMessage FindPatron(dynamic data)
         {
+            //Fuck C#
+            Patron searchData = new Patron
+            {
+                FirstName = data.firstName,
+                MiddleName = data.middleName,
+                LastName = data.lastName,
+                DateOfBirth = data.dateOfBirth.HasValues ? data.dateOfBirth : DateTime.MinValue
+            };
             ApiResponse response = new ApiResponse(Request);
             try
             {
@@ -40,29 +49,14 @@ namespace SrProj.API
         }
 
         [HttpPost]
-        public HttpResponseMessage Create(Patron patron)
-        {
-            ApiResponse response = new ApiResponse(Request);
-            try
-            {
-                var patronContext = new Database();
-                patronContext.Patrons.Add(patron);
-                patronContext.SaveChanges();
-
-                response.data = ApiResponse.DefaultSuccessResponse;
-                return response.GenerateResponse(HttpStatusCode.Created);
-            }
-            catch(Exception e)
-            {
-                response.errors.Add(new InvalidPatron { source = e });
-                return response.GenerateResponse(HttpStatusCode.BadRequest);
-            }
-        }
-
-        [HttpPost]
         public HttpResponseMessage CheckIn(dynamic visit)
         {
             ApiResponse response = new ApiResponse(Request);
+            if (visit == null)
+            {
+                response.errors.Add(new NullRequest());
+                return response.GenerateResponse(HttpStatusCode.BadRequest);
+            }
             try
             {
                 var database = new Database();
