@@ -4,31 +4,31 @@ function PatronCheckInViewModel() {
 
   this.validate = function () {
       var errors = [];
-      if (!this.firstName()) {
+      if (!this.FirstName()) {
           errors.push('Please enter a First Name');
       }
-      if (!this.lastName()) {
+      if (!this.LastName()) {
           errors.push('Please enter a Last Name');
       }
-      if (!this.dateOfBirth()) {
+      if (!this.DateOfBirth()) {
           errors.push('Please enter Date of Birth');
       }
-      if (!this.gender()) {
+      if (!this.Gender()) {
           errors.push('Please specify Gender');
       }
-      if (!this.ethnicity()) {
+      if (!this.Ethnicity()) {
           errors.push('Please specify Ethnicity');
       }
-      if (!this.maritalStatus()) {
+      if (!this.MaritalStatus()) {
           errors.push('Please specify Marital Status');
       }
-      if (!this.streetAddress()) {
+      if (!this.StreetAddress()) {
           errors.push('Please input Street Address');
       }
-      if (!this.postalCode()) {
+      if (!this.PostalCode()) {
           errors.push('Please enter Postal Code');
       }
-      if (!this.householdOccupants()) {
+      if (!this.HouseholdOccupants()) {
           errors.push('Please enter Household Occupants');
       }
 
@@ -36,39 +36,39 @@ function PatronCheckInViewModel() {
   }.bind(this);
 
   //Patron Check In
-  this.serviceStatus = ko.observable();
-  this.firstName = ko.observable();
-  this.middleName = ko.observable();
-  this.lastName = ko.observable();
-  this.dateOfBirth = ko.observable();
-  this.gender = ko.observable();
-  this.ethnicity = ko.observable();
+  this.ServiceStatus = ko.observable();
+  this.FirstName = ko.observable();
+  this.MiddleName = ko.observable();
+  this.LastName = ko.observable();
+  this.DateOfBirth = ko.observable();
+  this.Gender = ko.observable();
+  this.Ethnicity = ko.observable();
   this.streetAddress = ko.observable();
-  this.apartmentNumber = ko.observable();
-  this.postalCode = ko.observable();
-  this.householdOccupants = ko.observable();
-  this.veteranStatus = ko.observable(false);
-  this.maritalStatus = ko.observable();
-  this.serviceEligibility = ko.observable();
-  this.neccessaryPaperwork = ko.observable(false);
-  this.serviceSelection = ko.observable();
+  this.ApartmentNumber = ko.observable();
+  this.PostalCode = ko.observable();
+  this.HouseholdOccupants = ko.observable();
+  this.VeteranStatus = ko.observable(false);
+  this.MaritalStatus = ko.observable();
+  this.ServiceEligibility = ko.observable();
+  this.NeccessaryPaperwork = ko.observable(false);
+  this.ServiceSelection = ko.observable();
 
-  this.foundPatrons = ko.observableArray([]);
+  this.FoundPatrons = ko.observableArray([]);
 
-  this.autoComplete = function() {
+  this.AutoComplete = function() {
     var action = 'FindPatron';
     app.post(this.controller, action, ko.toJSON(this))
     .success(function(data) {
-      this.foundPatrons(data || []);
+      this.FoundPatrons(data || []);
     }.bind(this));
   }.bind(this);
 
-  this.firstName.subscribe(this.autoComplete);
-  this.middleName.subscribe(this.autoComplete);
-  this.lastName.subscribe(this.autoComplete);
-  this.dateOfBirth.subscribe(this.autoComplete);
+  this.FirstName.subscribe(this.autoComplete);
+  this.MiddleName.subscribe(this.autoComplete);
+  this.LastName.subscribe(this.autoComplete);
+  this.DateOfBirth.subscribe(this.autoComplete);
 
-  this.showCheckInModal = function () {
+  this.ShowCheckInModal = function () {
     var errors = this.validate();
     if(!errors.length)
       $('.ui.modal').modal('show');

@@ -19,7 +19,7 @@
             <!-- Service Selection-->
             <div class="field" data-bind="if: app.services().length > 1">
                 <h4 class="ui dividing header">Service Selection*</h4>
-                <select class="serviceSelection ui dropdown" data-bind="value: serviceSelection">
+                <select class="serviceSelection ui dropdown" data-bind="value: ServiceSelection">
                     <option value="">Reason for Visit</option>
                     <!-- ko foreach: app.services -->
                     <option data-bind="text: $data.name, value: $data.name"></option>
@@ -31,27 +31,27 @@
             <div class="three fields">
                 <div class="field">
                     <label>First Name*</label>
-                    <input type="text" placeholder="First Name" data-bind="textInput: firstName" />
+                    <input type="text" placeholder="First Name" data-bind="textInput: FirstName" />
                 </div>
                 <div class="field">
                     <label>Middle Name<em>(Optional)</em></label>
-                    <input type="text" placeholder="Middle Name" data-bind="textInput: middleName" />
+                    <input type="text" placeholder="Middle Name" data-bind="textInput: MiddleName" />
                 </div>
                 <div class="field">
                     <label>Last Name*</label>
-                    <input type="text" placeholder="Last Name*" data-bind="textInput: lastName">
+                    <input type="text" placeholder="Last Name*" data-bind="textInput: LastName">
                 </div>
             </div>
             <!--date of birth-->
             <div class="date field">
                 <label>Date Of Birth*</label>
-                <input type="date" placeholder="MM/DD/YYYY" data-bind="date: dateofBirth">
+                <input type="date" placeholder="MM/DD/YYYY" data-bind="date: DateofBirth">
             </div>
             <!--Gender & Ethnicity fields -->
             <div class="two fields">
                 <div class="field">
                     <label>Gender*</label>
-                    <select class="ui dropdown" data-bind="value: gender">
+                    <select class="ui dropdown" data-bind="value: Gender">
                         <option value="">Gender</option>
                         <option value="1">Male</option>
                         <option value="0">Female</option>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="field">
                     <label>Ethnicity*</label>
-                    <select class="ui dropdown" data-bind="value: gender">
+                    <select class="ui dropdown" data-bind="value: Ethnicity">
                         <option value="">Ethnicity</option>
                         <option value="5">American Indian or Alaska Native</option>
                         <option value="4">Asian</option>
@@ -74,7 +74,7 @@
             <!--Marital Status-->
             <div class="field">
                 <label>Marital Status*</label>
-                <select class="ui dropdown" data-bind="value: maritalStatus">
+                <select class="ui dropdown" data-bind="value: MaritalStatus">
                     <option value="">Marital Status</option>
                     <option value="4">Single</option>
                     <option value="3">Married</option>
@@ -88,22 +88,22 @@
             <h4 class="ui dividing header">Address*</h4>
             <div class="field">
                 <div class="field">
-                    <input type="text" placeholder="Street Address" data-bind="textInput: streetAddress" />
+                    <input type="text" placeholder="Street Address" data-bind="textInput: StreetAddress" />
                 </div>
             </div>
             <!-- Apartment number & Postal Code-->
             <div class="two fields">
                 <div class="field">
-                    <input type="text" placeholder="Apt #" data-bind="textInput: apartmentNumber" />
+                    <input type="text" placeholder="Apt #" data-bind="textInput: ApartmentNumber" />
                 </div>
                 <div class="field">
-                    <input type="text" placeholder="Postal Code" data-bind="textInput: postalCode" />
+                    <input type="text" placeholder="Postal Code" data-bind="textInput: PostalCode" />
                 </div>
             </div>
             <!-- Apartment number & Postal Code-->
             <!--Household occupants-->
             <div class="field">
-                <input type="number" placeholder="Houshold Occupants" data-bind="number: householdOccupants" />
+                <input type="number" placeholder="Houshold Occupants" data-bind="number: HouseholdOccupants" />
             </div>
 
 
@@ -114,7 +114,7 @@
             <h4 class="ui dividing header">Service Eligibility</h4>
             <div class="field">
                 <label>Service Status*</label>
-                <select class="ui dropdown" data-bind="value: serviceStatus">
+                <select class="ui dropdown" data-bind="value: ServiceStatus">
                     <option value="">Service Status</option>
                     <option value="1">Approved</option>
                     <option value="0">Banned</option>
@@ -124,7 +124,7 @@
             <!--Veteran Status-->
             <div class="span fields">
                 <div class="field">
-                    <div class="ui checkbox" data-bind="checked: veteranStatus">
+                    <div class="ui checkbox" data-bind="checked: VeteranStatus">
                         <input type="checkbox" name="credentials">
                         <label>Is a Veteran</label>
                     </div>
@@ -132,7 +132,7 @@
 
            <!--Medical Insurance Status-->
            <div class="field">
-                    <div class="ui checkbox" data-bind="checked: insuranceStatus">
+                    <div class="ui checkbox" data-bind="checked: InsuranceStatus">
                         <input type="checkbox" name="credentials">
                         <label>Has Medical Insurance</label>
                     </div>
@@ -142,7 +142,7 @@
             <!--Services Eligible For-->
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" data-bind="checked: neccessaryPaperwork">
+                    <input type="checkbox" data-bind="checked: NeccessaryPaperwork">
                     <label>Has necessary paperwork to recieve services</label>
                 </div>
             </div>
@@ -151,7 +151,7 @@
                 <em>* Indicates required field</em>
             </div>
             <div class="rightAligned field">
-            <button class="ui blue submit button" data-bind="click: showCheckInModal">Submit</button>
+            <button class="ui blue submit button" data-bind="click: ShowCheckInModal">Submit</button>
             <button class="ui negative button" data-bind="click: clear">Clear</button>
             </div>
         </div>
@@ -176,10 +176,10 @@
     <div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0">
         <div class="ui form segment" data-bind="foreach: foundPatrons">
             <div class="ui fields">
-                <div class="field" data-bind="text: firstName"></div>
-                <div class="field" data-bind="text: lastName"></div>
-                <div class="field" data-bind="text: dateOfBirth"></div>
-                <div class="field" data-bind="text: addresses[0].streetAddress"></div>
+                <div class="field" data-bind="text: FirstName"></div>
+                <div class="field" data-bind="text: LastName"></div>
+                <div class="field" data-bind="text: DateOfBirth"></div>
+                <div class="field" data-bind="text: addresses[0].StreetAddress"></div>
             </div>
         </div>
     </div>
