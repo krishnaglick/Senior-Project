@@ -173,7 +173,9 @@
     <Compile Include="API\AuthorizableApi.cs" />
     <Compile Include="API\Authorization.cs" />
     <Compile Include="API\LoginController.cs" />
+    <Compile Include="API\EnumController.cs" />
     <Compile Include="API\ReportingController.cs" />
+    <Compile Include="API\Responses\Errors\NullRequest.cs" />
     <Compile Include="API\Responses\Errors\InvalidCheckIn.cs" />
     <Compile Include="API\Responses\Errors\InvalidToken.cs" />
     <Compile Include="API\Responses\Errors\InvalidUsernameOrPassword.cs" />

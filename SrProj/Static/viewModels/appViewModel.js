@@ -8,6 +8,8 @@ function App() {
   this.services = ko.observableArray([]);
   this.roles = ko.observableArray([]);
 
+  this.enums = {};
+
   this.authToken.subscribe(cookieTracking, this);
   this.username.subscribe(cookieTracking, this);
   this.services.subscribe(cookieTracking, this);

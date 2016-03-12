@@ -16,16 +16,7 @@ namespace Models
         public string LastName { get; set; }
         [NotMapped]
         public string FullName => $"{this.FirstName} {this.LastName}";
-
-        public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
-        public virtual ICollection<Address> Addresses { get; set; }
-    }
-
-    [ComplexType]
-    public class PhoneNumber
-    {
-        [MinLength(10)]
-        [MaxLength(10)]
-        public string ContactNumber { get; set; }
+        [Required][MinLength(10)][MaxLength(10)]
+        public string PhoneNumber { get; set; }
     }
 }

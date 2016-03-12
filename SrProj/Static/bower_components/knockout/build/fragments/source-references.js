@@ -35,7 +35,6 @@ knockoutDebugCallback([
     'src/binding/defaultBindings/hasfocus.js',
     'src/binding/defaultBindings/html.js',
     'src/binding/defaultBindings/ifIfnotWith.js',
-    'src/binding/defaultBindings/let.js',
     'src/binding/defaultBindings/options.js',
     'src/binding/defaultBindings/selectedOptions.js',
     'src/binding/defaultBindings/style.js',
