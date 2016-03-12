@@ -59,18 +59,13 @@ namespace SrProj.API
             }
         }
 
-        public class CheckInViewModel : Patron
-        {
-
-        }
-
         [HttpPost]
         public HttpResponseMessage CheckIn(dynamic visit)
         {
             ApiResponse response = new ApiResponse(Request);
             try
             {
-                var checkInContext = new Database();
+                var database = new Database();
                 return response.GenerateResponse(HttpStatusCode.Created);
             }
             catch(Exception e)
