@@ -48,11 +48,6 @@ namespace SrProj.API
             }
         }
 
-        public class CheckInViewModel : Patron
-        {
-            //TODO: Populate this based off of camel-cased visit information. God damnit C#.
-        }
-
         [HttpPost]
         public HttpResponseMessage CheckIn(dynamic visit)
         {
@@ -64,7 +59,7 @@ namespace SrProj.API
             }
             try
             {
-                var checkInContext = new Database();
+                var database = new Database();
                 return response.GenerateResponse(HttpStatusCode.Created);
             }
             catch(Exception e)

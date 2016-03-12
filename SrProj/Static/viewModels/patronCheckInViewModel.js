@@ -2,73 +2,80 @@
 function PatronCheckInViewModel() {
   this.controller = 'Patron';
 
-  this.validate = function () {
-      var errors = [];
-      if (!this.FirstName()) {
-          errors.push('Please enter a First Name');
-      }
-      if (!this.LastName()) {
-          errors.push('Please enter a Last Name');
-      }
-      if (!this.DateOfBirth()) {
-          errors.push('Please enter Date of Birth');
-      }
-      if (!this.Gender()) {
-          errors.push('Please specify Gender');
-      }
-      if (!this.Ethnicity()) {
-          errors.push('Please specify Ethnicity');
-      }
-      if (!this.MaritalStatus()) {
-          errors.push('Please specify Marital Status');
-      }
-      if (!this.StreetAddress()) {
-          errors.push('Please input Street Address');
-      }
-      if (!this.PostalCode()) {
-          errors.push('Please enter Postal Code');
-      }
-      if (!this.HouseholdOccupants()) {
-          errors.push('Please enter Household Occupants');
-      }
+  this.neccessaryPaperwork = ko.observable(false);
+  this.serviceSelection = ko.observable();
 
-      return errors;
+  //Patron Properties
+  this.firstName = ko.observable('');
+  this.middleName = ko.observable('');
+  this.lastName = ko.observable('');
+  this.fullName = ko.computed(function() {
+    return this.firstName() + ' ' + (this.middleName() ? this.middleName() + ' ' : '') + this.lastName();
+  }, this);
+
+  this.dateOfBirth = ko.observable('');
+  this.householdOccupants = ko.observable(0);
+  this.veteran = ko.observable(false);
+
+  this.banned = ko.observable(false);
+
+  this.maritalStatus = ko.observable();
+  this.gender = ko.observable();
+  this.ethnicity = ko.observable();
+  this.residenceStatus = ko.observable();
+
+  this.addresses = ko.observableArray([ new Address() ]);
+  this.addAddress = function() {
+    this.addresses.push(new Address());
+  }.bind(this);
+  this.removeAddress = function(address) {
+    //Confirm Alert
+    this.addresses.remove(address);
   }.bind(this);
 
-  //Patron Check In
-  this.ServiceStatus = ko.observable();
-  this.FirstName = ko.observable();
-  this.MiddleName = ko.observable();
-  this.LastName = ko.observable();
-  this.DateOfBirth = ko.observable();
-  this.Gender = ko.observable();
-  this.Ethnicity = ko.observable();
-  this.streetAddress = ko.observable();
-  this.ApartmentNumber = ko.observable();
-  this.PostalCode = ko.observable();
-  this.HouseholdOccupants = ko.observable();
-  this.VeteranStatus = ko.observable(false);
-  this.MaritalStatus = ko.observable();
-  this.ServiceEligibility = ko.observable();
-  this.NeccessaryPaperwork = ko.observable(false);
-  this.ServiceSelection = ko.observable();
+  this.phoneNumbers = ko.observableArray([ new PhoneNumber() ]);
+  this.addPhoneNumber = function() {
+    this.phoneNumbers.push(new PhoneNumber());
+  }.bind(this);
+  this.removePhoneNumber = function(phoneNumber) {
+    //Confirm Alert
+    this.phoneNumbers.remove(phoneNumber);
+  }.bind(this);
 
-  this.FoundPatrons = ko.observableArray([]);
+  this.emergencyContacts = ko.observableArray([ new EmergencyContact() ]);
+  this.addEmergencyContact = function() {
+    this.emergencyContacts.push(new EmergencyContact());
+  }.bind(this);
+  this.removeEmergencyContact = function(emergencyContact) {
+    //Confirm Alert
+    this.emergencyContacts.remove(emergencyContact);
+  }.bind(this);
+  //End Patron Properties
 
-  this.AutoComplete = function() {
+  //Patron Searching Functionality
+  this.foundPatrons = ko.observableArray([]);
+
+  this.autoComplete = function() {
     var action = 'FindPatron';
     app.post(this.controller, action, ko.toJSON(this))
     .success(function(data) {
-      this.FoundPatrons(data || []);
+      this.foundPatrons(data || []);
     }.bind(this));
   }.bind(this);
 
-  this.FirstName.subscribe(this.autoComplete);
-  this.MiddleName.subscribe(this.autoComplete);
-  this.LastName.subscribe(this.autoComplete);
-  this.DateOfBirth.subscribe(this.autoComplete);
+  this.firstName.subscribe(this.autoComplete);
+  this.middleName.subscribe(this.autoComplete);
+  this.lastName.subscribe(this.autoComplete);
+  this.dateOfBirth.subscribe(this.autoComplete);
 
-  this.ShowCheckInModal = function () {
+  this.parseAddress = function(address) {
+    if(address && address[0] && address[0].streetAddress)
+      return address[0].streetAddress;
+    return '';
+  }.bind(this);
+  //End Patron Searching Functionality
+
+  this.showCheckInModal = function () {
     var errors = this.validate();
     if(!errors.length)
       $('.ui.modal').modal('show');
@@ -110,3 +117,85 @@ function PatronCheckInViewModel() {
   }.bind(this);
 }
 
+PatronCheckInViewModel.prototype.validate = function() {
+  //TODO: Go over this.
+  var errors = [];
+  if (!this.firstName()) {
+    errors.push('Please enter a First Name');
+  }
+  if (!this.lastName()) {
+      errors.push('Please enter a Last Name');
+  }
+  if (!this.dateOfBirth()) {
+      errors.push('Please enter Date of Birth');
+  }
+  if (!this.gender()) {
+      errors.push('Please specify Gender');
+  }
+  if (!this.ethnicity()) {
+      errors.push('Please specify Ethnicity');
+  }
+  if (!this.maritalStatus()) {
+      errors.push('Please specify Marital Status');
+  }
+  if (!this.addresses().length) {
+      errors.push('Please include at least one Address!');
+  }
+
+  this.addresses().forEach(function(address) {
+    address.validate(errors);
+  });
+
+  if (!this.householdOccupants()) {
+      errors.push('Please enter Household Occupants');
+  }
+  return errors;
+};
+
+function Address() {
+  this.streetAddress = ko.observable('');
+  this.city = ko.observable('');
+  this.state = ko.observable('');
+  this.zip = ko.observable('');
+
+  this.validate = function(errors) {
+    if(!this.streetAddress()) {
+      errors.push('Please include a street address!');
+    }
+    if(!this.city()) {
+      errors.push('Please include a city!');
+    }
+    if(!this.state()) {
+      errors.push('Please include a state!');
+    }
+    if(!this.zip()) {
+      errors.push('Please include a zip code!');
+    }
+    return errors;
+  }.bind(this);
+}
+
+function EmergencyContact() {
+  this.firstName = ko.observable('');
+  this.lastName = ko.observable('');
+  this.fullName = ko.computed(function() {
+    return this.firstName() + ' ' + this.lastName();
+  }.bind(this));
+
+  this.phoneNumber = ko.observable('');
+
+  this.validate = function(errors) {
+    if(!this.firstName())
+      errors.push('Emergency Contacts need a First Name!');
+    if(!this.lastName())
+      errors.push('Emergency Contacts need a Last Name!');
+    if(!this.phoneNumber())
+      errors.push('Emergency Contacts need a Phone Number!');
+
+    return errors;
+  }.bind(this);
+}
+
+function PhoneNumber() {
+  this.phoneNumber = ko.observable('');
+}
