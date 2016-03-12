@@ -10,7 +10,7 @@ function PatronCheckInViewModel() {
   this.middleName = ko.observable('');
   this.lastName = ko.observable('');
   this.fullName = ko.computed(function() {
-    return this.firstName() + ' ' + this.middleName() + ' ' + this.lastName();
+    return this.firstName() + ' ' + (this.middleName() ? this.middleName() + ' ' : '') + this.lastName();
   }, this);
 
   this.dateOfBirth = ko.observable('');
@@ -22,6 +22,7 @@ function PatronCheckInViewModel() {
   this.maritalStatus = ko.observable();
   this.gender = ko.observable();
   this.ethnicity = ko.observable();
+  this.residenceStatus = ko.observable();
 
   this.addresses = ko.observableArray([ new Address() ]);
   this.addAddress = function() {
