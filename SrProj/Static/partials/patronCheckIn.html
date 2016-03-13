@@ -11,7 +11,7 @@
             <div class="ui right aligned category search field">
                 <h4 class="ui dividing header">Search Patron</h4>
                 <div class="ui icon input">
-                    <input class="prompt" type="text" placeholder="Search Patron">
+                    <input class="prompt" type="text" placeholder="search patron">
                     <i class="search icon"></i>
                 </div>
                 <div class="results"></div>
@@ -19,7 +19,7 @@
             <!-- Service Selection-->
             <div class="field" data-bind="if: app.services().length > 1">
                 <h4 class="ui dividing header">Service Selection*</h4>
-                <select class="serviceSelection ui dropdown" data-bind="value: ServiceSelection">
+                <select class="serviceSelection ui dropdown" data-bind="value: serviceselection">
                     <option value="">Reason for Visit</option>
                     <!-- ko foreach: app.services -->
                     <option data-bind="text: $data.name, value: $data.name"></option>
@@ -31,27 +31,27 @@
             <div class="three fields">
                 <div class="field">
                     <label>First Name*</label>
-                    <input type="text" placeholder="First Name" data-bind="textInput: FirstName" />
+                    <input type="text" placeholder="First Name" data-bind="textInput: firstname" />
                 </div>
                 <div class="field">
                     <label>Middle Name<em>(Optional)</em></label>
-                    <input type="text" placeholder="Middle Name" data-bind="textInput: MiddleName" />
+                    <input type="text" placeholder="Middle Name" data-bind="textInput: middlename" />
                 </div>
                 <div class="field">
                     <label>Last Name*</label>
-                    <input type="text" placeholder="Last Name*" data-bind="textInput: LastName">
+                    <input type="text" placeholder="Last Name*" data-bind="textInput: lastname">
                 </div>
             </div>
             <!--date of birth-->
             <div class="date field">
                 <label>Date Of Birth*</label>
-                <input type="date" placeholder="MM/DD/YYYY" data-bind="date: DateofBirth">
+                <input type="date" placeholder="MM/DD/YYYY" data-bind="date: dateofbirth">
             </div>
             <!--Gender & Ethnicity fields -->
             <div class="two fields">
                 <div class="field">
                     <label>Gender*</label>
-                    <select class="ui dropdown" data-bind="value: Gender">
+                    <select class="ui dropdown" data-bind="value: gender">
                         <option value="">Gender</option>
                         <option value="1">Male</option>
                         <option value="0">Female</option>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="field">
                     <label>Ethnicity*</label>
-                    <select class="ui dropdown" data-bind="value: Ethnicity">
+                    <select class="ui dropdown" data-bind="value: ethnicity">
                         <option value="">Ethnicity</option>
                         <option value="5">American Indian or Alaska Native</option>
                         <option value="4">Asian</option>
@@ -74,7 +74,7 @@
             <!--Marital Status-->
             <div class="field">
                 <label>Marital Status*</label>
-                <select class="ui dropdown" data-bind="value: MaritalStatus">
+                <select class="ui dropdown" data-bind="value: maritalstatus">
                     <option value="">Marital Status</option>
                     <option value="4">Single</option>
                     <option value="3">Married</option>
@@ -88,22 +88,22 @@
             <h4 class="ui dividing header">Address*</h4>
             <div class="field">
                 <div class="field">
-                    <input type="text" placeholder="Street Address" data-bind="textInput: StreetAddress" />
+                    <input type="text" placeholder="Street Address" data-bind="textInput: streetaddress" />
                 </div>
             </div>
             <!-- Apartment number & Postal Code-->
             <div class="two fields">
                 <div class="field">
-                    <input type="text" placeholder="Apt #" data-bind="textInput: ApartmentNumber" />
+                    <input type="text" placeholder="Apt #" data-bind="textInput: apartmentnumber" />
                 </div>
                 <div class="field">
-                    <input type="text" placeholder="Postal Code" data-bind="textInput: PostalCode" />
+                    <input type="text" placeholder="Postal Code" data-bind="textInput: postalcode" />
                 </div>
             </div>
             <!-- Apartment number & Postal Code-->
             <!--Household occupants-->
             <div class="field">
-                <input type="number" placeholder="Houshold Occupants" data-bind="number: HouseholdOccupants" />
+                <input type="number" placeholder="Houshold Occupants" data-bind="number: householdoccupants" />
             </div>
 
 
@@ -114,7 +114,7 @@
             <h4 class="ui dividing header">Service Eligibility</h4>
             <div class="field">
                 <label>Service Status*</label>
-                <select class="ui dropdown" data-bind="value: ServiceStatus">
+                <select class="ui dropdown" data-bind="value: servicestatus">
                     <option value="">Service Status</option>
                     <option value="1">Approved</option>
                     <option value="0">Banned</option>
@@ -124,7 +124,7 @@
             <!--Veteran Status-->
             <div class="span fields">
                 <div class="field">
-                    <div class="ui checkbox" data-bind="checked: VeteranStatus">
+                    <div class="ui checkbox" data-bind="checked: veteranstatus">
                         <input type="checkbox" name="credentials">
                         <label>Is a Veteran</label>
                     </div>
@@ -132,7 +132,7 @@
 
            <!--Medical Insurance Status-->
            <div class="field">
-                    <div class="ui checkbox" data-bind="checked: InsuranceStatus">
+                    <div class="ui checkbox" data-bind="checked: insurancestatus">
                         <input type="checkbox" name="credentials">
                         <label>Has Medical Insurance</label>
                     </div>
@@ -142,7 +142,7 @@
             <!--Services Eligible For-->
             <div class="field">
                 <div class="ui checkbox">
-                    <input type="checkbox" data-bind="checked: NeccessaryPaperwork">
+                    <input type="checkbox" data-bind="checked: neccessarypaperwork">
                     <label>Has necessary paperwork to recieve services</label>
                 </div>
             </div>
@@ -151,7 +151,7 @@
                 <em>* Indicates required field</em>
             </div>
             <div class="rightAligned field">
-            <button class="ui blue submit button" data-bind="click: ShowCheckInModal">Submit</button>
+            <button class="ui blue submit button" data-bind="click: showcheckinmodal">Submit</button>
             <button class="ui negative button" data-bind="click: clear">Clear</button>
             </div>
         </div>
@@ -168,18 +168,18 @@
             </div>
         </div>
         <div class="actions">
-            <button class="ui negative button" data-bind="click: checkIn">Yes</button>
+            <button class="ui negative button" data-bind="click: checkin">Yes</button>
             <button class="ui positive button">No</button>
         </div>
     </div>
 
-    <div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0">
-        <div class="ui form segment" data-bind="foreach: foundPatrons">
+    <div class="patronSearchSelection" data-bind="visible: foundpatrons().length > 0">
+        <div class="ui form segment" data-bind="foreach: foundpatrons">
             <div class="ui fields">
-                <div class="field" data-bind="text: FirstName"></div>
-                <div class="field" data-bind="text: LastName"></div>
-                <div class="field" data-bind="text: DateOfBirth"></div>
-                <div class="field" data-bind="text: addresses[0].StreetAddress"></div>
+                <div class="field" data-bind="text: firstname"></div>
+                <div class="field" data-bind="text: lastname"></div>
+                <div class="field" data-bind="text: dateOfbirth"></div>
+                <div class="field" data-bind="text: addresses[0].streetaddress"></div>
             </div>
         </div>
     </div>
