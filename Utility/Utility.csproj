@@ -56,7 +56,7 @@
     <Compile Include="Enum\ServiceTypeID.cs" />
     <Compile Include="ExtensionMethod\ArrayExtensions.cs" />
     <Compile Include="ExtensionMethod\DateExtensions.cs" />
-    <Compile Include="ExtensionMethod\EnumExtensions.cs" />
+    <Compile Include="ExtensionMethod\ObjectExtensions.cs" />
     <Compile Include="ExtensionMethod\HttpRequestHeadersExtentions.cs" />
     <Compile Include="ExtensionMethod\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

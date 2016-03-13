@@ -60,6 +60,7 @@
     <Compile Include="Address.cs" />
     <Compile Include="EmergencyContact.cs" />
     <Compile Include="Gender.cs" />
+    <Compile Include="PhoneNumber.cs" />
     <Compile Include="ResidenceStatus.cs" />
     <Compile Include="Race.cs" />
     <Compile Include="MaritalStatus.cs" />

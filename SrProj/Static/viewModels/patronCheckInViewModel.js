@@ -14,15 +14,15 @@ function PatronCheckInViewModel() {
   }, this);
 
   this.dateOfBirth = ko.observable('');
-  this.householdOccupants = ko.observable(0);
+  this.householdOccupants = ko.observable(1);
   this.veteran = ko.observable(false);
 
   this.banned = ko.observable(false);
 
-  this.maritalStatus = ko.observable();
-  this.gender = ko.observable();
-  this.ethnicity = ko.observable();
-  this.residenceStatus = ko.observable();
+  this.maritalStatusID = ko.observable();
+  this.genderID = ko.observable();
+  this.ethnicityID = ko.observable();
+  this.residenceStatusID = ko.observable();
 
   this.addresses = ko.observableArray([ new Address() ]);
   this.addAddress = function() {
@@ -129,13 +129,13 @@ PatronCheckInViewModel.prototype.validate = function() {
   if (!this.dateOfBirth()) {
       errors.push('Please enter Date of Birth');
   }
-  if (!this.gender()) {
+  if (!this.genderID()) {
       errors.push('Please specify Gender');
   }
-  if (!this.ethnicity()) {
+  if (!this.ethnicityID()) {
       errors.push('Please specify Ethnicity');
   }
-  if (!this.maritalStatus()) {
+  if (!this.maritalStatusID()) {
       errors.push('Please specify Marital Status');
   }
   if (!this.addresses().length) {
