@@ -1,14 +1,11 @@
 ﻿
 using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
-using System.Dynamic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Microsoft.Ajax.Utilities;
 using Models;
 using Newtonsoft.Json;
 using SrProj.API.Responses;
@@ -47,9 +44,11 @@ namespace SrProj.API
                         p.FirstName.ToLower().Contains(searchData.FirstName.ToLower()) ||
                         p.MiddleName.ToLower().Contains(searchData.MiddleName.ToLower()) ||
                         p.LastName.ToLower().Contains(searchData.LastName.ToLower()) ||
-                        p.DateOfBirth.ToString().Contains(searchData.DateOfBirth.ToString()));
+                        p.DateOfBirth.ToString().Contains(searchData.DateOfBirth.ToString()))
+                    .Include(p => p.MaritalStatus).Include(p => p.Ethnicity).Include(p => p.Gender).Include(p => p.Residence).Include(p => p.EmergencyContacts).Include(p => p.PhoneNumbers).Include(p => p.Addresses);
 
                 response.data = patrons;
+
                 return response.GenerateResponse(HttpStatusCode.OK);
             }
             catch (Exception e)
@@ -64,10 +63,10 @@ namespace SrProj.API
             public bool NecessaryPaperwork { get; set; }
             public int ServiceSelection { get; set; }
 
-            public MaritalStatusID maritalStatusID { get; set; }
-            public GenderID genderID { get; set; }
-            public EthnicityID ethnicityID { get; set; }
-            public ResidenceStatusID residenceStatusID { get; set; }
+            public MaritalStatusID maritalStatusID => (MaritalStatusID) (this.MaritalStatus?.ID ?? 0);
+            public GenderID genderID => (GenderID) (this.Gender?.ID ?? 0);
+            public EthnicityID ethnicityID => (EthnicityID) (this.Ethnicity?.ID ?? 0);
+            public ResidenceStatusID residenceStatusID => (ResidenceStatusID) (this.Residence?.ID ?? 0);
         }
 
         [HttpPost]
@@ -85,13 +84,13 @@ namespace SrProj.API
                 var volunteerName = Request.Headers.GetHeaderValue("username");
                 var volunteer = database.Volunteers.FirstOrDefault(v => v.Username == volunteerName);
                 var serviceType = database.ServiceTypes.FirstOrDefault(st => st.ID == checkIn.ServiceSelection);
-                var dumb = JsonConvert.DeserializeObject<Patron>(JsonConvert.SerializeObject(checkIn));
-                dumb.Ethnicity = database.Ethnicities.FirstOrDefault(et => et.ID == (int) checkIn.ethnicityID);
-                dumb.Gender = database.Genders.FirstOrDefault(gt => gt.ID == (int) checkIn.genderID);
-                dumb.Residence = database.ResidenceStatuses.FirstOrDefault(rt => rt.ID == (int) checkIn.residenceStatusID);
-                dumb.MaritalStatus = database.MaritalStatuses.FirstOrDefault(mt => mt.ID == (int) checkIn.maritalStatusID);
+                var upwardCasting = JsonConvert.DeserializeObject<Patron>(JsonConvert.SerializeObject(checkIn)); //You can move values up an inheritance chain!
+                upwardCasting.Ethnicity = database.Ethnicities.FirstOrDefault(et => et.ID == (int) checkIn.ethnicityID);
+                upwardCasting.Gender = database.Genders.FirstOrDefault(gt => gt.ID == (int) checkIn.genderID);
+                upwardCasting.Residence = database.ResidenceStatuses.FirstOrDefault(rt => rt.ID == (int) checkIn.residenceStatusID);
+                upwardCasting.MaritalStatus = database.MaritalStatuses.FirstOrDefault(mt => mt.ID == (int) checkIn.maritalStatusID);
                 
-                database.Patrons.AddOrUpdate(dumb);
+                database.Patrons.AddOrUpdate(upwardCasting);
                 database.SaveChanges();
                 Visit visit = new Visit
                 {

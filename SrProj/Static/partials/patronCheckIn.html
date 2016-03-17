@@ -130,7 +130,7 @@
 
 <div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0">
   <div class="ui form segment" data-bind="foreach: foundPatrons">
-    <div class="ui fields">
+    <div class="selectable clickable ui fields" data-bind="click: $root.fillPatron">
       <div class="field" data-bind="text: firstName"></div>
       <div class="field" data-bind="text: lastName"></div>
       <div class="field" data-bind="text: dateOfBirth"></div>

@@ -16,19 +16,20 @@ namespace DataAccess.TestData
             var residenceStatuses = Enums.GetResidenceStatuses(context);
             var genderStatuses = Enums.GetGenders(context);
             var ethnicityStatuses = Enums.GetEthnicities(context);
-            var raceStatuses = Enums.GetRaces(context);
                 
             return new Patron
             {
                 FirstName = Names[Random.Next(namesSize)],
+                MiddleName = Names[Random.Next(namesSize)],
                 LastName = Names[Random.Next(namesSize)],
                 DateOfBirth = new DateTime(Random.Next(1970, 2015), Random.Next(1, 12), Random.Next(1, 28)),
                 MaritalStatus = maritalStatuses[Random.Next(maritalStatuses.Length)],
                 Residence = residenceStatuses[Random.Next(residenceStatuses.Length)],
                 Gender = genderStatuses[Random.Next(genderStatuses.Length)],
                 Ethnicity = ethnicityStatuses[Random.Next(ethnicityStatuses.Length)],
-                Addresses = new AddressGenerator(Random.Next(5), Random).ToArray(),
-                HouseholdOccupants = (short) Random.Next(1, 10)
+                Addresses = new AddressGenerator(Random.Next(1, 5), Random).ToArray(),
+                HouseholdOccupants = (short) Random.Next(1, 10),
+                Veteran = Random.Next(0, 2) < 0.5
             };
         }
 

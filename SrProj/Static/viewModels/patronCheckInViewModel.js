@@ -6,14 +6,14 @@ function PatronCheckInViewModel() {
   this.serviceSelection = ko.observable();
 
   //Patron Properties
-  this.firstName = ko.observable('');
-  this.middleName = ko.observable('');
-  this.lastName = ko.observable('');
+  this.firstName = ko.observable('').extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
+  this.middleName = ko.observable('').extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
+  this.lastName = ko.observable('').extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
   this.fullName = ko.computed(function() {
     return this.firstName() + ' ' + (this.middleName() ? this.middleName() + ' ' : '') + this.lastName();
   }, this);
 
-  this.dateOfBirth = ko.observable('');
+  this.dateOfBirth = ko.observable('').extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
   this.householdOccupants = ko.observable(1);
   this.veteran = ko.observable(false);
 
@@ -61,6 +61,24 @@ function PatronCheckInViewModel() {
     .success(function(data) {
       this.foundPatrons(data || []);
     }.bind(this));
+  }.bind(this);
+
+  this.fillPatron = function(patron) {
+    for(var key in patron) {
+      try {
+        var myKey;
+        if(!this[key] && this[key + 'ID']) myKey = key + 'ID';
+
+        if(ko.isWriteableObservable(this[myKey || key])) {
+          console.log(key, ': ', patron[key]);
+          this[myKey || key](patron[key]);
+        }
+      }
+      catch(x) {
+        debugger;
+        console.log('Issue with key ', key);
+      }
+    }
   }.bind(this);
 
   this.firstName.subscribe(this.autoComplete);
