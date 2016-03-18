@@ -45,7 +45,7 @@ namespace SrProj.API
                         p.MiddleName.ToLower().Contains(searchData.MiddleName.ToLower()) ||
                         p.LastName.ToLower().Contains(searchData.LastName.ToLower()) ||
                         p.DateOfBirth.ToString().Contains(searchData.DateOfBirth.ToString()))
-                    .Include(p => p.MaritalStatus).Include(p => p.Ethnicity).Include(p => p.Gender).Include(p => p.Residence).Include(p => p.EmergencyContacts).Include(p => p.PhoneNumbers).Include(p => p.Addresses);
+                    .Include(p => p.MaritalStatus).Include(p => p.Ethnicity).Include(p => p.Gender).Include(p => p.ResidenceStatus).Include(p => p.EmergencyContacts).Include(p => p.PhoneNumbers).Include(p => p.Addresses);
 
                 response.data = patrons;
 
@@ -66,7 +66,7 @@ namespace SrProj.API
             public MaritalStatusID maritalStatusID => (MaritalStatusID) (this.MaritalStatus?.ID ?? 0);
             public GenderID genderID => (GenderID) (this.Gender?.ID ?? 0);
             public EthnicityID ethnicityID => (EthnicityID) (this.Ethnicity?.ID ?? 0);
-            public ResidenceStatusID residenceStatusID => (ResidenceStatusID) (this.Residence?.ID ?? 0);
+            public ResidenceStatusID residenceStatusID => (ResidenceStatusID) (this.ResidenceStatus?.ID ?? 0);
         }
 
         [HttpPost]
@@ -87,7 +87,7 @@ namespace SrProj.API
                 var upwardCasting = JsonConvert.DeserializeObject<Patron>(JsonConvert.SerializeObject(checkIn)); //You can move values up an inheritance chain!
                 upwardCasting.Ethnicity = database.Ethnicities.FirstOrDefault(et => et.ID == (int) checkIn.ethnicityID);
                 upwardCasting.Gender = database.Genders.FirstOrDefault(gt => gt.ID == (int) checkIn.genderID);
-                upwardCasting.Residence = database.ResidenceStatuses.FirstOrDefault(rt => rt.ID == (int) checkIn.residenceStatusID);
+                upwardCasting.ResidenceStatus = database.ResidenceStatuses.FirstOrDefault(rt => rt.ID == (int) checkIn.residenceStatusID);
                 upwardCasting.MaritalStatus = database.MaritalStatuses.FirstOrDefault(mt => mt.ID == (int) checkIn.maritalStatusID);
                 
                 database.Patrons.AddOrUpdate(upwardCasting);

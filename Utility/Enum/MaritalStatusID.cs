@@ -7,15 +7,15 @@ namespace Utility.Enum
     {
         [EnumDecorators.Name("Single")]
         [EnumDecorators.Description("Patron has never been married")]
-        Single = 0,
+        Single = 1,
         [EnumDecorators.Name("Married")]
         [EnumDecorators.Description("Patron is married")]
-        Married = 1,
+        Married = 2,
         [EnumDecorators.Name("Divorced")]
         [EnumDecorators.Description("Patron is is divorced")]
-        Divorced = 2,
+        Divorced = 3,
         [EnumDecorators.Name("Legally Seperated")]
         [EnumDecorators.Description("Patron is legally seperated")]
-        LegallySeperated = 3
+        LegallySeperated = 4
     }
 }

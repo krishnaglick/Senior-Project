@@ -46,9 +46,9 @@
         </div>
         <div class="field">
           <label>Ethnicity</label>
-          <select class="ui dropdown" data-bind="value: ethnicityID">
+          <select id="ethnicity" class="ui dropdown" data-bind="value: ethnicityID">
             <option value="">Ethnicity</option>
-            <!-- ko foreach: app.enums.races -->
+            <!-- ko foreach: app.enums.ethnicities -->
               <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
             <!-- /ko -->
           </select>

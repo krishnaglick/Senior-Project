@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Utility.Attribute;
 
 namespace Utility.Enum
@@ -11,12 +7,12 @@ namespace Utility.Enum
     {
         [EnumDecorators.Name("Male")]
         [EnumDecorators.Description("Male")]
-        Male = 0,
+        Male = 1,
         [EnumDecorators.Name("Female")]
         [EnumDecorators.Description("Female")]
-        Female = 1,
+        Female = 2,
         [EnumDecorators.Name("Transgender")]
         [EnumDecorators.Description("Transgender")]
-        Transgender = 2
+        Transgender = 3
     }
 }

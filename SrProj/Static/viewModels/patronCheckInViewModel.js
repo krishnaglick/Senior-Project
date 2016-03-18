@@ -71,11 +71,10 @@ function PatronCheckInViewModel() {
 
         if(ko.isWriteableObservable(this[myKey || key])) {
           console.log(key, ': ', patron[key]);
-          this[myKey || key](patron[key]);
+          this[myKey || key](patron[key].id || patron[key]);
         }
       }
       catch(x) {
-        debugger;
         console.log('Issue with key ', key);
       }
     }

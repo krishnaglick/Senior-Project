@@ -35,7 +35,7 @@ namespace DataAccess.Contexts
         public DbSet<ResidenceStatus> ResidenceStatuses { get; set; }
         public DbSet<Ethnicity> Ethnicities { get; set; }
         public DbSet<MaritalStatus> MaritalStatuses { get; set; }
-        public DbSet<Race> Races { get; set; }
+        public DbSet<PhoneNumber> PhoneNumbers { get; set; }
 
     }
 }

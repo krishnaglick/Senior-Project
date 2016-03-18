@@ -23,7 +23,6 @@ namespace SrProj.API
                     Ethnicities = Enum.GetValues(typeof(EthnicityID)).ToList().Select(EnumViewModel.ParseEnum),
                     Genders = Enum.GetValues(typeof(GenderID)).ToList().Select(EnumViewModel.ParseEnum),
                     MaritalStatuses = Enum.GetValues(typeof(MaritalStatusID)).ToList().Select(EnumViewModel.ParseEnum),
-                    Races = Enum.GetValues(typeof(RaceID)).ToList().Select(EnumViewModel.ParseEnum),
                     ResidenceStatuses = Enum.GetValues(typeof(ResidenceStatusID)).ToList().Select(EnumViewModel.ParseEnum)
                 }
             };

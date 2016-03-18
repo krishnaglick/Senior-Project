@@ -24,7 +24,7 @@ namespace DataAccess.TestData
                 LastName = Names[Random.Next(namesSize)],
                 DateOfBirth = new DateTime(Random.Next(1970, 2015), Random.Next(1, 12), Random.Next(1, 28)),
                 MaritalStatus = maritalStatuses[Random.Next(maritalStatuses.Length)],
-                Residence = residenceStatuses[Random.Next(residenceStatuses.Length)],
+                ResidenceStatus = residenceStatuses[Random.Next(residenceStatuses.Length)],
                 Gender = genderStatuses[Random.Next(genderStatuses.Length)],
                 Ethnicity = ethnicityStatuses[Random.Next(ethnicityStatuses.Length)],
                 Addresses = new AddressGenerator(Random.Next(1, 5), Random).ToArray(),
