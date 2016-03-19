@@ -70,7 +70,7 @@ function PatronCheckInViewModel() {
         if(!this[key] && this[key + 'ID']) myKey = key + 'ID';
 
         if(ko.isWriteableObservable(this[myKey || key])) {
-          console.log(key, ': ', patron[key]);
+          if(key === 'dateOfBirth') patron[key] = moment(patron[key]).format('MM/DD/YYYY')
           this[myKey || key](patron[key].id || patron[key]);
         }
       }
