@@ -41,7 +41,7 @@ namespace Models
         [NotMapped]
         public string FullName => $"{this.FirstName} {this.MiddleName} {this.LastName}";
 
-        [Required][FilterableDate]
+        [Required][FilterableDate][DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
         [FilterableNumber]
         public short HouseholdOccupants { get; set; }
