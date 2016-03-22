@@ -45,7 +45,14 @@ namespace SrProj.API
                         p.MiddleName.ToLower().Contains(searchData.MiddleName.ToLower()) ||
                         p.LastName.ToLower().Contains(searchData.LastName.ToLower()) ||
                         p.DateOfBirth.ToString().Contains(searchData.DateOfBirth.ToString()))
-                    .Include(p => p.MaritalStatus).Include(p => p.Ethnicity).Include(p => p.Gender).Include(p => p.ResidenceStatus).Include(p => p.EmergencyContacts).Include(p => p.PhoneNumbers).Include(p => p.Addresses);
+                    .Include(p => p.MaritalStatus)
+                    .Include(p => p.Ethnicity)
+                    .Include(p => p.Gender)
+                    .Include(p => p.ResidenceStatus)
+                    .Include(p => p.EmergencyContacts)
+                    .Include(p => p.PhoneNumbers)
+                    .Include(p => p.Addresses)
+                    .Include(p => p.ServicesUsed);
 
                 response.data = patrons;
 

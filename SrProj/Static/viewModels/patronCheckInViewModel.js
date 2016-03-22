@@ -4,16 +4,17 @@ function PatronCheckInViewModel() {
 
   this.neccessaryPaperwork = ko.observable(false);
   this.serviceSelection = ko.observable();
+  this.search = ko.observable(true);
 
   //Patron Properties
-  this.firstName = ko.observable('').extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
-  this.middleName = ko.observable('').extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
-  this.lastName = ko.observable('').extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
+  this.firstName = ko.observable('');
+  this.middleName = ko.observable('');
+  this.lastName = ko.observable('');
   this.fullName = ko.computed(function() {
     return this.firstName() + ' ' + (this.middleName() ? this.middleName() + ' ' : '') + this.lastName();
   }, this);
 
-  this.dateOfBirth = ko.observable('').extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
+  this.dateOfBirth = ko.observable('');
   this.householdOccupants = ko.observable(1);
   this.veteran = ko.observable(false);
 
@@ -57,7 +58,8 @@ function PatronCheckInViewModel() {
 
   this.autoComplete = function() {
     var action = 'FindPatron';
-    app.post(this.controller, action, ko.toJSON(this))
+    if(!this.search()) return;
+    app.post(this.controller, action, ko.toJSON(this.patronSearchData))
     .success(function(data) {
       this.foundPatrons(data || []);
     }.bind(this));
@@ -78,12 +80,21 @@ function PatronCheckInViewModel() {
         console.log('Issue with key ', key);
       }
     }
+    this.search(false);
   }.bind(this);
 
-  this.firstName.subscribe(this.autoComplete);
-  this.middleName.subscribe(this.autoComplete);
-  this.lastName.subscribe(this.autoComplete);
-  this.dateOfBirth.subscribe(this.autoComplete);
+  this.patronSearchData = ko.computed(function() {
+    return {
+      firstName: this.firstName(),
+      middleName: this.middleName(),
+      lastName: this.lastName(),
+      dateOfBirth: this.dateOfBirth()
+    };
+  }, this).extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
+  this.patronSearchData.subscribe(this.autoComplete);
+  this.patronSearchData.subscribe(function showSearch() {
+    this.search(true);
+  }.bind(this));
 
   this.parseAddress = function(address) {
     if(address && address[0] && address[0].streetAddress)
