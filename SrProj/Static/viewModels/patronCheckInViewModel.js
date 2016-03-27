@@ -4,6 +4,7 @@ function PatronCheckInViewModel() {
 
   this.neccessaryPaperwork = ko.observable(false);
   this.serviceSelection = ko.observable();
+  this.search = ko.observable(true);
 
   //Patron Properties
   this.firstName = ko.observable('');
@@ -57,16 +58,43 @@ function PatronCheckInViewModel() {
 
   this.autoComplete = function() {
     var action = 'FindPatron';
-    app.post(this.controller, action, ko.toJSON(this))
+    if(!this.search()) return;
+    app.post(this.controller, action, ko.toJSON(this.patronSearchData))
     .success(function(data) {
       this.foundPatrons(data || []);
     }.bind(this));
   }.bind(this);
 
-  this.firstName.subscribe(this.autoComplete);
-  this.middleName.subscribe(this.autoComplete);
-  this.lastName.subscribe(this.autoComplete);
-  this.dateOfBirth.subscribe(this.autoComplete);
+  this.fillPatron = function(patron) {
+    for(var key in patron) {
+      try {
+        var myKey;
+        if(!this[key] && this[key + 'ID']) myKey = key + 'ID';
+
+        if(ko.isWriteableObservable(this[myKey || key])) {
+          if(key === 'dateOfBirth') patron[key] = moment(patron[key]).format('MM/DD/YYYY');
+          this[myKey || key](patron[key].id || patron[key]);
+        }
+      }
+      catch(x) {
+        console.log('Issue with key ', key);
+      }
+    }
+    this.search(false);
+  }.bind(this);
+
+  this.patronSearchData = ko.computed(function() {
+    return {
+      firstName: this.firstName(),
+      middleName: this.middleName(),
+      lastName: this.lastName(),
+      dateOfBirth: this.dateOfBirth()
+    };
+  }, this).extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
+  this.patronSearchData.subscribe(this.autoComplete);
+  this.patronSearchData.subscribe(function showSearch() {
+    this.search(true);
+  }.bind(this));
 
   this.parseAddress = function(address) {
     if(address && address[0] && address[0].streetAddress)

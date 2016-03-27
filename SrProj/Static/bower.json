@@ -19,6 +19,7 @@
     "cookies-js": "~1.2.2",
     "jquery": ">=1.8",
     "semantic": "semantic-ui#~2.1.4",
-    "knockout": "^3.4.0"
+    "knockout": "^3.4.0",
+    "moment": "^2.12.0"
   }
 }

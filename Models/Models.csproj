@@ -62,7 +62,6 @@
     <Compile Include="Gender.cs" />
     <Compile Include="PhoneNumber.cs" />
     <Compile Include="ResidenceStatus.cs" />
-    <Compile Include="Race.cs" />
     <Compile Include="MaritalStatus.cs" />
     <Compile Include="Ethnicity.cs" />
     <Compile Include="ModelBase.cs" />

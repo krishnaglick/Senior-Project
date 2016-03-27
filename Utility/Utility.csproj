@@ -50,7 +50,6 @@
     <Compile Include="Enum\EthnicityID.cs" />
     <Compile Include="Enum\GenderID.cs" />
     <Compile Include="Enum\MaritalStatusID.cs" />
-    <Compile Include="Enum\RaceID.cs" />
     <Compile Include="Enum\ResidenceStatusID.cs" />
     <Compile Include="Enum\RoleID.cs" />
     <Compile Include="Enum\ServiceTypeID.cs" />

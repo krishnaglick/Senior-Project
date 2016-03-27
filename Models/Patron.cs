@@ -41,7 +41,7 @@ namespace Models
         [NotMapped]
         public string FullName => $"{this.FirstName} {this.MiddleName} {this.LastName}";
 
-        [Required][FilterableDate]
+        [Required][FilterableDate][DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
         [FilterableNumber]
         public short HouseholdOccupants { get; set; }
@@ -58,7 +58,7 @@ namespace Models
         [FilterableDropdown]
         public Ethnicity Ethnicity { get; set; }
         [FilterableDropdown]
-        public ResidenceStatus Residence { get; set; }
+        public ResidenceStatus ResidenceStatus { get; set; }
     
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }

@@ -66,16 +66,6 @@ namespace DataAccess.TestData
                 });
             }
 
-            foreach (RaceID race in Enum.GetValues(typeof(RaceID)))
-            {
-                context.Races.AddOrUpdate(new Race
-                {
-                    ID = (int)race,
-                    Name = race.GetEnumAttribute<EnumDecorators.Name>().name,
-                    Description = race.GetEnumAttribute<EnumDecorators.Description>().desc
-                });
-            }
-
             foreach (ResidenceStatusID residence in Enum.GetValues(typeof(ResidenceStatusID)))
             {
                 context.ResidenceStatuses.AddOrUpdate(new ResidenceStatus
@@ -112,11 +102,6 @@ namespace DataAccess.TestData
         public static MaritalStatus[] GetMaritalStatuses(Database context)
         {
             return context.MaritalStatuses.ToArray();
-        }
-
-        public static Race[] GetRaces(Database context)
-        {
-            return context.Races.ToArray();
         }
 
         public static ResidenceStatus[] GetResidenceStatuses(Database context)

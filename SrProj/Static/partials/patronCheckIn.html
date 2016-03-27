@@ -46,9 +46,9 @@
         </div>
         <div class="field">
           <label>Ethnicity</label>
-          <select class="ui dropdown" data-bind="value: ethnicityID">
+          <select id="ethnicity" class="ui dropdown" data-bind="value: ethnicityID">
             <option value="">Ethnicity</option>
-            <!-- ko foreach: app.enums.races -->
+            <!-- ko foreach: app.enums.ethnicities -->
               <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
             <!-- /ko -->
           </select>
@@ -81,7 +81,7 @@
 
       <h4 class="ui dividing header">Household Occupants</h4>
       <div class="field">
-        <input type="number" placeholder="Houshold Occupants" data-bind="textInput  : householdOccupants"/>
+        <input type="number" placeholder="Houshold Occupants" min="1" data-bind="textInput: householdOccupants"/>
       </div>
       <h4 class="ui dividing header">Service Eligibility</h4>
       <div class="fields">
@@ -128,9 +128,9 @@
   </div>
 </div>
 
-<div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0">
+<div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0 && search()">
   <div class="ui form segment" data-bind="foreach: foundPatrons">
-    <div class="ui fields">
+    <div class="selectable clickable ui fields" data-bind="click: $root.fillPatron">
       <div class="field" data-bind="text: firstName"></div>
       <div class="field" data-bind="text: lastName"></div>
       <div class="field" data-bind="text: dateOfBirth"></div>
