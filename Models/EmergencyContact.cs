@@ -1,5 +1,4 @@
 ﻿
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,7 +15,7 @@ namespace Models
         public string LastName { get; set; }
         [NotMapped]
         public string FullName => $"{this.FirstName} {this.LastName}";
-        [Required][MinLength(10)][MaxLength(10)]
+        [Required]
         public string PhoneNumber { get; set; }
     }
 }

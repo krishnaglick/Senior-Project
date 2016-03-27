@@ -57,12 +57,10 @@ namespace Models
         public Gender Gender { get; set; }
         [FilterableDropdown]
         public Ethnicity Ethnicity { get; set; }
-
         [FilterableDropdown]
-        public ResidenceStatus Residence { get; set; } //Not in the frontend
-
-        [MinLength(10)][MaxLength(10)]
-        public virtual ICollection<string> PhoneNumbers { get; set; }
+        public ResidenceStatus Residence { get; set; }
+    
+        public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
         public virtual ICollection<ServiceEligibility> ServicesUsed { get; set; }

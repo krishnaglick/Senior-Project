@@ -12,9 +12,9 @@ namespace Models
         public string StreetAddress { get; set; }
         [FilterableText]
         public string City { get; set; }
-        [FilterableText][MinLength(2)]
+        [FilterableText]
         public string State { get; set; }
-        [FilterableText][MinLength(5)][MaxLength(5)]
+        [FilterableText]
         public string Zip { get; set; }
     }
 }
