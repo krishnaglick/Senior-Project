@@ -29,7 +29,8 @@ namespace DataAccess.TestData
                 Ethnicity = ethnicityStatuses[Random.Next(ethnicityStatuses.Length)],
                 Addresses = new AddressGenerator(Random.Next(1, 5), Random).ToArray(),
                 HouseholdOccupants = (short) Random.Next(1, 10),
-                Veteran = Random.Next(0, 2) < 0.5
+                Veteran = Random.Next(0, 2) < 0.5,
+                ServicesUsed = new ServiceGenerator(Random)
             };
         }
 
