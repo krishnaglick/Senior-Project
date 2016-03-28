@@ -75,8 +75,10 @@
     <Compile Include="Contexts\RoleContext.cs" />
     <Compile Include="Contexts\VolunteerContext.cs" />
     <Compile Include="TestData\AddressGenerator.cs" />
+    <Compile Include="TestData\EmergencyContactGenerator.cs" />
     <Compile Include="TestData\Enums.cs" />
     <Compile Include="TestData\Patrons.cs" />
+    <Compile Include="TestData\PhoneNumberGenerator.cs" />
     <Compile Include="TestData\ServiceGenerator.cs" />
     <Compile Include="TestData\Visits.cs" />
     <Compile Include="TestData\VolunteerRoles.cs" />

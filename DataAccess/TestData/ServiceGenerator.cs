@@ -1,17 +1,26 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using DataAccess.Contexts;
 using Models;
 
 namespace DataAccess.TestData
 {
     class ServiceGenerator : List<ServiceEligibility>
     {
-        private Random _random;
-
-        public ServiceGenerator(Random random = null)
+        public ServiceGenerator(Database database, Random random)
         {
-            _random = random ?? new Random();
+            var serviceTypes = database.ServiceTypes.Select(st => st).ToArray();
+            for (int i = 0; i < random.Next(1, 8); i++)
+            {
+                this.Add(
+                    new ServiceEligibility
+                    {
+                        ServiceType = serviceTypes[random.Next(0, serviceTypes.Length)]
+                    }
+                );
+            }
         }
     }
 }

@@ -30,7 +30,9 @@ namespace DataAccess.TestData
                 Addresses = new AddressGenerator(Random.Next(1, 5), Random).ToArray(),
                 HouseholdOccupants = (short) Random.Next(1, 10),
                 Veteran = Random.Next(0, 2) < 0.5,
-                ServicesUsed = new ServiceGenerator(Random)
+                ServicesUsed = new ServiceGenerator(context, Random),
+                PhoneNumbers = new PhoneNumberGenerator(Random),
+                EmergencyContacts = new EmergencyContactGenerator(Random)
             };
         }
 
