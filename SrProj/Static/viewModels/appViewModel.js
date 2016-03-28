@@ -20,7 +20,9 @@ function App() {
   }
 
   this.isAdmin = ko.computed(function() {
-    return this.roles().indexOf('Admin') > -1;
+    return this.roles().map(function(role) {
+      return role.roleName;
+    }).indexOf('Admin') > -1;
   }, this);
 
   this.headers = function() {

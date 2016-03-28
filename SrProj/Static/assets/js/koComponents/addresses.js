@@ -19,7 +19,7 @@ ko.components.register('addresses', {
         '<input type="text" placeholder="State" data-bind="textInput: state"></input>' +
       '</div>' +
       '<div class="field">' +
-        '<input type="text" placeholder="Zip Code" data-bind="textInput: zip"></input>' +
+        '<input type="text" class="zipField" placeholder="Zip Code" data-bind="textInput: zip"></input>' +
       '</div>' +
       '<div class="field">' +
         '<button class="circular red ui icon button" data-bind="click: $root.removeAddress">' +

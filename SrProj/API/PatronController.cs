@@ -39,25 +39,28 @@ namespace SrProj.API
             ApiResponse response = new ApiResponse(Request);
             try
             {
-                var patronContext = new Database();
-                var patrons = patronContext.Patrons.Where(
-                    p =>
-                        p.FirstName.ToLower().Contains(searchData.FirstName.ToLower()) ||
-                        p.MiddleName.ToLower().Contains(searchData.MiddleName.ToLower()) ||
-                        p.LastName.ToLower().Contains(searchData.LastName.ToLower()) ||
-                        p.DateOfBirth.ToString().Contains(searchData.DateOfBirth.ToString()))
-                    .Include(p => p.MaritalStatus)
-                    .Include(p => p.Ethnicity)
-                    .Include(p => p.Gender)
-                    .Include(p => p.ResidenceStatus)
-                    .Include(p => p.EmergencyContacts)
-                    .Include(p => p.PhoneNumbers)
-                    .Include(p => p.Addresses)
-                    .Include(p => p.ServicesUsed);
+                using (var patronContext = new Database())
+                {
+                    var patrons = patronContext.Patrons.Where(
+                        p =>
+                            p.FirstName.ToLower().Contains(searchData.FirstName.ToLower()) ||
+                            p.MiddleName.ToLower().Contains(searchData.MiddleName.ToLower()) ||
+                            p.LastName.ToLower().Contains(searchData.LastName.ToLower()) ||
+                            p.DateOfBirth.ToString().Contains(searchData.DateOfBirth.ToString()))
+                        .Include(p => p.MaritalStatus)
+                        .Include(p => p.Ethnicity)
+                        .Include(p => p.Gender)
+                        .Include(p => p.ResidenceStatus)
+                        .Include(p => p.EmergencyContacts)
+                        .Include(p => p.PhoneNumbers)
+                        .Include(p => p.Addresses)
+                        .Include(p => p.ServicesUsed.Select(su => su.ServiceType))
+                    .ToList();
 
-                response.data = patrons;
+                    response.data = patrons;
 
-                return response.GenerateResponse(HttpStatusCode.OK);
+                    return response.GenerateResponse(HttpStatusCode.OK);
+                }
             }
             catch (Exception e)
             {
@@ -88,32 +91,34 @@ namespace SrProj.API
             }
             try
             {
-                var database = new Database();
-                var volunteerName = Request.Headers.GetHeaderValue("username");
-                var volunteer = database.Volunteers.FirstOrDefault(v => v.Username == volunteerName);
-                var serviceType = database.ServiceTypes.FirstOrDefault(st => st.ID == checkIn.ServiceSelection);
-                var upwardCasting = JsonConvert.DeserializeObject<Patron>(JsonConvert.SerializeObject(checkIn)); //You can move values up an inheritance chain!
-                upwardCasting.Ethnicity = database.Ethnicities.FirstOrDefault(et => et.ID == (int) checkIn.ethnicityID);
-                upwardCasting.Gender = database.Genders.FirstOrDefault(gt => gt.ID == (int) checkIn.genderID);
-                upwardCasting.ResidenceStatus = database.ResidenceStatuses.FirstOrDefault(rt => rt.ID == (int) checkIn.residenceStatusID);
-                upwardCasting.MaritalStatus = database.MaritalStatuses.FirstOrDefault(mt => mt.ID == (int) checkIn.maritalStatusID);
-                
-                database.Patrons.AddOrUpdate(upwardCasting);
-                database.SaveChanges();
-                Visit visit = new Visit
+                using (var database = new Database())
                 {
-                    CreateVolunteer = volunteer,
-                    Service = serviceType,
-                    Patron = database.Patrons.FirstOrDefault(p =>
-                        p.FirstName == checkIn.FirstName &&
-                        p.LastName == checkIn.LastName &&
-                        p.MiddleName == checkIn.MiddleName &&
-                        p.DateOfBirth == checkIn.DateOfBirth
-                    )
-                };
-                database.Visits.Add(visit);
-                database.SaveChanges();
-                return response.GenerateResponse(HttpStatusCode.Created);
+                    var volunteerName = Request.Headers.GetHeaderValue("username");
+                    var volunteer = database.Volunteers.FirstOrDefault(v => v.Username == volunteerName);
+                    var serviceType = database.ServiceTypes.FirstOrDefault(st => st.ID == checkIn.ServiceSelection);
+                    var upwardCasting = JsonConvert.DeserializeObject<Patron>(JsonConvert.SerializeObject(checkIn)); //You can move values up an inheritance chain!
+                    upwardCasting.Ethnicity = database.Ethnicities.FirstOrDefault(et => et.ID == (int)checkIn.ethnicityID);
+                    upwardCasting.Gender = database.Genders.FirstOrDefault(gt => gt.ID == (int)checkIn.genderID);
+                    upwardCasting.ResidenceStatus = database.ResidenceStatuses.FirstOrDefault(rt => rt.ID == (int)checkIn.residenceStatusID);
+                    upwardCasting.MaritalStatus = database.MaritalStatuses.FirstOrDefault(mt => mt.ID == (int)checkIn.maritalStatusID);
+
+                    database.Patrons.AddOrUpdate(upwardCasting);
+                    database.SaveChanges();
+                    Visit visit = new Visit
+                    {
+                        CreateVolunteer = volunteer,
+                        Service = serviceType,
+                        Patron = database.Patrons.FirstOrDefault(p =>
+                            p.FirstName == checkIn.FirstName &&
+                            p.LastName == checkIn.LastName &&
+                            p.MiddleName == checkIn.MiddleName &&
+                            p.DateOfBirth == checkIn.DateOfBirth
+                        )
+                    };
+                    database.Visits.Add(visit);
+                    database.SaveChanges();
+                    return response.GenerateResponse(HttpStatusCode.Created);
+                }
             }
             catch(Exception e)
             {

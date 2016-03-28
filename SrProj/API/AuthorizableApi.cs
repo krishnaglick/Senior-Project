@@ -11,6 +11,7 @@ using SrProj.API.Responses.Errors;
 using Utility.Enum;
 using Utility.ExtensionMethod;
 using Database = DataAccess.Contexts.Database;
+using System.Data.Entity;
 
 namespace SrProj.API
 {
@@ -85,25 +86,29 @@ namespace SrProj.API
 
             if (!string.IsNullOrEmpty(authToken) && !string.IsNullOrEmpty(activeUser))
             {
-                var database = new Database();
-                var decodedAuthToken = Authorization.DecodeToken(authToken);
-                if (decodedAuthToken == null)
-                    return AuthorizationResult.InvalidToken;
+                using (var database = new Database())
+                {
+                    var decodedAuthToken = Authorization.DecodeToken(authToken);
+                    if (decodedAuthToken == null)
+                        return AuthorizationResult.InvalidToken;
 
-                if(decodedAuthToken.username != activeUser)
-                    return AuthorizationResult.MismatchedUser;
+                    if (decodedAuthToken.username != activeUser)
+                        return AuthorizationResult.MismatchedUser;
 
-                if(decodedAuthToken.timeDiff > AuthorizationOptions.AuthTokenTimeout)
-                    return AuthorizationResult.ExpiredToken;
+                    if (decodedAuthToken.timeDiff > AuthorizationOptions.AuthTokenTimeout)
+                        return AuthorizationResult.ExpiredToken;
 
-                //Valid token, need to check roles
-                var dbRoles = database.RoleVolunteers.Where(rv => rv.Volunteer.Username == activeUser)
-                    .Select(rv => rv.Role.ID).ToArray();
+                    //Valid token, need to check roles
+                    var dbRoles = database.RoleVolunteers
+                        .Where(rv => rv.Volunteer.Username == activeUser)
+                        .Include(rv => rv.Volunteer)
+                        .Select(rv => rv.Role.ID).ToArray();
 
-                if(roles.Select(r => (int) r).Intersect(dbRoles).Count() == roles.Length)
-                    return AuthorizationResult.Success;
-                    
-                return AuthorizationResult.Unauthorized;
+                    if (roles.Select(r => (int)r).Intersect(dbRoles).Count() == roles.Length)
+                        return AuthorizationResult.Success;
+
+                    return AuthorizationResult.Unauthorized;
+                }
             }
 
             return AuthorizationResult.InvalidRequest;

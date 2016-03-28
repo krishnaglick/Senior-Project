@@ -22,10 +22,11 @@ namespace SrProj.API
             using (var dbContext = new Database())
             {
                 var roleVolunteer = dbContext.RoleVolunteers
-                    .Include(rv => rv.Volunteer)
-                    .Include(rv => rv.Role)
-                    .Where(rv => rv.Volunteer.Username == volunteer.Username)
-                    .ToList();
+                .Where(rv => rv.Volunteer.Username == volunteer.Username)
+                .Include(rv => rv.Volunteer)
+                .Include(rv => rv.Volunteer.ServiceTypes)
+                .Include(rv => rv.Role)
+                .ToList();
 
                 if (roleVolunteer.Count == 0)
                 {
@@ -47,12 +48,12 @@ namespace SrProj.API
 
                     response.data = new
                     {
-                        roles = roleVolunteer.Select(rv => rv.Role.RoleName),
+                        roles = roleVolunteer.Select(rv => rv.Role).ToList(),
                         allowedServices = dbVolunteer.ServiceTypes.Select(st =>
                         new {
                             id = st.ID,
                             name = st.ServiceName
-                        })
+                        }).ToList()
                     };
 
                     return response.GenerateResponse(HttpStatusCode.OK, new Dictionary<string, string>

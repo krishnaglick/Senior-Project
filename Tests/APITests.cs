@@ -8,10 +8,16 @@ namespace Tests
     [TestClass]
     public class APITests
     {
+        [TestInitialize]
+        public void BeforeEach()
+        {
+            DataAccess.Contexts.ConnectionString.ChosenConnection = "homeDesktop";
+        }
+
         [TestMethod]
         public void LoginTest()
         {
-            return;
+            //return;
             //For some reason the DB context gets all wacky, so this isn't doing anything!
             var testVolunteer = new Login
             {
