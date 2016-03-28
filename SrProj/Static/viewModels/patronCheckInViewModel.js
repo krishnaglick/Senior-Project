@@ -3,8 +3,31 @@ function PatronCheckInViewModel() {
   this.controller = 'Patron';
 
   this.neccessaryPaperwork = ko.observable(false);
-  this.serviceSelection = ko.observable();
   this.search = ko.observable(true);
+  this.serviceSelection = ko.observable();
+  this.servicesUsed = ko.observableArray();
+
+  this.paperworkPreviouslyValidated = function() {
+    function getDays(millisec) {
+      var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+      return days;
+    }
+    if(!this.servicesUsed().length || !this.serviceSelection()) return;
+    this.servicesUsed().forEach(function(service) {
+      var serviceTypeID = service.serviceType.id;
+      if(~~this.serviceSelection() === serviceTypeID) {
+        var serviceUsedDate = new Date(service.createDate);
+        var now = Date.now();
+        var milisecDiff = serviceUsedDate - now;
+        //TODO: This logic needs some polish.
+        if(getDays(milisecDiff) < 365) {
+          this.neccessaryPaperwork(true);
+        }
+      }
+    }.bind(this));
+  }.bind(this);
+
+  this.serviceSelection.subscribe(this.paperworkPreviouslyValidated);
 
   //Patron Properties
   this.firstName = ko.observable('');
@@ -80,7 +103,11 @@ function PatronCheckInViewModel() {
         console.log('Issue with key ', key);
       }
     }
-    this.search(false);
+    setTimeout(function() {
+      // :/
+      this.search(false);
+      this.paperworkPreviouslyValidated();
+    }.bind(this), 600);
   }.bind(this);
 
   this.patronSearchData = ko.computed(function() {
@@ -119,9 +146,6 @@ function PatronCheckInViewModel() {
     var action = 'CheckIn';
     if(app.services().length === 1)
       this.serviceSelection(app.services()[0]);
-    else {
-      this.serviceSelection($('.ui.dropdown.selection').dropdown('get text')[0]);
-    }
 
     app.post(this.controller, action, ko.toJSON(this))
     .success(function(data, textStatus, request) {

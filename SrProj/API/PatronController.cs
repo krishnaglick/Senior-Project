@@ -53,7 +53,7 @@ namespace SrProj.API
                     .Include(p => p.EmergencyContacts)
                     .Include(p => p.PhoneNumbers)
                     .Include(p => p.Addresses)
-                    .Include(p => p.ServicesUsed);
+                    .Include(p => p.ServicesUsed.Select(su =>  su.ServiceType ));
 
                 response.data = patrons;
 
