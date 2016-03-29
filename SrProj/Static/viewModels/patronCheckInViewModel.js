@@ -174,9 +174,7 @@ function PatronCheckInViewModel() {
     for(var key in this) {
       try {
         if(this[key].default !== undefined) {
-          if(ko.isWriteableObservable(this[key])) {
-            this[key](this[key].default);
-          }
+          this[key](this[key].default);
         }
       }
       catch(x) {
