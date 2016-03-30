@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -22,6 +23,7 @@
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
     <UseGlobalApplicationHostFile />
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -262,6 +264,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\ChoJax - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -279,7 +282,20 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Static\app.html" />
     <Content Include="Static\assets\css\app.css" />
+    <Content Include="Static\assets\img\visitor.png" />
+    <Content Include="Static\assets\img\volunteer.png" />
+    <Content Include="Static\assets\js\koComponents\addresses.js" />
+    <Content Include="Static\assets\js\koComponents\emergencyContacts.js" />
+    <Content Include="Static\assets\js\koComponents\multipleSearchSelection.js" />
+    <Content Include="Static\assets\js\koComponents\phoneNumbers.js" />
     <Content Include="Static\assets\js\router.js" />
+    <Content Include="Static\assets\js\utility.js" />
+    <Content Include="Static\bower_components\cookies-js\dist\cookies.js" />
+    <Content Include="Static\bower_components\cookies-js\dist\cookies.min.js" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\dist\jquery.mask.js" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\dist\jquery.mask.min.js" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\package.js" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\src\jquery.mask.js" />
     <Content Include="Static\bower_components\jquery\dist\jquery.js" />
     <Content Include="Static\bower_components\jquery\dist\jquery.min.js" />
     <Content Include="Static\bower_components\jquery\MIT-LICENSE.txt" />
@@ -427,6 +443,114 @@
     <Content Include="Static\bower_components\knockout\src\utils.js" />
     <Content Include="Static\bower_components\knockout\src\version.js" />
     <Content Include="Static\bower_components\knockout\src\virtualElements.js" />
+    <Content Include="Static\bower_components\moment\min\locales.js" />
+    <Content Include="Static\bower_components\moment\min\locales.min.js" />
+    <Content Include="Static\bower_components\moment\min\moment-with-locales.js" />
+    <Content Include="Static\bower_components\moment\min\moment-with-locales.min.js" />
+    <Content Include="Static\bower_components\moment\min\moment.min.js" />
+    <Content Include="Static\bower_components\moment\min\tests.js" />
+    <Content Include="Static\bower_components\moment\moment.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\check-overflow.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\date-from-array.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\from-anything.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\from-array.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\from-object.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\from-string-and-array.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\from-string-and-format.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\from-string.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\local.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\parsing-flags.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\utc.js" />
+    <Content Include="Static\bower_components\moment\src\lib\create\valid.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\abs.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\add-subtract.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\as.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\bubble.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\constructor.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\create.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\duration.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\get.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\humanize.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\iso-string.js" />
+    <Content Include="Static\bower_components\moment\src\lib\duration\prototype.js" />
+    <Content Include="Static\bower_components\moment\src\lib\format\format.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\calendar.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\constructor.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\en.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\formats.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\invalid.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\lists.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\locale.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\locales.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\ordinal.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\pre-post-format.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\prototype.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\relative.js" />
+    <Content Include="Static\bower_components\moment\src\lib\locale\set.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\add-subtract.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\calendar.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\clone.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\compare.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\constructor.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\creation-data.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\diff.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\format.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\from.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\get-set.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\locale.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\min-max.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\moment.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\now.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\prototype.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\start-end-of.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\to-type.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\to.js" />
+    <Content Include="Static\bower_components\moment\src\lib\moment\valid.js" />
+    <Content Include="Static\bower_components\moment\src\lib\parse\regex.js" />
+    <Content Include="Static\bower_components\moment\src\lib\parse\token.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\aliases.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\constants.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\day-of-month.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\day-of-week.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\day-of-year.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\hour.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\millisecond.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\minute.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\month.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\offset.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\quarter.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\second.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\timestamp.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\timezone.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\units.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\week-calendar-utils.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\week-year.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\week.js" />
+    <Content Include="Static\bower_components\moment\src\lib\units\year.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\abs-ceil.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\abs-floor.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\abs-round.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\compare-arrays.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\defaults.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\deprecate.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\extend.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\has-own-prop.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\hooks.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\is-array.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\is-date.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\is-function.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\is-object.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\is-undefined.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\map.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\to-int.js" />
+    <Content Include="Static\bower_components\moment\src\lib\utils\zero-fill.js" />
+    <Content Include="Static\bower_components\moment\src\moment.js" />
+    <Content Include="Static\bower_components\moment\templates\amd-named.js" />
+    <Content Include="Static\bower_components\moment\templates\amd.js" />
+    <Content Include="Static\bower_components\moment\templates\default.js" />
+    <Content Include="Static\bower_components\moment\templates\globals.js" />
+    <Content Include="Static\bower_components\moment\templates\locale-header.js" />
+    <Content Include="Static\bower_components\moment\templates\test-header.js" />
     <Content Include="Static\bower_components\semantic\.gitignore" />
     <Content Include="Static\bower_components\semantic\dist\components\accordion.css" />
     <Content Include="Static\bower_components\semantic\dist\components\accordion.js" />
@@ -683,9 +807,19 @@
     <Content Include="Static\bower_components\semantic\tasks\watch.js" />
     <Content Include="Static\controllers\appController.js" />
     <Content Include="Static\partials\admin\createVolunteer.html" />
+    <Content Include="Static\partials\admin\manageVolunteers.html" />
+    <Content Include="Static\partials\admin\reporting.html" />
+    <Content Include="Static\partials\footer.html" />
+    <Content Include="Static\partials\login.html" />
     <Content Include="Static\partials\mainPage.html" />
+    <Content Include="Static\partials\menu.html" />
+    <Content Include="Static\partials\patronCheckIn.html" />
     <Content Include="Static\viewModels\appViewModel.js" />
     <Content Include="Static\viewModels\createVolunteerViewModel.js" />
+    <Content Include="Static\viewModels\loginViewModel.js" />
+    <Content Include="Static\viewModels\manageVolunteersViewModel.js" />
+    <Content Include="Static\viewModels\patronCheckInViewModel.js" />
+    <Content Include="Static\viewModels\reportingViewModel.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1098,10 +1232,27 @@
     <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\package.json" />
     <Content Include="Static\bower_components\semantic\tasks\config\admin\templates\README.md" />
     <Content Include="Static\bower_components\semantic\tasks\README.md" />
+    <Content Include="Static\bower_components\cookies-js\.bower.json" />
+    <Content Include="Static\bower_components\cookies-js\bower.json" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\.bower.json" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\bower.json" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\CHANGELOG.md" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\component.json" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\dist\jquery.mask.min.js.gz" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\docker-compose.yml" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\Dockerfile" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\LICENSE" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\package.json" />
+    <Content Include="Static\bower_components\jquery-mask-plugin\README.md" />
+    <Content Include="Static\bower.json" />
+    <Content Include="Static\bower_components\moment\.bower.json" />
+    <Content Include="Static\bower_components\moment\bower.json" />
+    <Content Include="Static\bower_components\moment\CHANGELOG.md" />
+    <Content Include="Static\bower_components\moment\LICENSE" />
+    <Content Include="Static\bower_components\moment\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Static\assets\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1109,6 +1260,7 @@
     <Content Include="Scripts\jquery-2.2.0.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
@@ -1125,11 +1277,15 @@
       <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Static\bower_components\cookies-js\dist\cookies.d.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
