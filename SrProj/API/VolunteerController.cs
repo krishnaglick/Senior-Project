@@ -56,38 +56,39 @@ namespace SrProj.API
         [AuthorizableAction]
         public HttpResponseMessage ModifyVolunteer([FromBody] VolunteerViewModel volunteer)
         {
-            var db = new Database();
-
-            //Get Volunteer
-            var dbVolunteer = db.Volunteers.FirstOrDefault(v => v.Username == volunteer.Username);
-            //Get Roles
-            var dbRoles = db.Roles.Where(r => volunteer.Roles.Contains(r.ID));
-            //Remove all current roles
-            db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username)
-                .ForEach(rv => db.RoleVolunteers.Remove(rv));
-
-            //Associate user to new roles
-            dbRoles.ForEach(r => db.RoleVolunteers.Add(new RoleVolunteer
+            using (var db = new Database())
             {
-                Role = r,
-                Volunteer = dbVolunteer
-            }));
-            db.SaveChanges();
+                //Get Volunteer
+                var dbVolunteer = db.Volunteers.FirstOrDefault(v => v.Username == volunteer.Username);
+                //Get Roles
+                var dbRoles = db.Roles.Where(r => volunteer.Roles.Contains(r.ID));
+                //Remove all current roles
+                db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username)
+                    .ForEach(rv => db.RoleVolunteers.Remove(rv));
 
-            return new ApiResponse(Request)
-            {
-                data = ApiResponse.DefaultSuccessResponse
+                //Associate user to new roles
+                dbRoles.ForEach(r => db.RoleVolunteers.Add(new RoleVolunteer
+                {
+                    Role = r,
+                    Volunteer = dbVolunteer
+                }));
+                db.SaveChanges();
+
+                return new ApiResponse(Request)
+                {
+                    data = ApiResponse.DefaultSuccessResponse
+                }
+                .GenerateResponse(HttpStatusCode.OK);
             }
-            .GenerateResponse(HttpStatusCode.OK);
         }
 
         [HttpGet]
         [AuthorizableAction]
         public HttpResponseMessage GetVolunteers()
         {
-            var db = new Database();
-
-            var volunteers = db.Volunteers
+            using (var db = new Database())
+            {
+                var volunteers = db.Volunteers
                 .Include(v => v.Roles)
                 .Select(v => new {
                     username = v.Username,
@@ -98,17 +99,18 @@ namespace SrProj.API
                 })
                 .ToList();
 
-            var response = new ApiResponse(Request);
+                var response = new ApiResponse(Request);
 
-            if (volunteers.Any())
-            {
-                response.data = new {volunteers = volunteers};
-                return response.GenerateResponse(HttpStatusCode.OK);
-            }
-            else
-            {
-                response.errors.Add(new NoRecordsFound());
-                return response.GenerateResponse(HttpStatusCode.InternalServerError);
+                if (volunteers.Any())
+                {
+                    response.data = new {volunteers = volunteers};
+                    return response.GenerateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    response.errors.Add(new NoRecordsFound());
+                    return response.GenerateResponse(HttpStatusCode.InternalServerError);
+                }
             }
         }
     }
