@@ -6,9 +6,15 @@ namespace DataAccess.Contexts
 {
     public class ContextBase : DbContext
     {
-        public ContextBase() : base(ConnectionString.ChosenConnection) { }
+        public ContextBase() : base(ConnectionString.ChosenConnection)
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+        }
 
-        public ContextBase(string connectionString) : base(connectionString) { }
+        public ContextBase(string connectionString) : base(connectionString)
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

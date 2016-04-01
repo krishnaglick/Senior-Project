@@ -39,7 +39,7 @@ namespace SrProj.API
             ApiResponse response = new ApiResponse(Request);
             try
             {
-                using(var patronContext = new Database())
+                using (var patronContext = new Database())
                 {
                     var patrons = patronContext.Patrons.Where(
                         p =>
@@ -54,7 +54,8 @@ namespace SrProj.API
                         .Include(p => p.EmergencyContacts)
                         .Include(p => p.PhoneNumbers)
                         .Include(p => p.Addresses)
-                        .Include(p => p.ServicesUsed.Select(su => su.ServiceType).ToList());
+                        .Include(p => p.ServicesUsed.Select(su => su.ServiceType))
+                    .ToList();
 
                     response.data = patrons;
 
