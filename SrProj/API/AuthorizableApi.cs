@@ -11,6 +11,7 @@ using SrProj.API.Responses.Errors;
 using Utility.Enum;
 using Utility.ExtensionMethod;
 using Database = DataAccess.Contexts.Database;
+using System.Data.Entity;
 
 namespace SrProj.API
 {
@@ -98,7 +99,9 @@ namespace SrProj.API
                         return AuthorizationResult.ExpiredToken;
 
                     //Valid token, need to check roles
-                    var dbRoles = database.RoleVolunteers.Where(rv => rv.Volunteer.Username == activeUser)
+                    var dbRoles = database.RoleVolunteers
+                        .Where(rv => rv.Volunteer.Username == activeUser)
+                        .Include(rv => rv.Volunteer)
                         .Select(rv => rv.Role.ID).ToArray();
 
                     if (roles.Select(r => (int)r).Intersect(dbRoles).Count() == roles.Length)
