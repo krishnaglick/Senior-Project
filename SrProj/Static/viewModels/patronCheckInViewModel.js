@@ -3,9 +3,9 @@ function PatronCheckInViewModel() {
   this.controller = 'Patron';
 
   this.neccessaryPaperwork = ko.observable(false);
-    this.neccessaryPaperwork.default = false;
+  this.neccessaryPaperwork.default = false;
   this.search = ko.observable(true);
-    this.search.default = true;
+  this.search.default = true;
   this.serviceSelection = ko.observable();
   this.servicesUsed = ko.observableArray();
   this.servicesUsed.default = [];
@@ -44,37 +44,37 @@ function PatronCheckInViewModel() {
 
   //Patron Properties
   this.firstName = ko.observable('');
-    this.firstName.default = '';
+  this.firstName.default = '';
   this.middleName = ko.observable('');
-    this.middleName.default = '';
+  this.middleName.default = '';
   this.lastName = ko.observable('');
-    this.lastName.default = '';
+  this.lastName.default = '';
 
   this.fullName = ko.computed(function() {
     return this.firstName() + ' ' + (this.middleName() ? this.middleName() + ' ' : '') + this.lastName();
   }, this);
 
   this.dateOfBirth = ko.observable('');
-    this.dateOfBirth.default = '';
+  this.dateOfBirth.default = '';
   this.householdOccupants = ko.observable(1);
-    this.householdOccupants.default = 1;
+  this.householdOccupants.default = 1;
   this.veteran = ko.observable(false);
-    this.veteran.default = false;
+  this.veteran.default = false;
 
   this.banned = ko.observable(false);
-    this.banned.default = false;
+  this.banned.default = false;
 
   this.maritalStatusID = ko.observable();
-    this.maritalStatusID.default = null;
+  this.maritalStatusID.default = null;
   this.genderID = ko.observable();
-    this.genderID.default = null;
+  this.genderID.default = null;
   this.ethnicityID = ko.observable();
-    this.ethnicityID.default = null;
+  this.ethnicityID.default = null;
   this.residenceStatusID = ko.observable();
-    this.residenceStatusID.default = null;
+  this.residenceStatusID.default = null;
 
   this.addresses = ko.observableArray([ new Address() ]);
-    this.addresses.default = [ new Address() ];
+  this.addresses.default = [ new Address() ];
   this.addAddress = function() {
     this.addresses.push(new Address());
     $('.zipField').mask('00000-0000');
@@ -85,7 +85,7 @@ function PatronCheckInViewModel() {
   }.bind(this);
 
   this.phoneNumbers = ko.observableArray([ new PhoneNumber() ]);
-    this.phoneNumbers.default = [ new PhoneNumber() ];
+  this.phoneNumbers.default = [ new PhoneNumber() ];
   this.addPhoneNumber = function() {
     this.phoneNumbers.push(new PhoneNumber());
     $('.phoneField').mask('(000) 000-0000');
@@ -96,7 +96,7 @@ function PatronCheckInViewModel() {
   }.bind(this);
 
   this.emergencyContacts = ko.observableArray([ new EmergencyContact() ]);
-    this.emergencyContacts.default = [ new EmergencyContact() ];
+  this.emergencyContacts.default = [ new EmergencyContact() ];
   this.addEmergencyContact = function() {
     this.emergencyContacts.push(new EmergencyContact());
   }.bind(this);
@@ -171,14 +171,17 @@ function PatronCheckInViewModel() {
   }.bind(this);
 
   this.clear = function() {
-    for(var key in this) {
-      try {
-        if(this[key].default !== undefined) {
-          this[key](this[key].default);
+
+    if(confirm("Are you sure you want to clear?")){;
+      for(var key in this) {
+        try {
+          if(this[key].default !== undefined) {
+            this[key](this[key].default);
+          }
         }
-      }
-      catch(x) {
-        console.log('Issue with key ', key);
+        catch(x) {
+          console.log('Issue with key ', key);
+        }
       }
     }
   }.bind(this);
@@ -208,25 +211,25 @@ PatronCheckInViewModel.prototype.validate = function() {
     errors.push('Please enter a First Name');
   }
   if (!this.lastName()) {
-      errors.push('Please enter a Last Name');
+    errors.push('Please enter a Last Name');
   }
   if (!this.dateOfBirth()) {
-      errors.push('Please enter Date of Birth');
+    errors.push('Please enter Date of Birth');
   }
   if (!this.genderID()) {
-      errors.push('Please specify Gender');
+    errors.push('Please specify Gender');
   }
   if (!this.ethnicityID()) {
-      errors.push('Please specify Ethnicity');
+    errors.push('Please specify Ethnicity');
   }
   if (!this.maritalStatusID()) {
-      errors.push('Please specify Marital Status');
+    errors.push('Please specify Marital Status');
   }
   if (!this.residenceStatusID()) {
-      errors.push('Please specify Residence Status');
+    errors.push('Please specify Residence Status');
   }
   if (!this.addresses().length) {
-      errors.push('Please include at least one Address!');
+    errors.push('Please include at least one Address!');
   }
   if(~~this.householdOccupants() < 1) {
     errors.push('Please include at least one household occupant!');
