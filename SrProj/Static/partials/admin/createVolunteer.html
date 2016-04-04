@@ -28,7 +28,6 @@
         <input id="username" placeholder="Username" type="text" data-bind="textInput: username" autofocus="true" />
       </div>
 
-
       <div class="field">
         <label>Password*</label>
         <input id="password" placeholder="Password" type="password" data-bind="textInput: password" />
@@ -37,6 +36,16 @@
       <div class="field">
         <label>Confirm Password*</label>
         <input id="confirmPassword" placeholder="Confirm Password" type="password" data-bind="textInput: confirmPassword" />
+      </div>
+
+      <div class="field">
+        <label>Roles</label>
+        <div id="newVolunteerRoles" data-bind="component: { name: 'multipleSearchSelection', params: { data: app.enums.roles, defaultValue: 'Roles', activeSelection: [] } }"></div>
+      </div>
+
+      <div class="field">
+        <label>Services</label>
+        <div id="newVolunteerServices" data-bind="component: { name: 'multipleSearchSelection', params: { data: app.enums.services, defaultValue: 'Services', activeSelection: [] } }"></div>
       </div>
 
       <div class"field">

@@ -11,28 +11,60 @@ using SrProj.API.Responses.Errors;
 using Utility.Enum;
 using WebGrease.Css.Extensions;
 using Database = DataAccess.Contexts.Database;
+using System.Collections.Generic;
 
 namespace SrProj.API
 {
     public class VolunteerController : ApiController
     {
+        public class CreateVolunteerViewModel : VolunteerViewModel
+        {
+            public string Password { get; set; }
+            public string ConfirmPassword { get; set; }
+        }
+
         [HttpPost]
         [AuthorizableAction]
-        public HttpResponseMessage CreateVolunteer([FromBody] Volunteer volunteer)
+        public HttpResponseMessage CreateVolunteer([FromBody] CreateVolunteerViewModel volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
 
+            if (volunteer.Password != volunteer.ConfirmPassword) {
+                response.data = new JsonError(); //Make json error for mismatched passwords
+                return response.GenerateResponse(HttpStatusCode.BadRequest);
+            }
+
             try
             {
-                volunteer.SecurePassword();
                 using (var dbContext = new Database())
                 {
-                    dbContext.RoleVolunteers.Add(new RoleVolunteer
+                    var roles = dbContext.Roles.Where(r => volunteer.Roles.Contains(r.ID));
+                    var services = dbContext.ServiceTypes.Where(st => volunteer.Services.Contains(st.ID));
+
+                    var newVolunteer = new Volunteer
                     {
-                        Role = dbContext.Roles.First(r => r.ID == (int)RoleID.Volunteer),
-                        Volunteer = volunteer
-                    });
-                    dbContext.Volunteers.Add(volunteer);
+                        FirstName = volunteer.FirstName,
+                        LastName = volunteer.LastName,
+                        Username = volunteer.Username,
+                        Email = volunteer.Email ?? "",
+                        Password = volunteer.Password,
+                        ServiceTypes = new List<ServiceType>()
+                    };
+
+                    roles.ForEach(r => dbContext.RoleVolunteers.Add(
+                        new RoleVolunteer
+                        {
+                            Role = r,
+                            Volunteer = newVolunteer
+                        })
+                    );
+
+                    services.ForEach(s => newVolunteer.ServiceTypes.Add(s));
+
+                    newVolunteer.SecurePassword();
+
+                    dbContext.Volunteers.Add(newVolunteer);
+
                     dbContext.SaveChanges();
 
                     response.data = ApiResponse.DefaultSuccessResponse;
@@ -49,7 +81,11 @@ namespace SrProj.API
         public class VolunteerViewModel
         {
             public string Username { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Email { get; set; }
             public int[] Roles { get; set; }
+            public int[] Services { get; set; }
         }
 
         [HttpPost]
@@ -59,19 +95,37 @@ namespace SrProj.API
             using (var db = new Database())
             {
                 //Get Volunteer
-                var dbVolunteer = db.Volunteers.FirstOrDefault(v => v.Username == volunteer.Username);
+                var dbVolunteer = db.Volunteers
+                    .Include(v => v.ServiceTypes)
+                    .FirstOrDefault(v => v.Username == volunteer.Username);
                 //Get Roles
                 var dbRoles = db.Roles.Where(r => volunteer.Roles.Contains(r.ID));
                 //Remove all current roles
                 db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username)
                     .ForEach(rv => db.RoleVolunteers.Remove(rv));
+                //Get Services
+                var dbServices = db.ServiceTypes.Where(st => volunteer.Services.Contains(st.ID));
+                //Remove all current services
+                db.Database.ExecuteSqlCommand(
+                    $@"DELETE VolunteerServiceType
+                      WHERE Volunteer_Username = {volunteer.Username.Split(' ')[0]}" //YO DAWG I HERD  U LIEK SQL INJECTION, ALSO EF IS AWFUL. HOPE NO ONE HAS A SPACE IN THEIR USERNAME
+                );
 
-                //Associate user to new roles
+                //Associate volunteer to new roles
                 dbRoles.ForEach(r => db.RoleVolunteers.Add(new RoleVolunteer
                 {
                     Role = r,
                     Volunteer = dbVolunteer
                 }));
+                //Associate volunteer to new services
+                dbVolunteer.ServiceTypes.Clear();
+                dbServices.ForEach(s => dbVolunteer.ServiceTypes.Add(s));
+
+                //Set First Name, Last Name, Email
+                dbVolunteer.FirstName = volunteer.FirstName;
+                dbVolunteer.LastName = volunteer.LastName;
+                dbVolunteer.Email = volunteer.Email;
+
                 db.SaveChanges();
 
                 return new ApiResponse(Request)
@@ -95,7 +149,8 @@ namespace SrProj.API
                     firstName = v.FirstName,
                     lastName = v.LastName,
                     email = v.Email,
-                    roles = v.Roles.Select(vr => vr.Role)
+                    roles = v.Roles.Select(vr => vr.Role),
+                    services = v.ServiceTypes.Select(st => st)
                 })
                 .ToList();
 

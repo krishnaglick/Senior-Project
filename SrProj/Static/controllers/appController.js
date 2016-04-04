@@ -51,7 +51,7 @@ $(function() {
 
     var loginVM = new LoginViewModel();
     app.logout = loginVM.logout;
-    var createVolunteerVM = new CreateVolunteerViewModel();
+    window.createVolunteerVM = new CreateVolunteerViewModel();
     window.manageVolunteersVM = new ManageVolunteersViewModel();
     var reportingVM = new ReportingViewModel();
     window.reportingVM = reportingVM;
@@ -120,7 +120,8 @@ $(function() {
         url: 'partials/admin/createVolunteer.html',
         name: 'Create Volunteer',
         id: 'createVolunteer',
-        vm: createVolunteerVM
+        vm: createVolunteerVM,
+        routeAction: () => setTimeout(() => $('.ui.dropdown').dropdown(), 1000)
       },
 
       ManageVolunteers: {

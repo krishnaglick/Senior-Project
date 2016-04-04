@@ -1,7 +1,7 @@
 
 <div class="ui modal" id="editVolunteer" data-bind="with: targetVolunteer">
   <i class="clickable close icon"></i>
-  <div class="header" data-bind="text: fullName"></div>
+  <div class="header" data-bind=`text: ${fullName} | ${username}`></div>
   <div class="content">
     <div class="ui form">
       <div class="field">
@@ -17,12 +17,12 @@
         <input id="email" placeholder="Email" type="text" data-bind="textInput: email"  autofocus="true" />
       </div>
       <div class="field">
-        <label>Username</label>
-        <input id="username" placeholder="Username" type="text" data-bind="textInput: username"  autofocus="true" />
+        <label>Roles</label>
+        <div id="volunteerRoles" data-bind="component: { name: 'multipleSearchSelection', params: { data: app.enums.roles, defaultValue: 'Roles', activeSelection: $parent.parseVolunteerRoles(roles) } }"></div>
       </div>
       <div class="field">
-        <label>Roles</label>
-        <div data-bind="component: { name: 'multipleSearchSelection', params: { data: $parent.availableRoles, defaultValue: 'Roles', activeSelection: $parent.parseVolunteerRoles(roles) } }"></div>
+        <label>Services</label>
+        <div id="volunteerServices" data-bind="component: { name: 'multipleSearchSelection', params: { data: app.enums.services, defaultValue: 'Services', activeSelection: $parent.parseVolunteerServices(services) } }"></div>
       </div>
     </div>
   </div>
