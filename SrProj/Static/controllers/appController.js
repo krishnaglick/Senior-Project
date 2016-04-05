@@ -4,7 +4,7 @@ $(function() {
   ko.applyBindings(app, $('title')[0]);
 
   (function loadHeaderAndSetupMenu(){
-    $('#menu').load('partials/menu.html', function() {
+    $('#menu').load('Static/partials/menu.html', function() {
       function changeActiveMenuOption() {
         var currentPage = window.location.href.split('#')[1];
         if(currentPage == 'Register') currentPage = 'Login';
@@ -32,7 +32,7 @@ $(function() {
   }).call(this);
 
   (function loadFooter() {
-    //$('#footer').load('partials/footer.html');
+    //$('#footer').load('Static/footer.html');
   }).call(this);
 
   (function restoreSession() {
@@ -46,7 +46,7 @@ $(function() {
     app.roles(user.roles);
   }).call(this);
 
-  (function createRouter() {
+  app.createRouter = () => {
     window.router = new Router(renderArea, partials);
 
     var loginVM = new LoginViewModel();
@@ -59,20 +59,20 @@ $(function() {
     window.patronCheckInVM = patronCheckInVM;
     var routes = {
       Home: {
-          url: 'partials/mainPage.html',
+          url: 'Static/partials/mainPage.html',
           name: 'Home',
           id: 'mainPage'
       },
 
       Login: {
-        url: 'partials/login.html',
+        url: 'Static/partials/login.html',
         name: 'Login',
         id: 'login',
         vm: loginVM
       },
 
       PatronCheckIn: {
-        url: 'partials/patronCheckIn.html',
+        url: 'Static/partials/patronCheckIn.html',
         name: 'Patron Check In',
         id: 'patronCheckIn',
         vm: patronCheckInVM,
@@ -86,7 +86,7 @@ $(function() {
       },
 
       Reporting: {
-        url: 'partials/admin/reporting.html',
+        url: 'Static/partials/admin/reporting.html',
         name: 'Reporting',
         id: 'reporting',
         vm: reportingVM,
@@ -111,13 +111,13 @@ $(function() {
       },
 
       Logout: {
-        url: 'partials/mainPage.html',
+        url: 'Static/partials/mainPage.html',
         name: 'Logout',
         id: 'logout'
       },
 
       CreateVolunteer: {
-        url: 'partials/admin/createVolunteer.html',
+        url: 'Static/partials/admin/createVolunteer.html',
         name: 'Create Volunteer',
         id: 'createVolunteer',
         vm: createVolunteerVM,
@@ -125,7 +125,7 @@ $(function() {
       },
 
       ManageVolunteers: {
-        url: 'partials/admin/manageVolunteers.html',
+        url: 'Static/partials/admin/manageVolunteers.html',
         name: 'Manage Volunteers',
         id: 'manageVolunteers',
         vm: manageVolunteersVM,
@@ -139,7 +139,8 @@ $(function() {
     };
 
     router.registerRouting(app.pageTitle, routes);
-  }).call(this);
+  };
+  app.createRouter();
 
   (function loadEnums() {
     if(!window.app.enums && Cookies.get('enums')) {

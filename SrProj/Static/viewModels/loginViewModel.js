@@ -58,9 +58,8 @@ function LoginViewModel() {
   }.bind(this);
 
   this.logout = function() {
-    var action = 'logout';
-    app.get(this.controller, action);
     app.clearCredentials();
+    app.createRouter();
     window.location.href = '#';
   }.bind(this);
 }
