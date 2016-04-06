@@ -164,6 +164,7 @@ function PatronCheckInViewModel() {
 
   this.showCheckInModal = function () {
     var errors = this.validate();
+    console.log(errors);
     if(!errors.length)
       $('.ui.modal').modal('show');
     else
@@ -195,6 +196,7 @@ function PatronCheckInViewModel() {
     app.post(this.controller, action, ko.toJSON(this))
     .success(function(data, textStatus, request) {
       alert('Patron Checked In Successfully!');
+      this.clear();
     }.bind(this))
     .error(function() {
       alert('There was a problem checking the patron in. Please try again later!');

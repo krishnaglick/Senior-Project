@@ -1,20 +1,20 @@
 ﻿
-<div class="ui grid topMargin">
-  <div class="nine wide column">
+<div class="ui grid topMargin leftMargin">
+  <div class="ten wide column">
     <div class="ui blue attached massive message">
       <div class="header">Patron Check-In</div>
     </div>
     <div class="ui form segment">
-       <div class="field" data-bind="if: app.services().length > 1, value: serviceSelection">
-          <h4 class="ui dividing header">Service Selection</h4>
-          <select class="serviceSelection ui dropdown" data-bind="value: serviceSelection">
-            <option value="">Reason for Visit</option>
-            <!-- ko foreach: app.services -->
-              <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
-            <!-- /ko -->
-          </select>
+      <div class="field" data-bind="if: app.services().length > 1, value: serviceSelection">
+        <h4 class="ui dividing header">Service Selection</h4>
+        <select class="serviceSelection ui dropdown" data-bind="value: serviceSelection">
+          <option value="">Reason for Visit</option>
+          <!-- ko foreach: app.services -->
+          <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
+          <!-- /ko -->
+        </select>
       </div>
-    <h4 class="ui dividing header">Patron Information</h4>
+    <h4 class="ui dividing header noTopMargin">Patron Information</h4>
       <div class="three fields">
         <div class="field">
           <label>First Name</label>
@@ -130,7 +130,7 @@
 
 <div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0 && search()">
   <div class="ui form segment" data-bind="foreach: foundPatrons">
-    <div class="selectable clickable ui fields" data-bind="click: $root.fillPatron">
+    <div class="clickable ui fields" data-bind="click: $root.fillPatron">
       <div class="field" data-bind="text: firstName"></div>
       <div class="field" data-bind="text: lastName"></div>
       <div class="field" data-bind="text: dateOfBirth"></div>
