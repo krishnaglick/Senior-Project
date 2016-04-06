@@ -7,8 +7,8 @@ function PatronCheckInViewModel() {
   this.search = ko.observable(true);
     this.search.default = true;
   this.serviceSelection = ko.observable();
-  this.servicesUsed = ko.observableArray();
-  this.servicesUsed.default = [];
+  this.servicesUsed = ko.observableArray([]);
+    this.servicesUsed.default = [];
 
   this.paperworkPreviouslyValidated = function() {
     function getDays(millisec) {
@@ -23,7 +23,7 @@ function PatronCheckInViewModel() {
       var dentalID = 5;
       if(~~this.serviceSelection() === serviceTypeID) {
         var serviceUsedDate = new Date(service.createDate);
-        var now = Date.now();
+        let now = Date.now();
         if(serviceTypeID === medicalID || serviceTypeID === dentalID) {
           //If user has visited this year
           if(now.getFullYear() === serviceUsedDate.getFullYear())
@@ -43,6 +43,8 @@ function PatronCheckInViewModel() {
   this.serviceSelection.subscribe(this.paperworkPreviouslyValidated);
 
   //Patron Properties
+  this.id = ko.observable(-1);
+    this.id.default = -1;
   this.firstName = ko.observable('');
     this.firstName.default = '';
   this.middleName = ko.observable('');
@@ -84,11 +86,11 @@ function PatronCheckInViewModel() {
     this.addresses.remove(address);
   }.bind(this);
 
-  this.phoneNumbers = ko.observableArray(['']);
-    this.phoneNumbers.default = ko.observableArray(['']);
-  this.addPhoneNumber = function(pn) {
-    this.phoneNumbers.push(pn || '');
-    $('.phoneField').mask('(000) 000-0000');
+  this.phoneNumbers = ko.observableArray([ new PhoneNumber() ]);
+    this.phoneNumbers.default = [ new PhoneNumber() ];
+  this.addPhoneNumber = function() {
+    this.phoneNumbers.push('');
+    $('.phoneField').mask('000-000-0000');
   }.bind(this);
   this.removePhoneNumber = function(phoneNumber) {
     //Confirm Alert
@@ -99,6 +101,7 @@ function PatronCheckInViewModel() {
     this.emergencyContacts.default = [ new EmergencyContact() ];
   this.addEmergencyContact = function() {
     this.emergencyContacts.push(new EmergencyContact());
+    $('.phoneField').mask('000-000-0000');
   }.bind(this);
   this.removeEmergencyContact = function(emergencyContact) {
     //Confirm Alert
@@ -108,6 +111,7 @@ function PatronCheckInViewModel() {
 
   //Patron Searching Functionality
   this.foundPatrons = ko.observableArray([]);
+    this.foundPatrons.default = [];
 
   this.autoComplete = function() {
     if(!this.firstName() && !this.middleName() && !this.lastName() && !this.dateOfBirth())
@@ -116,6 +120,11 @@ function PatronCheckInViewModel() {
     if(!this.search()) return;
     app.post(this.controller, action, ko.toJSON(this.patronSearchData))
     .success(function(data) {
+      data = data.map((d) => {
+        if(d.dateOfBirth)
+          d.dateOfBirth = moment(d.dateOfBirth).format('MM/DD/YYYY');
+        return d;
+      });
       this.foundPatrons(data || []);
     }.bind(this));
   }.bind(this);
@@ -128,12 +137,10 @@ function PatronCheckInViewModel() {
 
         if(ko.isWriteableObservable(this[myKey || key])) {
           if(key === 'dateOfBirth') patron[key] = moment(patron[key]).format('MM/DD/YYYY');
-          if(key === 'phoneNumbers') {
-            patron[key] = patron[key].map((pn) => pn.phoneNumber);
-          }
-          else {
-            this[myKey || key](patron[key].id || patron[key]);
-          }
+          if(key === 'phoneNumbers') patron[key] = patron[key].map((pn) => new PhoneNumber(pn));
+          if(key === 'addresses') patron[key] = patron[key].map((adr) => new Address(adr));
+          if(key === 'emergencyContacts') patron[key] = patron[key].map((ec) => new EmergencyContact(ec));
+          this[myKey || key](patron[key].id || patron[key]);
         }
       }
       catch(x) {
@@ -169,7 +176,6 @@ function PatronCheckInViewModel() {
 
   this.showCheckInModal = function () {
     var errors = this.validate();
-    console.log(errors);
     if(!errors.length)
       $('.ui.modal.patronCheckIn').modal('show');
     else
@@ -196,7 +202,8 @@ function PatronCheckInViewModel() {
     }
     var action = 'CheckIn';
     if(app.services().length === 1)
-      this.serviceSelection(app.services()[0]);
+      this.serviceSelection(app.services()[0].id);
+    this.servicesUsed = ko.observableArray(this.servicesUsed.default);
 
     app.post(this.controller, action, ko.toJSON(this))
     .success(function(data, textStatus, request) {
@@ -238,9 +245,9 @@ PatronCheckInViewModel.prototype.validate = function() {
   if(~~this.householdOccupants() < 1) {
     errors.push('Please include at least one household occupant!');
   }
-  if(this.phoneNumbers().length < 1) {
-    errors.push('Please provide at least one phone number!');
-  }
+  this.phoneNumbers().forEach((phoneNumber) => {
+    phoneNumber.validate(errors);
+  });
   this.addresses().forEach(function(address) {
     address.validate(errors);
   });
@@ -251,13 +258,14 @@ PatronCheckInViewModel.prototype.validate = function() {
   return errors;
 };
 
-function Address() {
-  this.streetAddress = ko.observable('');
-  this.city = ko.observable('');
-  this.state = ko.observable('');
-  this.zip = ko.observable('');
+function Address(address) {
+  address = address || {}; //WTB default params :(
+  this.streetAddress = ko.observable(address.streetAddress || '');
+  this.city = ko.observable(address.city || '');
+  this.state = ko.observable(address.state || '');
+  this.zip = ko.observable(address.zip || '');
 
-  this.validate = function(errors) {
+  this.validate = (errors) => {
     if(!this.streetAddress()) {
       errors.push('Please include a street address!');
     }
@@ -271,17 +279,18 @@ function Address() {
       errors.push('Please include a zip code!');
     }
     return errors;
-  }.bind(this);
+  };
 }
 
-function EmergencyContact() {
-  this.firstName = ko.observable('');
-  this.lastName = ko.observable('');
+function EmergencyContact(emergencyContact) {
+  emergencyContact = emergencyContact || {};
+  this.firstName = ko.observable(emergencyContact.firstName || '');
+  this.lastName = ko.observable(emergencyContact.lastName || '');
   this.fullName = ko.computed(function() {
     return this.firstName() + ' ' + this.lastName();
   }.bind(this));
 
-  this.phoneNumber = ko.observable('');
+  this.phoneNumber = ko.observable(emergencyContact.phoneNumber || '');
 
   this.validate = function(errors) {
     if(!this.firstName())
@@ -296,5 +305,13 @@ function EmergencyContact() {
 }
 
 function PhoneNumber(phoneNumber) {
-  this.phoneNumber = ko.observable(phoneNumber || '');
+  phoneNumber = phoneNumber || {};
+  this.phoneNumber = ko.observable(phoneNumber.phoneNumber || '');
+
+  this.validate = (errors) => {
+    if(!this.phoneNumber())
+      errors.push('A phone number can not be blank!');
+
+    return errors;
+  };
 }

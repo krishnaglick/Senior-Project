@@ -80,7 +80,7 @@ $(function() {
           $('.ui.dropdown').dropdown();
           $('.ui.modal').modal();
           $('.dateField').mask('00/00/0000');
-          $('.phoneField').mask('(000) 000-0000');
+          $('.phoneField').mask('000-000-0000');
           $('.zipField').mask('00000-0000');
         }
       },
