@@ -65,13 +65,13 @@ function PatronCheckInViewModel() {
     this.banned.default = false;
 
   this.maritalStatusID = ko.observable();
-    this.maritalStatusID.default = null;
+    this.maritalStatusID.default = '';
   this.genderID = ko.observable();
-    this.genderID.default = null;
+    this.genderID.default = '';
   this.ethnicityID = ko.observable();
-    this.ethnicityID.default = null;
+    this.ethnicityID.default = '';
   this.residenceStatusID = ko.observable();
-    this.residenceStatusID.default = null;
+    this.residenceStatusID.default = '';
 
   this.addresses = ko.observableArray([ new Address() ]);
     this.addresses.default = [ new Address() ];
@@ -84,10 +84,10 @@ function PatronCheckInViewModel() {
     this.addresses.remove(address);
   }.bind(this);
 
-  this.phoneNumbers = ko.observableArray([ new PhoneNumber() ]);
-    this.phoneNumbers.default = [ new PhoneNumber() ];
-  this.addPhoneNumber = function() {
-    this.phoneNumbers.push(new PhoneNumber());
+  this.phoneNumbers = ko.observableArray(['']);
+    this.phoneNumbers.default = ko.observableArray(['']);
+  this.addPhoneNumber = function(pn) {
+    this.phoneNumbers.push(pn || '');
     $('.phoneField').mask('(000) 000-0000');
   }.bind(this);
   this.removePhoneNumber = function(phoneNumber) {
@@ -128,11 +128,16 @@ function PatronCheckInViewModel() {
 
         if(ko.isWriteableObservable(this[myKey || key])) {
           if(key === 'dateOfBirth') patron[key] = moment(patron[key]).format('MM/DD/YYYY');
-          this[myKey || key](patron[key].id || patron[key]);
+          if(key === 'phoneNumbers') {
+            patron[key] = patron[key].map((pn) => pn.phoneNumber);
+          }
+          else {
+            this[myKey || key](patron[key].id || patron[key]);
+          }
         }
       }
       catch(x) {
-        console.log('Issue with key ', key);
+        console.log('Issue with key ', key, '\n', x);
       }
     }
     setTimeout(function() {
@@ -166,7 +171,7 @@ function PatronCheckInViewModel() {
     var errors = this.validate();
     console.log(errors);
     if(!errors.length)
-      $('.ui.modal').modal('show');
+      $('.ui.modal.patronCheckIn').modal('show');
     else
       alert(errors.join('\n'));
   }.bind(this);
@@ -290,6 +295,6 @@ function EmergencyContact() {
   }.bind(this);
 }
 
-function PhoneNumber() {
-  this.phoneNumber = ko.observable('');
+function PhoneNumber(phoneNumber) {
+  this.phoneNumber = ko.observable(phoneNumber || '');
 }
