@@ -1119,7 +1119,6 @@
     <Content Include="Static\bower_components\jquery-mask-plugin\bower.json" />
     <Content Include="Static\bower_components\jquery-mask-plugin\CHANGELOG.md" />
     <Content Include="Static\bower_components\jquery-mask-plugin\component.json" />
-    <Content Include="Static\bower_components\jquery-mask-plugin\dist\jquery.mask.min.js.gz" />
     <Content Include="Static\bower_components\jquery-mask-plugin\docker-compose.yml" />
     <Content Include="Static\bower_components\jquery-mask-plugin\Dockerfile" />
     <Content Include="Static\bower_components\jquery-mask-plugin\LICENSE" />
