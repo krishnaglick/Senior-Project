@@ -14,7 +14,7 @@
           <!-- /ko -->
         </select>
       </div>
-    <h4 class="ui dividing header noTopMargin">Patron Information</h4>
+      <h4 class="ui dividing header noTopMargin">Patron Information</h4>
       <div class="three fields">
         <div class="field">
           <label>First Name</label>
@@ -39,7 +39,7 @@
           <select class="ui dropdown" data-bind="value: genderID">
             <option value="">Gender</option>
             <!-- ko foreach: app.enums.genders -->
-              <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
+            <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
             <!-- /ko -->
           </select>
 
@@ -49,7 +49,7 @@
           <select id="ethnicity" class="ui dropdown" data-bind="value: ethnicityID">
             <option value="">Ethnicity</option>
             <!-- ko foreach: app.enums.ethnicities -->
-              <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
+            <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
             <!-- /ko -->
           </select>
         </div>
@@ -59,7 +59,7 @@
         <select class="ui dropdown" data-bind="value: maritalStatusID">
           <option value="">Marital Status</option>
           <!-- ko foreach: app.enums.maritalStatuses -->
-            <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
+          <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
           <!-- /ko -->
         </select>
       </div>
@@ -68,7 +68,7 @@
         <select class="ui dropdown" data-bind="value: residenceStatusID">
           <option value="">Residence Status</option>
           <!-- ko foreach: app.enums.residenceStatuses -->
-            <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
+          <option data-bind="text: $data.name, attr: { value: $data.id }"></option>
           <!-- /ko -->
         </select>
       </div>
@@ -94,9 +94,9 @@
         </div>
         <div class="field">
           <label>Veteran Status</label>
-            <div class="ui checkbox">
-              <input type="checkbox" data-bind="checked: veteran">
-              <label>Veteran</label>
+          <div class="ui checkbox">
+            <input type="checkbox" data-bind="checked: veteran">
+            <label>Veteran</label>
           </div>
         </div>
         <div class="field">
@@ -112,29 +112,30 @@
     </div>
   </div>
 
-<div class="ui small basic modal patronCheckIn">
-  <i class="close icon"></i>
-  <div class="header">
-    Patron Check In
-  </div>
-  <div class="description">
-    <div class="left">
-      <p>Are you sure you want to check in this Patron?</p>
+  <div class="ui small basic modal patronCheckIn">
+    <i class="close icon"></i>
+    <div class="header">
+      Patron Check In
+    </div>
+    <div class="description">
+      <div class="left">
+        <p>Are you sure you want to check in this Patron?</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="ui negative button" data-bind="click: checkIn">Yes</button>
+      <button class="ui positive button">No</button>
     </div>
   </div>
-  <div class="actions">
-    <button class="ui negative button" data-bind="click: checkIn">Yes</button>
-    <button class="ui positive button">No</button>
-  </div>
-</div>
 
-<div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0 && search()">
-  <div class="ui form segment" data-bind="foreach: foundPatrons">
-    <div class="clickable ui fields" data-bind="click: $root.fillPatron">
-      <div class="field" data-bind="text: firstName"></div>
-      <div class="field" data-bind="text: lastName"></div>
-      <div class="field" data-bind="text: dateOfBirth"></div>
-      <div class="field" data-bind="text: $root.parseAddress(addresses)"></div>
+  <div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0 && search()">
+    <div class="ui form segment" data-bind="foreach: foundPatrons">
+      <div class="clickable ui fields" data-bind="click: $root.fillPatron">
+        <div class="field" data-bind="text: firstName"></div>
+        <div class="field" data-bind="text: lastName"></div>
+        <div class="field" data-bind="text: dateOfBirth"></div>
+        <div class="field" data-bind="text: $root.parseAddress(addresses)"></div>
+      </div>
     </div>
   </div>
 </div>

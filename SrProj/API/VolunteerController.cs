@@ -207,7 +207,7 @@ namespace SrProj.API
                 }
                 catch (Exception e)
                 {
-                    response.errors.Add(new DatabaseFailure(e)); //TODO: DB Error
+                    response.errors.Add(new DatabaseFailure(e));
                     return response.GenerateResponse(HttpStatusCode.InternalServerError);
                 }
                 response.data = ApiResponse.DefaultSuccessResponse;

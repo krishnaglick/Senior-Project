@@ -15,6 +15,10 @@ body.pushable {
   margin-top: 5% !important;
 }
 
+.halfTopMargin {
+  margin-top: 2% !important;
+}
+
 .leftMargin {
   margin-left: 15% !important;
 }
@@ -35,7 +39,7 @@ div#logIn{
   font-weight: bold !important;
 }
 
-.patronSearchSelection {
+.patronSearchSelection, .reportingPatronSearch {
   float: right;
   position: fixed;
 }

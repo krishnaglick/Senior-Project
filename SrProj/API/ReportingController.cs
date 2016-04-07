@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,6 +9,7 @@ using Models;
 using SrProj.API.Responses;
 using Utility.ExtensionMethod;
 using System.Data.Entity;
+using SrProj.API.Responses.Errors;
 using Database = DataAccess.Contexts.Database;
 
 namespace SrProj.API
@@ -52,6 +54,37 @@ namespace SrProj.API
                 response.data = potato;
 
                 return response.GenerateResponse(HttpStatusCode.OK);
+            }
+        }
+
+        public class ReportingPatronViewModel
+        {
+            public int ID { get; set; }
+            public List<ServiceType> ServiceTypeSelections { get; set; }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetPatronData(ReportingPatronViewModel reportingParams)
+        {
+            using (var db = new Database())
+            {
+                var response = new ApiResponse(Request);
+                try
+                {
+                    var servicesWanted = reportingParams.ServiceTypeSelections.Select(st => st.ID).ToArray();
+                    var services = db.ServiceEligibilities
+                        .Include(se => se.Patron)
+                        .Include(se => se.ServiceType)
+                        .Where(se => se.Patron.ID == reportingParams.ID && servicesWanted.Contains(se.ServiceType.ID))
+                        .ToList();
+                    response.data = services; //TODO: Flatten?
+                    return response.GenerateResponse(HttpStatusCode.OK);
+                }
+                catch (Exception e)
+                {
+                    response.errors.Add(new DatabaseFailure(e));
+                    return response.GenerateResponse(HttpStatusCode.InternalServerError);
+                }
             }
         }
     }

@@ -28,7 +28,9 @@ function ReportingViewModel() {
   }, this);
 
   //Patron Reporting
+  this.id = ko.observable();
   this.firstName = ko.observable();
+  this.middleName = ko.observable();
   this.lastName =  ko.observable();
   this.dateOfBirth =  ko.observable();
 
@@ -44,6 +46,52 @@ function ReportingViewModel() {
   this.timePeriodSelectIsDateRange = ko.computed(function() {
     return this.timePeriod() === '2';
   }, this);
+
+  //Patron auto-complete
+  this.foundPatrons = ko.observableArray([]);
+  this.search = ko.observable(true);
+  this.patronSearchData = ko.computed(function() {
+    return {
+      firstName: this.firstName(),
+      middleName: this.middleName(),
+      lastName: this.lastName(),
+      dateOfBirth: this.dateOfBirth()
+    };
+  }, this).extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
+  this.autoComplete = () => {
+    if(!this.firstName() && !this.middleName() && !this.lastName() && !this.dateOfBirth())
+      return;
+
+    let controller = 'Patron';
+    let action = 'FindPatron';
+    if(!this.search()) return;
+
+    app.post(controller, action, ko.toJSON(this.patronSearchData))
+    .success((patrons) => {
+      patrons = patrons.map((patron) => {
+        return {
+          id: patron.id,
+          dateOfBirth: moment(patron.dateOfBirth).format('MM/DD/YYYY'),
+          firstName: patron.firstName,
+          middleName: patron.middleName,
+          lastName: patron.lastName
+        };
+      });
+      this.foundPatrons(patrons || []);
+    });
+  };
+  this.patronSearchData.subscribe(this.autoComplete);
+  this.patronSearchData.subscribe(() => this.search(true));
+  this.fillPatron = (patron) => {
+    this.id(patron.id);
+    this.firstName(patron.firstName);
+    this.middleName(patron.middleName);
+    this.lastName(patron.lastName);
+    this.dateOfBirth(patron.dateOfBirth);
+    setTimeout(() => {
+      this.search(false);
+    }, 600);
+  };
 
   this.getReport = function() {
     var validationErrors = this.validate();

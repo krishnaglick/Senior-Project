@@ -129,7 +129,7 @@ function PatronCheckInViewModel() {
     }.bind(this));
   }.bind(this);
 
-  this.fillPatron = function(patron) {
+  this.fillPatron = (patron) => {
     for(var key in patron) {
       try {
         var myKey;
@@ -147,12 +147,12 @@ function PatronCheckInViewModel() {
         console.log('Issue with key ', key, '\n', x);
       }
     }
-    setTimeout(function() {
+    setTimeout(() => {
       // :/
       this.search(false);
       this.paperworkPreviouslyValidated();
-    }.bind(this), 600);
-  }.bind(this);
+    }, 600);
+  };
 
   this.patronSearchData = ko.computed(function() {
     return {
@@ -292,7 +292,7 @@ function EmergencyContact(emergencyContact) {
 
   this.phoneNumber = ko.observable(emergencyContact.phoneNumber || '');
 
-  this.validate = function(errors) {
+  this.validate = (errors) => {
     if(!this.firstName())
       errors.push('Emergency Contacts need a First Name!');
     if(!this.lastName())
@@ -301,7 +301,7 @@ function EmergencyContact(emergencyContact) {
       errors.push('Emergency Contacts need a Phone Number!');
 
     return errors;
-  }.bind(this);
+  };
 }
 
 function PhoneNumber(phoneNumber) {

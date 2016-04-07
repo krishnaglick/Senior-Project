@@ -141,6 +141,7 @@
     <Compile Include="API\LoginController.cs" />
     <Compile Include="API\EnumController.cs" />
     <Compile Include="API\ReportingController.cs" />
+    <Compile Include="API\Responses\Errors\DatabaseFailure.cs" />
     <Compile Include="API\Responses\Errors\NullRequest.cs" />
     <Compile Include="API\Responses\Errors\InvalidCheckIn.cs" />
     <Compile Include="API\Responses\Errors\InvalidToken.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="API\Responses\ApiResponse.cs" />
     <Compile Include="API\Responses\Errors\InvalidPatron.cs" />
     <Compile Include="API\Responses\Errors\NoRecordsFound.cs" />
+    <Compile Include="API\Responses\Errors\PasswordMismatch.cs" />
     <Compile Include="API\RoleController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
