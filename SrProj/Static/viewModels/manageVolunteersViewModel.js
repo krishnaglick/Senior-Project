@@ -98,15 +98,27 @@ function ManageVolunteersViewModel() {
     $('.ui.dropdown').dropdown();
   };
 
-  this.changePassword = function() {
+  this.changePassword = () => {
+    let action = 'ChangePassword';
+    if(this.targetVolunteer().password() !== this.targetVolunteer().confirmPassword()) {
+      alert('Passwords need to match!');
+      return false;
+    }
 
-  }.bind(this);
+    app.post(this.controller, action, ko.toJSON(this.targetVolunteer))
+    .success(() => {
+      alert('Password Changed Successfully');
+    })
+    .error(() => {
+      alert('Unable to change password, plese try again later!');
+    });
+  };
 
-  this.editPassword = function(data, event) {
+  this.editPassword = (data, event) => {
     data.fullName = data.firstName + ' ' + data.lastName;
     data.password = ko.observable();
     data.confirmPassword = ko.observable();
     this.targetVolunteer(data);
     $('#changePassword').modal('show');
-  }.bind(this);
+  };
 }

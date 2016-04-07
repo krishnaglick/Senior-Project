@@ -12,9 +12,11 @@ using Utility.Enum;
 using WebGrease.Css.Extensions;
 using Database = DataAccess.Contexts.Database;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 
 namespace SrProj.API
 {
+    [AuthorizableController(new[] { RoleID.Admin })]
     public class VolunteerController : ApiController
     {
         public class CreateVolunteerViewModel : VolunteerViewModel
@@ -24,13 +26,12 @@ namespace SrProj.API
         }
 
         [HttpPost]
-        [AuthorizableAction]
         public HttpResponseMessage CreateVolunteer([FromBody] CreateVolunteerViewModel volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
 
             if (volunteer.Password != volunteer.ConfirmPassword) {
-                response.data = new JsonError(); //Make json error for mismatched passwords
+                response.data = new PasswordMismatch();
                 return response.GenerateResponse(HttpStatusCode.BadRequest);
             }
 
@@ -89,7 +90,6 @@ namespace SrProj.API
         }
 
         [HttpPost]
-        [AuthorizableAction]
         public HttpResponseMessage ModifyVolunteer([FromBody] VolunteerViewModel volunteer)
         {
             using (var db = new Database())
@@ -107,9 +107,9 @@ namespace SrProj.API
                 var dbServices = db.ServiceTypes.Where(st => volunteer.Services.Contains(st.ID));
                 //Remove all current services
                 db.Database.ExecuteSqlCommand(
-                    $@"DELETE VolunteerServiceType
-                      WHERE Volunteer_Username = {volunteer.Username.Split(' ')[0]}" //YO DAWG I HERD  U LIEK SQL INJECTION, ALSO EF IS AWFUL. HOPE NO ONE HAS A SPACE IN THEIR USERNAME
-                );
+                    @"DELETE VolunteerServiceType
+                      WHERE Volunteer_Username = @p0" //EF IS AWFUL
+                , volunteer.Username);
 
                 //Associate volunteer to new roles
                 dbRoles.ForEach(r => db.RoleVolunteers.Add(new RoleVolunteer
@@ -137,7 +137,6 @@ namespace SrProj.API
         }
 
         [HttpGet]
-        [AuthorizableAction]
         public HttpResponseMessage GetVolunteers()
         {
             using (var db = new Database())
@@ -166,6 +165,53 @@ namespace SrProj.API
                     response.errors.Add(new NoRecordsFound());
                     return response.GenerateResponse(HttpStatusCode.InternalServerError);
                 }
+            }
+        }
+
+        public class ChangePasswordViewModel
+        {
+            public string Username { get; set; }
+            public string Password { get; set; }
+            public string ConfirmPassword { get; set; }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage ChangePassword(ChangePasswordViewModel volunteer)
+        {
+            using (var db = new Database())
+            {
+                var response = new ApiResponse(Request);
+
+                if (volunteer.Password != volunteer.ConfirmPassword)
+                {
+                    response.errors.Add(new PasswordMismatch());
+                    return response.GenerateResponse(HttpStatusCode.BadRequest);
+                }
+
+                var dbVolunteer = db.Volunteers.FirstOrDefault(v => v.Username == volunteer.Username);
+                if (dbVolunteer == null)
+                {
+                    response.errors.Add(new NoRecordsFound());
+                    return response.GenerateResponse(HttpStatusCode.InternalServerError);
+                }
+                try
+                {
+                    dbVolunteer.Password = volunteer.Password;
+                    dbVolunteer.SecurePassword();
+                    //Fuck you EF.
+                    db.Database.ExecuteSqlCommand(@"
+                        UPDATE Volunteer
+                        SET HashedPassword = @p0
+                        WHERE Username = @p1
+                    ", volunteer.Password, volunteer.Username);
+                }
+                catch (Exception e)
+                {
+                    response.errors.Add(new DatabaseFailure(e)); //TODO: DB Error
+                    return response.GenerateResponse(HttpStatusCode.InternalServerError);
+                }
+                response.data = ApiResponse.DefaultSuccessResponse;
+                return response.GenerateResponse(HttpStatusCode.OK);
             }
         }
     }
