@@ -203,7 +203,7 @@ namespace SrProj.API
                         UPDATE Volunteer
                         SET HashedPassword = @p0
                         WHERE Username = @p1
-                    ", volunteer.Password, volunteer.Username);
+                    ", dbVolunteer.HashedPassword, volunteer.Username);
                 }
                 catch (Exception e)
                 {
