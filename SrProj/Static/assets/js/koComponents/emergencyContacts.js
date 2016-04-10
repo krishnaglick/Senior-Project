@@ -9,13 +9,13 @@ ko.components.register(`emergencyContacts`, {
     </button>
     <!-- ko foreach: data -->
     <div class="fields">
-      <div class="field">
+      <div class="field emergencyContactFirstName ">
         <input type="text" placeholder="First Name" data-bind="textInput: firstName" />
       </div>
-      <div class="field">
+      <div class="field emergencyContactlastName">
         <input type="text" placeholder="Last Name" data-bind="textInput: lastName" />
       </div>
-      <div class="field">
+      <div class="field emergencyContactphoneNumber">
         <input type="text" placeholder="XXX-XXX-XXXX" data-bind="textInput: phoneNumber" class="phoneField" />
       </div>
       <div class="field">

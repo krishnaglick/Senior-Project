@@ -9,22 +9,24 @@ ko.components.register('addresses', {
     </button>
     <!-- ko foreach: data -->
     <div class="ui address segment">
-      <div class="clickable floating ui red label" data-bind="click: $root.removeAddress">
-        Remove
+      <div class="transparent floating ui label" data-bind="click: $root.removeAddress">
+        <button class="circular red ui icon button">
+          <i class="close icon"></i>
+        </button>
       </div>
       <div class="fields">
-        <div class="field">
+        <div class="field streetAddress">
           <input type="text" placeholder="Street Address" data-bind="textInput: streetAddress" />
         </div>
-        <div class="field">
+        <div class="field city">
           <input type="text" placeholder="City" data-bind="textInput: city">
         </div>
       </div>
       <div class="fields">
-        <div class="field">
+        <div class="field state">
           <input type="text" placeholder="State" data-bind="textInput: state"></input>
         </div>
-        <div class="field">
+        <div class="field zip">
           <input type="text" class="zipField" placeholder="Zip Code" data-bind="textInput: zip"></input>
         </div>
       </div>

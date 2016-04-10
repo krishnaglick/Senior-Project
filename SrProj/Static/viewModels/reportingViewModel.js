@@ -121,7 +121,9 @@ function ReportingViewModel() {
 
     app.post(this.controller, action, ko.toJSON(this))
       .success(function(data, textStatus, request) {
-        //Export data to CSV.
+        console.log(JSON.stringify(data));
+        data = data.map((d) => flatten(d));
+        console.log(data);
       }.bind(this))
       .error(function(data) {
         if(data.responseJSON){
@@ -152,4 +154,11 @@ function ReportingViewModel() {
     //timePeriod
     //reportingType
   }.bind(this);
+}
+
+function flatten(obj) {
+  if(typeof obj === 'object') {
+
+  }
+  else if (true) { }
 }

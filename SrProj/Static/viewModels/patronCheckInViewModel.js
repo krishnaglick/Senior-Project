@@ -60,11 +60,15 @@ function PatronCheckInViewModel() {
     this.dateOfBirth.default = '';
   this.householdOccupants = ko.observable(1);
     this.householdOccupants.default = 1;
+  this.minorHouseholdOccupants = ko.observable(0);
+    this.minorHouseholdOccupants.default = 0;
   this.veteran = ko.observable(false);
     this.veteran.default = false;
 
   this.banned = ko.observable(false);
     this.banned.default = false;
+  this.disabledPatron = ko.observable(false);
+    this.disabledPatron.default = false;
 
   this.maritalStatusID = ko.observable();
     this.maritalStatusID.default = '';
@@ -193,6 +197,7 @@ function PatronCheckInViewModel() {
         console.log('Issue with key ', key);
       }
     }
+    $('.error').each((i, element) => $(element).removeClass('error'));
   }.bind(this);
 
   this.checkIn = function() {
@@ -216,44 +221,114 @@ function PatronCheckInViewModel() {
   }.bind(this);
 }
 
+function markFieldAsErrored(bindingName, mark, index) {
+  let element;
+  if(index)
+    element = $($(`.field.${bindingName}`)[index]);
+  else
+    element = $(`.field.${bindingName}`);
+
+  if(mark) {
+    element.addClass('error');
+  }
+  else {
+    element.removeClass('error');
+  }
+}
+
 PatronCheckInViewModel.prototype.validate = function() {
   var errors = [];
   if (!this.firstName()) {
     errors.push('Please enter a First Name');
+    markFieldAsErrored('firstName', true);
+  }
+  else {
+    markFieldAsErrored('firstName', false);
   }
   if (!this.lastName()) {
       errors.push('Please enter a Last Name');
+      markFieldAsErrored('lastName', true);
+  }
+  else {
+    markFieldAsErrored('lastName', false);
   }
   if (!this.dateOfBirth()) {
       errors.push('Please enter Date of Birth');
+      markFieldAsErrored('dateOfBirth', true);
+  }
+  else {
+    markFieldAsErrored('dateOfBirth', false);
   }
   if (!this.genderID()) {
       errors.push('Please specify Gender');
+      markFieldAsErrored('genderID', true);
+  }
+  else {
+    markFieldAsErrored('genderID', false);
   }
   if (!this.ethnicityID()) {
       errors.push('Please specify Ethnicity');
+      markFieldAsErrored('ethnicityID', true);
+  }
+  else {
+    markFieldAsErrored('ethnicityID', false);
   }
   if (!this.maritalStatusID()) {
       errors.push('Please specify Marital Status');
+      markFieldAsErrored('maritalStatusID', true);
+  }
+  else {
+    markFieldAsErrored('maritalStatusID', false);
   }
   if (!this.residenceStatusID()) {
       errors.push('Please specify Residence Status');
+      markFieldAsErrored('residenceStatusID', true);
+  }
+  else {
+    markFieldAsErrored('residenceStatusID', false);
+  }
+  if(!this.serviceSelection()) {
+    errors.push('Please choose a service selection!');
+    markFieldAsErrored('serviceSelection', true);
+  }
+  else {
+    markFieldAsErrored('serviceSelection', false);
+  }
+  if(!this.neccessaryPaperwork()) {
+    errors.push('Please ensure the Patron has provided the neccessary paperwork!');
+    markFieldAsErrored('neccessaryPaperwork', true);
+  }
+  else {
+    markFieldAsErrored('neccessaryPaperwork', false);
   }
   if (!this.addresses().length) {
       errors.push('Please include at least one Address!');
   }
   if(~~this.householdOccupants() < 1) {
     errors.push('Please include at least one household occupant!');
+    markFieldAsErrored('householdOccupants', true);
   }
-  this.phoneNumbers().forEach((phoneNumber) => {
-    phoneNumber.validate(errors);
-  });
-  this.addresses().forEach(function(address) {
-    address.validate(errors);
-  });
-  this.emergencyContacts().forEach(function(emergencyContact) {
-    emergencyContact.validate(errors);
-  });
+  else {
+    markFieldAsErrored('householdOccupants', false);
+  }
+  if(~~this.minorHouseholdOccupants() > ~~this.householdOccupants() - 1) {
+    errors.push(`At least one member of the household must be over 18!`);
+    markFieldAsErrored('minorHouseholdOccupants', true);
+    markFieldAsErrored('householdOccupants', true);
+  }
+  else {
+    markFieldAsErrored('minorHouseholdOccupants', false);
+    markFieldAsErrored('householdOccupants', false);
+  }
+  for(let i = 0; i < this.phoneNumbers().length; i++) {
+    this.phoneNumbers()[i].validate(errors, i);
+  }
+  for(let i = 0; i < this.addresses().length; i++) {
+    this.addresses()[i].validate(errors, i);
+  }
+  for(let i = 0; i < this.emergencyContacts().length; i++) {
+    this.emergencyContacts()[i].validate(errors, i);
+  }
 
   return errors;
 };
@@ -265,24 +340,40 @@ function Address(address) {
   this.state = ko.observable(address.state || '');
   this.zip = ko.observable(address.zip || '');
 
-  this.validate = (errors) => {
+  this.validate = (errors, index) => {
     if(!this.streetAddress()) {
       errors.push('Please include a street address!');
+      markFieldAsErrored('streetAddress', true, index);
+    }
+    else {
+      markFieldAsErrored('streetAddress', false, index);
     }
     if(!this.city()) {
       errors.push('Please include a city!');
+      markFieldAsErrored('city', true, index);
+    }
+    else {
+      markFieldAsErrored('city', false, index);
     }
     if(!this.state()) {
       errors.push('Please include a state!');
+      markFieldAsErrored('state', true, index);
+    }
+    else {
+      markFieldAsErrored('state', false, index);
     }
     if(!this.zip()) {
       errors.push('Please include a zip code!');
+      markFieldAsErrored('zip', true, index);
+    }
+    else {
+      markFieldAsErrored('zip', false, index);
     }
     return errors;
   };
 }
 
-function EmergencyContact(emergencyContact) {
+function EmergencyContact(emergencyContact, index) {
   emergencyContact = emergencyContact || {};
   this.firstName = ko.observable(emergencyContact.firstName || '');
   this.lastName = ko.observable(emergencyContact.lastName || '');
@@ -293,24 +384,46 @@ function EmergencyContact(emergencyContact) {
   this.phoneNumber = ko.observable(emergencyContact.phoneNumber || '');
 
   this.validate = (errors) => {
-    if(!this.firstName())
+    //Remove return to make emergency contacts required.
+    return errors;
+    if(!this.firstName()) {
       errors.push('Emergency Contacts need a First Name!');
-    if(!this.lastName())
+      markFieldAsErrored('emergencyContactFirstName', true, index);
+    }
+    else {
+      markFieldAsErrored('emergencyContactFirstName', false, index);
+    }
+    if(!this.lastName()) {
       errors.push('Emergency Contacts need a Last Name!');
-    if(!this.phoneNumber())
+      markFieldAsErrored('emergencyContactLastName', true, index);
+    }
+    else {
+      markFieldAsErrored('emergencyContactLastName', false, index);
+    }
+    if(!this.phoneNumber()) {
       errors.push('Emergency Contacts need a Phone Number!');
+      markFieldAsErrored('emergencyContactPhoneNumber', true, index);
+    }
+    else {
+      markFieldAsErrored('emergencyContactPhoneNumber', false, index);
+    }
 
     return errors;
   };
 }
 
-function PhoneNumber(phoneNumber) {
+function PhoneNumber(phoneNumber, index) {
   phoneNumber = phoneNumber || {};
   this.phoneNumber = ko.observable(phoneNumber.phoneNumber || '');
 
   this.validate = (errors) => {
-    if(!this.phoneNumber())
+    if(!this.phoneNumber()) {
       errors.push('A phone number can not be blank!');
+      markFieldAsErrored('phoneNumber', true, index);
+    }
+    else {
+      markFieldAsErrored('phoneNumber', false, index);
+    }
 
     return errors;
   };

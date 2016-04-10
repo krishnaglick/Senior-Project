@@ -12,7 +12,6 @@ using Utility.Enum;
 using WebGrease.Css.Extensions;
 using Database = DataAccess.Contexts.Database;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 
 namespace SrProj.API
 {
@@ -198,7 +197,6 @@ namespace SrProj.API
                 {
                     dbVolunteer.Password = volunteer.Password;
                     dbVolunteer.SecurePassword();
-                    //Fuck you EF.
                     db.Database.ExecuteSqlCommand(@"
                         UPDATE Volunteer
                         SET HashedPassword = @p0

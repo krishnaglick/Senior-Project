@@ -9,6 +9,7 @@ using Models;
 using SrProj.API.Responses;
 using Utility.ExtensionMethod;
 using System.Data.Entity;
+using System.Runtime.CompilerServices;
 using SrProj.API.Responses.Errors;
 using Database = DataAccess.Contexts.Database;
 
@@ -77,7 +78,8 @@ namespace SrProj.API
                         .Include(se => se.ServiceType)
                         .Where(se => se.Patron.ID == reportingParams.ID && servicesWanted.Contains(se.ServiceType.ID))
                         .ToList();
-                    response.data = services; //TODO: Flatten?
+
+                    response.data = services;
                     return response.GenerateResponse(HttpStatusCode.OK);
                 }
                 catch (Exception e)
