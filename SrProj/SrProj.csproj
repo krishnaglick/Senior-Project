@@ -172,6 +172,7 @@
     <Content Include="Static\assets\css\app.css" />
     <Content Include="Static\assets\img\visitor.png" />
     <Content Include="Static\assets\img\volunteer.png" />
+    <Content Include="Static\assets\js\jsonExport.js" />
     <Content Include="Static\assets\js\koComponents\addresses.js" />
     <Content Include="Static\assets\js\koComponents\emergencyContacts.js" />
     <Content Include="Static\assets\js\koComponents\multipleSearchSelection.js" />
@@ -586,6 +587,8 @@
     <Content Include="Static\bower_components\semantic\dist\semantic.min.js" />
     <Content Include="Static\bower_components\semantic\dist\themes\basic\assets\fonts\icons.svg" />
     <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.svg" />
+    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.woff" />
+    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.woff2" />
     <Content Include="Static\bower_components\semantic\dist\themes\default\assets\images\flags.png" />
     <Content Include="Static\bower_components\semantic\dist\themes\github\assets\fonts\octicons.svg" />
     <Content Include="Static\bower_components\semantic\examples\assets\images\avatar\nan.jpg" />
@@ -742,8 +745,6 @@
     <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.eot" />
     <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.otf" />
     <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.ttf" />
-    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.woff" />
-    <Content Include="Static\bower_components\semantic\dist\themes\default\assets\fonts\icons.woff2" />
     <Content Include="Static\bower_components\semantic\dist\themes\github\assets\fonts\octicons-local.ttf" />
     <Content Include="Static\bower_components\semantic\dist\themes\github\assets\fonts\octicons.ttf" />
     <Content Include="Static\bower_components\semantic\dist\themes\github\assets\fonts\octicons.woff" />
@@ -1132,6 +1133,7 @@
     <Content Include="Static\bower_components\moment\CHANGELOG.md" />
     <Content Include="Static\bower_components\moment\LICENSE" />
     <Content Include="Static\bower_components\moment\README.md" />
+    <Content Include="Static\.jshintrc" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

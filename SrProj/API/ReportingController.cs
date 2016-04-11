@@ -9,7 +9,6 @@ using Models;
 using SrProj.API.Responses;
 using Utility.ExtensionMethod;
 using System.Data.Entity;
-using System.Runtime.CompilerServices;
 using SrProj.API.Responses.Errors;
 using Database = DataAccess.Contexts.Database;
 

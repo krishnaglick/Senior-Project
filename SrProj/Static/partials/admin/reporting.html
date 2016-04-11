@@ -67,7 +67,8 @@
       </div>
 
       <div class="field halfTopMargin">
-        <button class="ui inverted green button" data-bind="click: getReport">Get Report</button>
+        <button class="ui inverted green button" data-bind="click: generateReport, visible: !hasReport()">Generate Report</button>
+        <a class="ui inverted blue button" data-bind="visible: hasReport" id="downloadReport" download="report.csv">Download Report</a>
         <button class="ui inverted red button" data-bind="click: clear">Clear</button>
       </div>
     </div>

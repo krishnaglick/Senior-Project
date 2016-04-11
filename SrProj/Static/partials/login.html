@@ -10,7 +10,7 @@
         </div>
         <div class="field">
           <div class="ui left icon input user">
-            <input id="username" placeholder="Username" type="text" data-bind="textInput: username, enterKey: login" id="username" autofocus="true" />
+            <input id="username" placeholder="Username" type="text" data-bind="textInput: username, enterKey: login" id="username" autofocus="autofocus" />
             <i class="user icon"></i>
           </div>
         </div>
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="rightAligned field">
-          <button type="button" class="ui inverted green button" data-bind="click: login">Login</button>
+          <button type="button" class="ui inverted green button" id="loginButton" data-bind="click: login">Login</button>
         </div>
       </div>
     </div>

@@ -26,6 +26,7 @@ function ReportingViewModel() {
   this.serviceSectionVisible = ko.computed(function() {
     return this.reportingType() === '2';
   }, this);
+  this.hasReport = ko.observable(false);
 
   //Patron Reporting
   this.id = ko.observable();
@@ -59,6 +60,7 @@ function ReportingViewModel() {
     };
   }, this).extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
   this.autoComplete = () => {
+    this.hasReport(false);
     if(!this.firstName() && !this.middleName() && !this.lastName() && !this.dateOfBirth())
       return;
 
@@ -93,7 +95,7 @@ function ReportingViewModel() {
     }, 600);
   };
 
-  this.getReport = function() {
+  this.generateReport = () => {
     var validationErrors = this.validate();
     if(validationErrors.length)
       return alert(validationErrors);
@@ -108,48 +110,44 @@ function ReportingViewModel() {
 
     var services = [];
     $('div.ui.fluid.search.dropdown a.ui.label.transition.visible')
-    .each(function(index, element) {
+    .each((index, element) => {
       services.push(parseInt($(element).data('value')));
-      }.bind(this)
-    );
+    });
     //The binding for this doesn't work properly. I need to fix it.
-    this.serviceTypeSelections = app.services().filter(function(service) {
+    this.serviceTypeSelections = app.services().filter((service) => {
       return services.includes(service.id);
     });
     //TODO: Remap this to use this.timePeriod, when it works.
     this.timePeriod($('.ui.timePeriod.dropdown.selection div.item.active.selected').text());
 
     app.post(this.controller, action, ko.toJSON(this))
-      .success(function(data, textStatus, request) {
-        console.log(JSON.stringify(data));
-        data = data.map((d) => flatten(d));
-        console.log(data);
-      }.bind(this))
-      .error(function(data) {
-        if(data.responseJSON){
-          if(Array.isArray(data.responseJSON) && data.responseJSON.length > 1) {
-            //Aggregate errors
-
-            return;
+      .success((data) => {
+        jsonExport(data, (err, csv) => {
+          if(err)
+            return alert('There was an issue generating the report, please try again or contact your system administrator.');
+          if(csv) {
+            csv = encodeURIComponent(csv);
+            $('#downloadReport').attr('href', `data:text/csv;charset=utf-8,${csv}`);
+            this.hasReport(true);
           }
-          else if(Array.isArray(data.responseJSON) && data.responseJSON.length == 1) {
-            data.responseJSON = data.responseJSON[0];
-          }
-
-          //Handle single error.
-          alert('Phhbt.');
-        }
-        //debugger;
-      }.bind(this));
-  }.bind(this);
+          else
+            alert('No data found!');
+        });
+      })
+      .error((data) => {
+        alert('There was an issue generating the report, please try again or contact your system administrator.');
+      });
+  };
 
   this.clear = function() {
     this.firstName('');
+    this.middleName('');
     this.lastName('');
     this.dateOfBirth('');
     this.startDate('');
     this.endDate('');
-    this.serviceTypeSelections([]);
+    //this.serviceTypeSelections([]);
+    this.hasReport(false);
 
     //timePeriod
     //reportingType

@@ -20,6 +20,7 @@ function LoginViewModel() {
 
   this.login = function(data, event) {
     var action = 'login';
+    $('#loginButton').addClass('loading');
 
     app.post(this.controller, action, ko.toJSON(this))
       .success(function(data, textStatus, request) {
@@ -54,7 +55,10 @@ function LoginViewModel() {
           alert('Invalid username or password.');
         }
         //debugger;
-      }.bind(this));
+      }.bind(this))
+      .complete(() => {
+        $('#loginButton').removeClass('loading');
+      });
   }.bind(this);
 
   this.logout = function() {
