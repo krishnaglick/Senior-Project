@@ -1,5 +1,5 @@
 
-Array.prototype.contains = function(eqObj) {
+function contains(eqObj) {
   if(!this.length || !eqObj) return false;
 
   for (var i = this.length - 1; i >= 0; i--) {
@@ -12,4 +12,4 @@ Array.prototype.contains = function(eqObj) {
   }
 
   return false;
-};
+}

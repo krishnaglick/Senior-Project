@@ -12,7 +12,7 @@ ko.components.register('multipleSearchSelection', {
       </select>
       <i class="dropdown icon"></i>
       <!-- ko foreach: activeSelection -->
-        <a class="ui label transition visible" data-bind="attr: { \'data-value\': id }" style="display: inline-block !important;">
+        <a class="ui label transition visible" data-bind="attr: { 'data-value': id }" style="display: inline-block !important;">
           <span data-bind="text: name"></span>
           <i class="delete icon"></i>
         </a>
@@ -20,8 +20,8 @@ ko.components.register('multipleSearchSelection', {
       <input class="search" autocomplete="off" tabindex="0" style="width: 2.1428em;" />
       <div class="default text" data-bind="text: defaultValue"></div>
       <div class="menu transition hidden" tabindex="1" data-bind="foreach: data">
-        <div class="item" data-bind="attr: { \'data-value\': id }, text: name, css: { \'active filtered\':
-        (typeof $parent.activeSelection === \'function\' ? $parent.activeSelection() : $parent.activeSelection).contains($data)} "></div>
+        <div class="item" data-bind="attr: { 'data-value': id }, text: name, css: { 'active filtered':
+        contains($data).bind(typeof $parent.activeSelection === 'function' ? $parent.activeSelection() : $parent.activeSelection)} "></div>
       </div>
     </div>`,
     synchronous: true
