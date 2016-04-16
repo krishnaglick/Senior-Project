@@ -1,6 +1,6 @@
 
-<div class="ui centered grid topMargin">
-  <div class="nine wide column">
+<div class="ui grid topMargin leftMargin">
+  <div class="ten wide column">
     <div class="ui form">
       <div class="field">
         I want to report on
@@ -17,12 +17,16 @@
         </div>
         <div class="three fields">
           <div class="field">
-              <label>First Name</label>
-              <input type="text" placeholder="First Name" data-bind="textInput: firstName" />
+            <label>First Name</label>
+            <input type="text" placeholder="First Name" data-bind="textInput: firstName" />
           </div>
           <div class="field">
-              <label>Last Name</label>
-              <input type="text" placeholder="Last Name" data-bind="textInput: lastName" />
+            <label>Middle Name</label>
+            <input type="text" placeholder="Middle Name" data-bind="textInput: middleName" />
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Last Name" data-bind="textInput: lastName" />
           </div>
           <div class="field">
             <label>Date of Birth</label>
@@ -62,9 +66,21 @@
         </div>
       </div>
 
-      <div class="field">
-        <button class="ui inverted green button" data-bind="click: getReport">Get Report</button>
+      <div class="field halfTopMargin">
+        <button class="ui inverted green button" data-bind="click: generateReport, visible: !hasReport()">Generate Report</button>
+        <a class="ui inverted blue button" data-bind="visible: hasReport" id="downloadReport" download="report.csv">Download Report</a>
         <button class="ui inverted red button" data-bind="click: clear">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="reportingPatronSearch" data-bind="visible: foundPatrons().length > 0 && patronSectionVisible() && search()">
+    <div class="ui form segment" data-bind="foreach: foundPatrons">
+      <div class="clickable ui fields" data-bind="click: $root.fillPatron">
+        <div class="field" data-bind="text: firstName"></div>
+        <div class="field" data-bind="text: middleName"></div>
+        <div class="field" data-bind="text: lastName"></div>
+        <div class="field" data-bind="text: dateOfBirth"></div>
       </div>
     </div>
   </div>

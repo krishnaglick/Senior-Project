@@ -7,8 +7,8 @@ function PatronCheckInViewModel() {
   this.search = ko.observable(true);
     this.search.default = true;
   this.serviceSelection = ko.observable();
-  this.servicesUsed = ko.observableArray();
-  this.servicesUsed.default = [];
+  this.servicesUsed = ko.observableArray([]);
+    this.servicesUsed.default = [];
 
   this.paperworkPreviouslyValidated = function() {
     function getDays(millisec) {
@@ -23,7 +23,7 @@ function PatronCheckInViewModel() {
       var dentalID = 5;
       if(~~this.serviceSelection() === serviceTypeID) {
         var serviceUsedDate = new Date(service.createDate);
-        var now = Date.now();
+        let now = Date.now();
         if(serviceTypeID === medicalID || serviceTypeID === dentalID) {
           //If user has visited this year
           if(now.getFullYear() === serviceUsedDate.getFullYear())
@@ -43,6 +43,8 @@ function PatronCheckInViewModel() {
   this.serviceSelection.subscribe(this.paperworkPreviouslyValidated);
 
   //Patron Properties
+  this.id = ko.observable(-1);
+    this.id.default = -1;
   this.firstName = ko.observable('');
     this.firstName.default = '';
   this.middleName = ko.observable('');
@@ -58,20 +60,24 @@ function PatronCheckInViewModel() {
     this.dateOfBirth.default = '';
   this.householdOccupants = ko.observable(1);
     this.householdOccupants.default = 1;
+  this.minorHouseholdOccupants = ko.observable(0);
+    this.minorHouseholdOccupants.default = 0;
   this.veteran = ko.observable(false);
     this.veteran.default = false;
 
   this.banned = ko.observable(false);
     this.banned.default = false;
+  this.disabledPatron = ko.observable(false);
+    this.disabledPatron.default = false;
 
   this.maritalStatusID = ko.observable();
-    this.maritalStatusID.default = null;
+    this.maritalStatusID.default = '';
   this.genderID = ko.observable();
-    this.genderID.default = null;
+    this.genderID.default = '';
   this.ethnicityID = ko.observable();
-    this.ethnicityID.default = null;
+    this.ethnicityID.default = '';
   this.residenceStatusID = ko.observable();
-    this.residenceStatusID.default = null;
+    this.residenceStatusID.default = '';
 
   this.addresses = ko.observableArray([ new Address() ]);
     this.addresses.default = [ new Address() ];
@@ -87,8 +93,8 @@ function PatronCheckInViewModel() {
   this.phoneNumbers = ko.observableArray([ new PhoneNumber() ]);
     this.phoneNumbers.default = [ new PhoneNumber() ];
   this.addPhoneNumber = function() {
-    this.phoneNumbers.push(new PhoneNumber());
-    $('.phoneField').mask('(000) 000-0000');
+    this.phoneNumbers.push('');
+    $('.phoneField').mask('000-000-0000');
   }.bind(this);
   this.removePhoneNumber = function(phoneNumber) {
     //Confirm Alert
@@ -99,6 +105,7 @@ function PatronCheckInViewModel() {
     this.emergencyContacts.default = [ new EmergencyContact() ];
   this.addEmergencyContact = function() {
     this.emergencyContacts.push(new EmergencyContact());
+    $('.phoneField').mask('000-000-0000');
   }.bind(this);
   this.removeEmergencyContact = function(emergencyContact) {
     //Confirm Alert
@@ -108,6 +115,7 @@ function PatronCheckInViewModel() {
 
   //Patron Searching Functionality
   this.foundPatrons = ko.observableArray([]);
+    this.foundPatrons.default = [];
 
   this.autoComplete = function() {
     if(!this.firstName() && !this.middleName() && !this.lastName() && !this.dateOfBirth())
@@ -116,11 +124,16 @@ function PatronCheckInViewModel() {
     if(!this.search()) return;
     app.post(this.controller, action, ko.toJSON(this.patronSearchData))
     .success(function(data) {
+      data = data.map((d) => {
+        if(d.dateOfBirth)
+          d.dateOfBirth = moment(d.dateOfBirth).format('MM/DD/YYYY');
+        return d;
+      });
       this.foundPatrons(data || []);
     }.bind(this));
   }.bind(this);
 
-  this.fillPatron = function(patron) {
+  this.fillPatron = (patron) => {
     for(var key in patron) {
       try {
         var myKey;
@@ -128,19 +141,22 @@ function PatronCheckInViewModel() {
 
         if(ko.isWriteableObservable(this[myKey || key])) {
           if(key === 'dateOfBirth') patron[key] = moment(patron[key]).format('MM/DD/YYYY');
+          if(key === 'phoneNumbers') patron[key] = patron[key].map((pn) => new PhoneNumber(pn));
+          if(key === 'addresses') patron[key] = patron[key].map((adr) => new Address(adr));
+          if(key === 'emergencyContacts') patron[key] = patron[key].map((ec) => new EmergencyContact(ec));
           this[myKey || key](patron[key].id || patron[key]);
         }
       }
       catch(x) {
-        console.log('Issue with key ', key);
+        console.log('Issue with key ', key, '\n', x);
       }
     }
-    setTimeout(function() {
+    setTimeout(() => {
       // :/
       this.search(false);
       this.paperworkPreviouslyValidated();
-    }.bind(this), 600);
-  }.bind(this);
+    }, 600);
+  };
 
   this.patronSearchData = ko.computed(function() {
     return {
@@ -165,23 +181,26 @@ function PatronCheckInViewModel() {
   this.showCheckInModal = function () {
     var errors = this.validate();
     if(!errors.length)
-      $('.ui.modal').modal('show');
+      $('.ui.modal.patronCheckIn').modal('show');
     else
       alert(errors.join('\n'));
   }.bind(this);
 
-  this.clear = function() {
-    for(var key in this) {
-      try {
-        if(this[key].default !== undefined) {
-          this[key](this[key].default);
+  this.clear = () => {
+    if(confirm("Are you sure you want to clear?")) {
+      for(var key in this) {
+        try {
+          if(this[key].default !== undefined) {
+            this[key](this[key].default);
+          }
+        }
+        catch(x) {
+          console.log('Issue with key ', key);
         }
       }
-      catch(x) {
-        console.log('Issue with key ', key);
-      }
+      $('.error').each((i, element) => $(element).removeClass('error'));
     }
-  }.bind(this);
+  };
 
   this.checkIn = function() {
     if(this.banned()) {
@@ -190,11 +209,13 @@ function PatronCheckInViewModel() {
     }
     var action = 'CheckIn';
     if(app.services().length === 1)
-      this.serviceSelection(app.services()[0]);
+      this.serviceSelection(app.services()[0].id);
+    this.servicesUsed = ko.observableArray(this.servicesUsed.default);
 
     app.post(this.controller, action, ko.toJSON(this))
     .success(function(data, textStatus, request) {
       alert('Patron Checked In Successfully!');
+      this.clear();
     }.bind(this))
     .error(function() {
       alert('There was a problem checking the patron in. Please try again later!');
@@ -202,92 +223,210 @@ function PatronCheckInViewModel() {
   }.bind(this);
 }
 
+function markFieldAsErrored(bindingName, mark, index) {
+  let element;
+  if(index)
+    element = $($(`.field.${bindingName}`)[index]);
+  else
+    element = $(`.field.${bindingName}`);
+
+  if(mark) {
+    element.addClass('error');
+  }
+  else {
+    element.removeClass('error');
+  }
+}
+
 PatronCheckInViewModel.prototype.validate = function() {
   var errors = [];
   if (!this.firstName()) {
     errors.push('Please enter a First Name');
+    markFieldAsErrored('firstName', true);
+  }
+  else {
+    markFieldAsErrored('firstName', false);
   }
   if (!this.lastName()) {
       errors.push('Please enter a Last Name');
+      markFieldAsErrored('lastName', true);
+  }
+  else {
+    markFieldAsErrored('lastName', false);
   }
   if (!this.dateOfBirth()) {
       errors.push('Please enter Date of Birth');
+      markFieldAsErrored('dateOfBirth', true);
+  }
+  else {
+    markFieldAsErrored('dateOfBirth', false);
   }
   if (!this.genderID()) {
       errors.push('Please specify Gender');
+      markFieldAsErrored('genderID', true);
+  }
+  else {
+    markFieldAsErrored('genderID', false);
   }
   if (!this.ethnicityID()) {
       errors.push('Please specify Ethnicity');
+      markFieldAsErrored('ethnicityID', true);
+  }
+  else {
+    markFieldAsErrored('ethnicityID', false);
   }
   if (!this.maritalStatusID()) {
       errors.push('Please specify Marital Status');
+      markFieldAsErrored('maritalStatusID', true);
+  }
+  else {
+    markFieldAsErrored('maritalStatusID', false);
   }
   if (!this.residenceStatusID()) {
       errors.push('Please specify Residence Status');
+      markFieldAsErrored('residenceStatusID', true);
+  }
+  else {
+    markFieldAsErrored('residenceStatusID', false);
+  }
+  if(!this.serviceSelection()) {
+    errors.push('Please choose a service selection!');
+    markFieldAsErrored('serviceSelection', true);
+  }
+  else {
+    markFieldAsErrored('serviceSelection', false);
+  }
+  if(!this.neccessaryPaperwork()) {
+    errors.push('Please ensure the Patron has provided the neccessary paperwork!');
+    markFieldAsErrored('neccessaryPaperwork', true);
+  }
+  else {
+    markFieldAsErrored('neccessaryPaperwork', false);
   }
   if (!this.addresses().length) {
       errors.push('Please include at least one Address!');
   }
   if(~~this.householdOccupants() < 1) {
     errors.push('Please include at least one household occupant!');
+    markFieldAsErrored('householdOccupants', true);
   }
-  if(this.phoneNumbers().length < 1) {
-    errors.push('Please provide at least one phone number!');
+  else {
+    markFieldAsErrored('householdOccupants', false);
   }
-  this.addresses().forEach(function(address) {
-    address.validate(errors);
-  });
-  this.emergencyContacts().forEach(function(emergencyContact) {
-    emergencyContact.validate(errors);
-  });
+  if(~~this.minorHouseholdOccupants() > ~~this.householdOccupants() - 1) {
+    errors.push(`At least one member of the household must be over 18!`);
+    markFieldAsErrored('minorHouseholdOccupants', true);
+    markFieldAsErrored('householdOccupants', true);
+  }
+  else {
+    markFieldAsErrored('minorHouseholdOccupants', false);
+    markFieldAsErrored('householdOccupants', false);
+  }
+  for(let i = 0; i < this.phoneNumbers().length; i++) {
+    this.phoneNumbers()[i].validate(errors, i);
+  }
+  for(let i = 0; i < this.addresses().length; i++) {
+    this.addresses()[i].validate(errors, i);
+  }
+  for(let i = 0; i < this.emergencyContacts().length; i++) {
+    this.emergencyContacts()[i].validate(errors, i);
+  }
 
   return errors;
 };
 
-function Address() {
-  this.streetAddress = ko.observable('');
-  this.city = ko.observable('');
-  this.state = ko.observable('');
-  this.zip = ko.observable('');
+function Address(address) {
+  address = address || {}; //WTB default params :(
+  this.streetAddress = ko.observable(address.streetAddress || '');
+  this.city = ko.observable(address.city || '');
+  this.state = ko.observable(address.state || '');
+  this.zip = ko.observable(address.zip || '');
 
-  this.validate = function(errors) {
+  this.validate = (errors, index) => {
     if(!this.streetAddress()) {
       errors.push('Please include a street address!');
+      markFieldAsErrored('streetAddress', true, index);
+    }
+    else {
+      markFieldAsErrored('streetAddress', false, index);
     }
     if(!this.city()) {
       errors.push('Please include a city!');
+      markFieldAsErrored('city', true, index);
+    }
+    else {
+      markFieldAsErrored('city', false, index);
     }
     if(!this.state()) {
       errors.push('Please include a state!');
+      markFieldAsErrored('state', true, index);
+    }
+    else {
+      markFieldAsErrored('state', false, index);
     }
     if(!this.zip()) {
       errors.push('Please include a zip code!');
+      markFieldAsErrored('zip', true, index);
+    }
+    else {
+      markFieldAsErrored('zip', false, index);
     }
     return errors;
-  }.bind(this);
+  };
 }
 
-function EmergencyContact() {
-  this.firstName = ko.observable('');
-  this.lastName = ko.observable('');
+function EmergencyContact(emergencyContact, index) {
+  emergencyContact = emergencyContact || {};
+  this.firstName = ko.observable(emergencyContact.firstName || '');
+  this.lastName = ko.observable(emergencyContact.lastName || '');
   this.fullName = ko.computed(function() {
     return this.firstName() + ' ' + this.lastName();
   }.bind(this));
 
-  this.phoneNumber = ko.observable('');
+  this.phoneNumber = ko.observable(emergencyContact.phoneNumber || '');
 
-  this.validate = function(errors) {
-    if(!this.firstName())
+  this.validate = (errors) => {
+    //Remove return to make emergency contacts required.
+    return errors;
+    if(!this.firstName()) {
       errors.push('Emergency Contacts need a First Name!');
-    if(!this.lastName())
+      markFieldAsErrored('emergencyContactFirstName', true, index);
+    }
+    else {
+      markFieldAsErrored('emergencyContactFirstName', false, index);
+    }
+    if(!this.lastName()) {
       errors.push('Emergency Contacts need a Last Name!');
-    if(!this.phoneNumber())
+      markFieldAsErrored('emergencyContactLastName', true, index);
+    }
+    else {
+      markFieldAsErrored('emergencyContactLastName', false, index);
+    }
+    if(!this.phoneNumber()) {
       errors.push('Emergency Contacts need a Phone Number!');
+      markFieldAsErrored('emergencyContactPhoneNumber', true, index);
+    }
+    else {
+      markFieldAsErrored('emergencyContactPhoneNumber', false, index);
+    }
 
     return errors;
-  }.bind(this);
+  };
 }
 
-function PhoneNumber() {
-  this.phoneNumber = ko.observable('');
+function PhoneNumber(phoneNumber, index) {
+  phoneNumber = phoneNumber || {};
+  this.phoneNumber = ko.observable(phoneNumber.phoneNumber || '');
+
+  this.validate = (errors) => {
+    if(!this.phoneNumber()) {
+      errors.push('A phone number can not be blank!');
+      markFieldAsErrored('phoneNumber', true, index);
+    }
+    else {
+      markFieldAsErrored('phoneNumber', false, index);
+    }
+
+    return errors;
+  };
 }

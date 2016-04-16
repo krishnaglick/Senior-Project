@@ -7,8 +7,24 @@ body.pushable {
   text-align: center !important;
 }
 
+.address {
+  width: 500px;
+}
+
 .topMargin {
   margin-top: 5% !important;
+}
+
+.halfTopMargin {
+  margin-top: 2% !important;
+}
+
+.leftMargin {
+  margin-left: 15% !important;
+}
+
+.noTopMargin {
+  margin-top: 0px !important;
 }
 
 .rightAligned {
@@ -23,13 +39,18 @@ div#logIn{
   font-weight: bold !important;
 }
 
-.patronSearchSelection {
+.patronSearchSelection, .reportingPatronSearch {
   float: right;
   position: fixed;
 }
 
 .clickable {
   cursor: pointer;
+}
+
+.clickable:hover {
+  background-color: grey;
+  opacity: 0.8;
 }
 
 .paginationButtons {
@@ -40,12 +61,13 @@ em {
     opacity: 0.7;
 }
 
-.selectable:hover {
-  background-color: grey;
-}
-
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.transparent {
+  background-image: none !important;
+  background-color: transparent !important;
 }

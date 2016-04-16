@@ -1,6 +1,5 @@
 ﻿
 using System.Data.Entity.Migrations;
-using System.Linq;
 using DataAccess.Contexts;
 using Models;
 using Utility.Enum;
