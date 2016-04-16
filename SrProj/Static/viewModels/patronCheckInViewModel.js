@@ -18,12 +18,16 @@ function PatronCheckInViewModel() {
     if(this.neccessaryPaperwork()) return;
     if(!this.servicesUsed().length || !this.serviceSelection()) return;
     this.servicesUsed().forEach(function(service) {
-      var serviceTypeID = service.serviceType.id;
-      var medicalID = 4;
-      var dentalID = 5;
+      let serviceTypeID = service.serviceType.id;
+      let medicalID = app.enums.services.find((service) => {
+          return service.name === "Medical";
+      }).id;
+      let dentalID = app.enums.services.find((service) => {
+          return service.name === "Dental";
+      }).id;
       if(~~this.serviceSelection() === serviceTypeID) {
         var serviceUsedDate = new Date(service.createDate);
-        let now = Date.now();
+        let now = new Date();
         if(serviceTypeID === medicalID || serviceTypeID === dentalID) {
           //If user has visited this year
           if(now.getFullYear() === serviceUsedDate.getFullYear())
