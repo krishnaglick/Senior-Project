@@ -17,7 +17,6 @@
   ],
   "dependencies": {
     "cookies-js": "~1.2.2",
-    "jasmine-core": "~2.4.1",
     "jquery": ">=1.8",
     "jquery-mask-plugin": "^1.13.9",
     "knockout": "^3.4.0",

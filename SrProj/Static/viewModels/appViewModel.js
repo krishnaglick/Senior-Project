@@ -34,10 +34,6 @@ function App() {
     };
   }.bind(this);
 
-  this.logout = function() {
-    throw 'Logout function not assigned!';
-  };
-
   this.clearCredentials = function() {
     this.authToken('');
     this.username('');

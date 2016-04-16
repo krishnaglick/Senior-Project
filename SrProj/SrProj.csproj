@@ -697,6 +697,15 @@
     <Content Include="Static\bower_components\semantic\tasks\version.js" />
     <Content Include="Static\bower_components\semantic\tasks\watch.js" />
     <Content Include="Static\controllers\appController.js" />
+    <Content Include="Static\jasmine_tests\lib\jasmine-2.1.3\boot.js" />
+    <Content Include="Static\jasmine_tests\lib\jasmine-2.1.3\console.js" />
+    <Content Include="Static\jasmine_tests\lib\jasmine-2.1.3\jasmine-html.js" />
+    <Content Include="Static\jasmine_tests\lib\jasmine-2.1.3\jasmine.css" />
+    <Content Include="Static\jasmine_tests\lib\jasmine-2.1.3\jasmine.js" />
+    <Content Include="Static\jasmine_tests\lib\jasmine-2.1.3\jasmine_favicon.png" />
+    <Content Include="Static\jasmine_tests\SpecRunner.html" />
+    <Content Include="Static\jasmine_tests\spec\appViewModelSpecc.js" />
+    <Content Include="Static\jasmine_tests\spec\patronCheckInSpecc.js" />
     <Content Include="Static\partials\admin\createVolunteer.html" />
     <Content Include="Static\partials\admin\manageVolunteers.html" />
     <Content Include="Static\partials\admin\reporting.html" />
@@ -705,7 +714,6 @@
     <Content Include="Static\partials\mainPage.html" />
     <Content Include="Static\partials\menu.html" />
     <Content Include="Static\partials\patronCheckIn.html" />
-    <Content Include="Static\tests\tests.html" />
     <Content Include="Static\viewModels\appViewModel.js" />
     <Content Include="Static\viewModels\createVolunteerViewModel.js" />
     <Content Include="Static\viewModels\loginViewModel.js" />
