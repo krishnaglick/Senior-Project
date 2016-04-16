@@ -815,6 +815,7 @@
     <Content Include="Static\partials\mainPage.html" />
     <Content Include="Static\partials\menu.html" />
     <Content Include="Static\partials\patronCheckIn.html" />
+    <Content Include="Static\tests\tests.html" />
     <Content Include="Static\viewModels\appViewModel.js" />
     <Content Include="Static\viewModels\createVolunteerViewModel.js" />
     <Content Include="Static\viewModels\loginViewModel.js" />
