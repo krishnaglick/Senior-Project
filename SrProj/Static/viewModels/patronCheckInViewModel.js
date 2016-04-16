@@ -186,19 +186,21 @@ function PatronCheckInViewModel() {
       alert(errors.join('\n'));
   }.bind(this);
 
-  this.clear = function() {
-    for(var key in this) {
-      try {
-        if(this[key].default !== undefined) {
-          this[key](this[key].default);
+  this.clear = () => {
+    if(confirm("Are you sure you want to clear?")) {
+      for(var key in this) {
+        try {
+          if(this[key].default !== undefined) {
+            this[key](this[key].default);
+          }
+        }
+        catch(x) {
+          console.log('Issue with key ', key);
         }
       }
-      catch(x) {
-        console.log('Issue with key ', key);
-      }
+      $('.error').each((i, element) => $(element).removeClass('error'));
     }
-    $('.error').each((i, element) => $(element).removeClass('error'));
-  }.bind(this);
+  };
 
   this.checkIn = function() {
     if(this.banned()) {
