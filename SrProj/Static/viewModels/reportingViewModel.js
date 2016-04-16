@@ -26,9 +26,12 @@ function ReportingViewModel() {
   this.serviceSectionVisible = ko.computed(function() {
     return this.reportingType() === '2';
   }, this);
+  this.hasReport = ko.observable(false);
 
   //Patron Reporting
+  this.id = ko.observable();
   this.firstName = ko.observable();
+  this.middleName = ko.observable();
   this.lastName =  ko.observable();
   this.dateOfBirth =  ko.observable();
 
@@ -45,7 +48,54 @@ function ReportingViewModel() {
     return this.timePeriod() === '2';
   }, this);
 
-  this.getReport = function() {
+  //Patron auto-complete
+  this.foundPatrons = ko.observableArray([]);
+  this.search = ko.observable(true);
+  this.patronSearchData = ko.computed(function() {
+    return {
+      firstName: this.firstName(),
+      middleName: this.middleName(),
+      lastName: this.lastName(),
+      dateOfBirth: this.dateOfBirth()
+    };
+  }, this).extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
+  this.autoComplete = () => {
+    this.hasReport(false);
+    if(!this.firstName() && !this.middleName() && !this.lastName() && !this.dateOfBirth())
+      return;
+
+    let controller = 'Patron';
+    let action = 'FindPatron';
+    if(!this.search()) return;
+
+    app.post(controller, action, ko.toJSON(this.patronSearchData))
+    .success((patrons) => {
+      patrons = patrons.map((patron) => {
+        return {
+          id: patron.id,
+          dateOfBirth: moment(patron.dateOfBirth).format('MM/DD/YYYY'),
+          firstName: patron.firstName,
+          middleName: patron.middleName,
+          lastName: patron.lastName
+        };
+      });
+      this.foundPatrons(patrons || []);
+    });
+  };
+  this.patronSearchData.subscribe(this.autoComplete);
+  this.patronSearchData.subscribe(() => this.search(true));
+  this.fillPatron = (patron) => {
+    this.id(patron.id);
+    this.firstName(patron.firstName);
+    this.middleName(patron.middleName);
+    this.lastName(patron.lastName);
+    this.dateOfBirth(patron.dateOfBirth);
+    setTimeout(() => {
+      this.search(false);
+    }, 600);
+  };
+
+  this.generateReport = () => {
     var validationErrors = this.validate();
     if(validationErrors.length)
       return alert(validationErrors);
@@ -60,48 +110,53 @@ function ReportingViewModel() {
 
     var services = [];
     $('div.ui.fluid.search.dropdown a.ui.label.transition.visible')
-    .each(function(index, element) {
+    .each((index, element) => {
       services.push(parseInt($(element).data('value')));
-      }.bind(this)
-    );
+    });
     //The binding for this doesn't work properly. I need to fix it.
-    this.serviceTypeSelections = app.services().filter(function(service) {
+    this.serviceTypeSelections = app.services().filter((service) => {
       return services.includes(service.id);
     });
     //TODO: Remap this to use this.timePeriod, when it works.
     this.timePeriod($('.ui.timePeriod.dropdown.selection div.item.active.selected').text());
 
     app.post(this.controller, action, ko.toJSON(this))
-      .success(function(data, textStatus, request) {
-        //Export data to CSV.
-      }.bind(this))
-      .error(function(data) {
-        if(data.responseJSON){
-          if(Array.isArray(data.responseJSON) && data.responseJSON.length > 1) {
-            //Aggregate errors
-
-            return;
+      .success((data) => {
+        jsonExport(data, (err, csv) => {
+          if(err)
+            return alert('There was an issue generating the report, please try again or contact your system administrator.');
+          if(csv) {
+            csv = encodeURIComponent(csv);
+            $('#downloadReport').attr('href', `data:text/csv;charset=utf-8,${csv}`);
+            this.hasReport(true);
           }
-          else if(Array.isArray(data.responseJSON) && data.responseJSON.length == 1) {
-            data.responseJSON = data.responseJSON[0];
-          }
-
-          //Handle single error.
-          alert('Phhbt.');
-        }
-        //debugger;
-      }.bind(this));
-  }.bind(this);
+          else
+            alert('No data found!');
+        });
+      })
+      .error((data) => {
+        alert('There was an issue generating the report, please try again or contact your system administrator.');
+      });
+  };
 
   this.clear = function() {
     this.firstName('');
+    this.middleName('');
     this.lastName('');
     this.dateOfBirth('');
     this.startDate('');
     this.endDate('');
-    this.serviceTypeSelections([]);
+    //this.serviceTypeSelections([]);
+    this.hasReport(false);
 
     //timePeriod
     //reportingType
   }.bind(this);
+}
+
+function flatten(obj) {
+  if(typeof obj === 'object') {
+
+  }
+  else if (true) { }
 }

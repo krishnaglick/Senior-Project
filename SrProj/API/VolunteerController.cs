@@ -11,28 +11,60 @@ using SrProj.API.Responses.Errors;
 using Utility.Enum;
 using WebGrease.Css.Extensions;
 using Database = DataAccess.Contexts.Database;
+using System.Collections.Generic;
 
 namespace SrProj.API
 {
+    [AuthorizableController(new[] { RoleID.Admin })]
     public class VolunteerController : ApiController
     {
+        public class CreateVolunteerViewModel : VolunteerViewModel
+        {
+            public string Password { get; set; }
+            public string ConfirmPassword { get; set; }
+        }
+
         [HttpPost]
-        [AuthorizableAction]
-        public HttpResponseMessage CreateVolunteer([FromBody] Volunteer volunteer)
+        public HttpResponseMessage CreateVolunteer([FromBody] CreateVolunteerViewModel volunteer)
         {
             ApiResponse response = new ApiResponse(Request);
 
+            if (volunteer.Password != volunteer.ConfirmPassword) {
+                response.data = new PasswordMismatch();
+                return response.GenerateResponse(HttpStatusCode.BadRequest);
+            }
+
             try
             {
-                volunteer.SecurePassword();
                 using (var dbContext = new Database())
                 {
-                    dbContext.RoleVolunteers.Add(new RoleVolunteer
+                    var roles = dbContext.Roles.Where(r => volunteer.Roles.Contains(r.ID));
+                    var services = dbContext.ServiceTypes.Where(st => volunteer.Services.Contains(st.ID));
+
+                    var newVolunteer = new Volunteer
                     {
-                        Role = dbContext.Roles.First(r => r.ID == (int)RoleID.Volunteer),
-                        Volunteer = volunteer
-                    });
-                    dbContext.Volunteers.Add(volunteer);
+                        FirstName = volunteer.FirstName,
+                        LastName = volunteer.LastName,
+                        Username = volunteer.Username,
+                        Email = volunteer.Email ?? "",
+                        Password = volunteer.Password,
+                        ServiceTypes = new List<ServiceType>()
+                    };
+
+                    roles.ForEach(r => dbContext.RoleVolunteers.Add(
+                        new RoleVolunteer
+                        {
+                            Role = r,
+                            Volunteer = newVolunteer
+                        })
+                    );
+
+                    services.ForEach(s => newVolunteer.ServiceTypes.Add(s));
+
+                    newVolunteer.SecurePassword();
+
+                    dbContext.Volunteers.Add(newVolunteer);
+
                     dbContext.SaveChanges();
 
                     response.data = ApiResponse.DefaultSuccessResponse;
@@ -49,29 +81,50 @@ namespace SrProj.API
         public class VolunteerViewModel
         {
             public string Username { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Email { get; set; }
             public int[] Roles { get; set; }
+            public int[] Services { get; set; }
         }
 
         [HttpPost]
-        [AuthorizableAction]
         public HttpResponseMessage ModifyVolunteer([FromBody] VolunteerViewModel volunteer)
         {
             using (var db = new Database())
             {
                 //Get Volunteer
-                var dbVolunteer = db.Volunteers.FirstOrDefault(v => v.Username == volunteer.Username);
+                var dbVolunteer = db.Volunteers
+                    .Include(v => v.ServiceTypes)
+                    .FirstOrDefault(v => v.Username == volunteer.Username);
                 //Get Roles
                 var dbRoles = db.Roles.Where(r => volunteer.Roles.Contains(r.ID));
                 //Remove all current roles
                 db.RoleVolunteers.Where(rv => rv.Volunteer.Username == volunteer.Username)
                     .ForEach(rv => db.RoleVolunteers.Remove(rv));
+                //Get Services
+                var dbServices = db.ServiceTypes.Where(st => volunteer.Services.Contains(st.ID));
+                //Remove all current services
+                db.Database.ExecuteSqlCommand(
+                    @"DELETE VolunteerServiceType
+                      WHERE Volunteer_Username = @p0" //EF IS AWFUL
+                , volunteer.Username);
 
-                //Associate user to new roles
+                //Associate volunteer to new roles
                 dbRoles.ForEach(r => db.RoleVolunteers.Add(new RoleVolunteer
                 {
                     Role = r,
                     Volunteer = dbVolunteer
                 }));
+                //Associate volunteer to new services
+                dbVolunteer.ServiceTypes.Clear();
+                dbServices.ForEach(s => dbVolunteer.ServiceTypes.Add(s));
+
+                //Set First Name, Last Name, Email
+                dbVolunteer.FirstName = volunteer.FirstName;
+                dbVolunteer.LastName = volunteer.LastName;
+                dbVolunteer.Email = volunteer.Email;
+
                 db.SaveChanges();
 
                 return new ApiResponse(Request)
@@ -83,7 +136,6 @@ namespace SrProj.API
         }
 
         [HttpGet]
-        [AuthorizableAction]
         public HttpResponseMessage GetVolunteers()
         {
             using (var db = new Database())
@@ -95,7 +147,8 @@ namespace SrProj.API
                     firstName = v.FirstName,
                     lastName = v.LastName,
                     email = v.Email,
-                    roles = v.Roles.Select(vr => vr.Role)
+                    roles = v.Roles.Select(vr => vr.Role),
+                    services = v.ServiceTypes.Select(st => st)
                 })
                 .ToList();
 
@@ -111,6 +164,52 @@ namespace SrProj.API
                     response.errors.Add(new NoRecordsFound());
                     return response.GenerateResponse(HttpStatusCode.InternalServerError);
                 }
+            }
+        }
+
+        public class ChangePasswordViewModel
+        {
+            public string Username { get; set; }
+            public string Password { get; set; }
+            public string ConfirmPassword { get; set; }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage ChangePassword(ChangePasswordViewModel volunteer)
+        {
+            using (var db = new Database())
+            {
+                var response = new ApiResponse(Request);
+
+                if (volunteer.Password != volunteer.ConfirmPassword)
+                {
+                    response.errors.Add(new PasswordMismatch());
+                    return response.GenerateResponse(HttpStatusCode.BadRequest);
+                }
+
+                var dbVolunteer = db.Volunteers.FirstOrDefault(v => v.Username == volunteer.Username);
+                if (dbVolunteer == null)
+                {
+                    response.errors.Add(new NoRecordsFound());
+                    return response.GenerateResponse(HttpStatusCode.InternalServerError);
+                }
+                try
+                {
+                    dbVolunteer.Password = volunteer.Password;
+                    dbVolunteer.SecurePassword();
+                    db.Database.ExecuteSqlCommand(@"
+                        UPDATE Volunteer
+                        SET HashedPassword = @p0
+                        WHERE Username = @p1
+                    ", dbVolunteer.HashedPassword, volunteer.Username);
+                }
+                catch (Exception e)
+                {
+                    response.errors.Add(new DatabaseFailure(e));
+                    return response.GenerateResponse(HttpStatusCode.InternalServerError);
+                }
+                response.data = ApiResponse.DefaultSuccessResponse;
+                return response.GenerateResponse(HttpStatusCode.OK);
             }
         }
     }

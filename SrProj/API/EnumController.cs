@@ -23,7 +23,8 @@ namespace SrProj.API
                     Ethnicities = Enum.GetValues(typeof(EthnicityID)).ToList().Select(EnumViewModel.ParseEnum),
                     Genders = Enum.GetValues(typeof(GenderID)).ToList().Select(EnumViewModel.ParseEnum),
                     MaritalStatuses = Enum.GetValues(typeof(MaritalStatusID)).ToList().Select(EnumViewModel.ParseEnum),
-                    ResidenceStatuses = Enum.GetValues(typeof(ResidenceStatusID)).ToList().Select(EnumViewModel.ParseEnum)
+                    ResidenceStatuses = Enum.GetValues(typeof(ResidenceStatusID)).ToList().Select(EnumViewModel.ParseEnum),
+                    roles = Enum.GetValues(typeof(RoleID)).ToList().Select(EnumViewModel.ParseEnum)
                 }
             };
             return response.GenerateResponse(HttpStatusCode.OK);

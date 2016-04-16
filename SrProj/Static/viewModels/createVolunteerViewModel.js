@@ -5,28 +5,31 @@ function CreateVolunteerViewModel() {
   this.username = ko.observable();
   this.password = ko.observable();
   this.confirmPassword = ko.observable();
+  this.roles = ko.observableArray([]);
+  this.services = ko.observableArray([]);
 
   this.controller = 'Volunteer';
 
-  this.clearCredentials = function() {
+  this.clearCredentials = () => {
     this.firstname('');
     this.lastname('');
     this.email('');
     this.username('');
     this.password('');
     this.confirmPassword('');
-  }.bind(this);
+    this.roles([]);
+    this.services([]);
+  };
 
-  this.validate = function() {
+  this.validate = () => {
     var errors = [];
     if(!this.firstname()) {
-            errors.push('\nYou need a First Name!');
+      errors.push('\nYou need a First Name!');
     }
 
     if(!this.lastname()) {
       errors.push('\nYou need a Last Name!');
     }
-
 
     if(!this.username()) {
       errors.push('\nYou need a Username!');
@@ -40,14 +43,35 @@ function CreateVolunteerViewModel() {
       errors.push('\nYour passwords don\'t match!');
     }
 
+    if(!this.roles().length) {
+      errors.push('\nPlease provide at least one role!\n');
+    }
+
+    if(!this.services().length) {
+      errors.push('\nPlease provide at least one service!\n');
+    }
+
     return errors;
-  }.bind(this);
+  };
 
   this.createVolunteer = function() {
+    this.roles([]);
+    this.services([]);
+
+    $('#newVolunteerRoles div.ui.fluid.search.dropdown a.ui.label.transition.visible')
+    .each((index, element) => {
+      this.roles.push(parseInt($(element).data('value')));
+      }
+    );
+    $('#newVolunteerServices div.ui.fluid.search.dropdown a.ui.label.transition.visible')
+    .each((index, element) => {
+      this.services.push(parseInt($(element).data('value')));
+      }
+    );
+
     var validationErrors = this.validate();
     if(validationErrors.length) {
-      alert(validationErrors);
-      return;
+      return alert(validationErrors);
     }
 
     var action = 'CreateVolunteer';

@@ -45,11 +45,15 @@ namespace Models
         public DateTime DateOfBirth { get; set; }
         [FilterableNumber]
         public short HouseholdOccupants { get; set; }
+        [FilterableNumber]
+        public short MinorHouseholdOccupants { get; set; }
         [FilterableBoolean]
         public bool Veteran { get; set; }
 
         [FilterableBoolean]
         public bool Banned { get; set; }
+        [FilterableBoolean]
+        public bool DisabledPatron { get; set; }
 
         [FilterableDropdown]
         public MaritalStatus MaritalStatus { get; set; }

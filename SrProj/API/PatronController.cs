@@ -1,12 +1,13 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using DataAccess.Contexts;
+using Microsoft.Ajax.Utilities;
 using Models;
 using Newtonsoft.Json;
 using SrProj.API.Responses;
@@ -74,10 +75,15 @@ namespace SrProj.API
             public bool NecessaryPaperwork { get; set; }
             public int ServiceSelection { get; set; }
 
-            public MaritalStatusID maritalStatusID => (MaritalStatusID) (this.MaritalStatus?.ID ?? 0);
-            public GenderID genderID => (GenderID) (this.Gender?.ID ?? 0);
-            public EthnicityID ethnicityID => (EthnicityID) (this.Ethnicity?.ID ?? 0);
-            public ResidenceStatusID residenceStatusID => (ResidenceStatusID) (this.ResidenceStatus?.ID ?? 0);
+            public MaritalStatusID maritalStatusID { get; set; }
+            public GenderID genderID { get; set; }
+            public EthnicityID ethnicityID { get; set; }
+            public ResidenceStatusID residenceStatusID { get; set; }
+
+            //Useless Crap
+            public bool Search { get; set; }
+            public string Controller { get; set; }
+
         }
 
         [HttpPost]
