@@ -57,7 +57,8 @@ namespace SrProj.API
         }
         else
         {
-          //throw error
+          response.errors.Add(new InvalidTimePeroid());
+          return response.GenerateResponse(HttpStatusCode.BadRequest);
         }
 
         var serviceTypeIDs = reportingParams.ServiceTypeSelections.Select(st => st.ID).ToList();
