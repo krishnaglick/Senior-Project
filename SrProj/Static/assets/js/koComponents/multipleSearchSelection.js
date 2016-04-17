@@ -21,7 +21,7 @@ ko.components.register('multipleSearchSelection', {
       <div class="default text" data-bind="text: defaultValue"></div>
       <div class="menu transition hidden" tabindex="1" data-bind="foreach: data">
         <div class="item" data-bind="attr: { 'data-value': id }, text: name, css: { 'active filtered':
-        contains($data).bind(typeof $parent.activeSelection === 'function' ? $parent.activeSelection() : $parent.activeSelection)} "></div>
+        contains.call(typeof $parent.activeSelection === 'function' ? $parent.activeSelection() : $parent.activeSelection, $data) }"></div>
       </div>
     </div>`,
     synchronous: true

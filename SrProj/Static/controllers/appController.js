@@ -107,6 +107,8 @@ $(function() {
           });
           $('.ui.dropdown.component')
           .dropdown();
+          $('.dateField').mask('00/00/0000');
+          $('.zipField').mask('00000-0000');
         }
       },
 

@@ -39,22 +39,56 @@ namespace SrProj.API
                     reportingParams.StartDate = DateTime.UtcNow.AbsoluteStart();
                     reportingParams.EndDate = DateTime.UtcNow.AbsoluteEnd();
                 }
+                else if (reportingParams.TimePeriod == "Specific Date")
+                {
+                    reportingParams.StartDate = reportingParams.StartDate.ToUniversalTime().AbsoluteStart();
+                    reportingParams.EndDate = reportingParams.StartDate.ToUniversalTime().AbsoluteEnd();
+                }
+                else if (reportingParams.TimePeriod == "Date Range")
+                {
+                    reportingParams.StartDate = reportingParams.StartDate.ToUniversalTime().AbsoluteStart();
+                    reportingParams.EndDate = reportingParams.EndDate.ToUniversalTime().AbsoluteEnd();
+                }
+                else if (reportingParams.TimePeriod == "All Time")
+                {
+                    reportingParams.StartDate = DateTime.MinValue;
+                    reportingParams.EndDate = DateTime.MaxValue;
+                }
+                else
+                {
+                    //throw error
+                }
 
                 var serviceTypeIDs = reportingParams.ServiceTypeSelections.Select(st => st.ID).ToList();
+                List<Visit> potato;
 
-                var potato = db.Visits
+                if (reportingParams.AndSearch)
+                {
+                   /* potato = db.Visits
+                        .Include(v => v.Service)
+                        .Include(v => v.Patron)
+                        .Where(v => 
+                            v.Service.ID
+                        )*/
+                }
+
+                potato = db.Visits
                     .Include(v => v.Service)
                     .Include(v => v.Patron)
                     .Where(
                     v => serviceTypeIDs.Contains(v.Service.ID)
-                        && (v.CreateDate >= reportingParams.StartDate && v.CreateDate < reportingParams.EndDate)
+                        && (v.CreateDate >= reportingParams.StartDate && v.CreateDate <= reportingParams.EndDate)
                 //&& reportingParams.ZipCode == 0 || (reportingParams.ZipCode > 0 && v.Patron.Addresses.FirstOrDefault(a => a.Zip == reportingParams.ZipCode.ToString()) != null)
-                );
+                ).ToList();
+
+
 
                 response.data = potato;
 
                 return response.GenerateResponse(HttpStatusCode.OK);
             }
+
+
         }
 
         public class ReportingPatronViewModel
