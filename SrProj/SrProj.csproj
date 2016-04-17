@@ -141,6 +141,7 @@
     <Compile Include="API\LoginController.cs" />
     <Compile Include="API\EnumController.cs" />
     <Compile Include="API\ReportingController.cs" />
+    <Compile Include="API\Responses\Errors\InvalidTimePeroid.cs" />
     <Compile Include="API\Responses\Errors\DatabaseFailure.cs" />
     <Compile Include="API\Responses\Errors\NullRequest.cs" />
     <Compile Include="API\Responses\Errors\InvalidCheckIn.cs" />
