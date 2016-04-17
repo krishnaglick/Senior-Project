@@ -218,7 +218,8 @@ function PatronCheckInViewModel() {
       this.clear();
     }.bind(this))
     .error(function() {
-      alert('There was a problem checking the patron in. Please try again later!');
+      if(app.authToken())
+        alert('There was a problem checking the patron in. Please try again later!');
     }.bind(this));
   }.bind(this);
 }

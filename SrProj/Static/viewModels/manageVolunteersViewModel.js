@@ -65,10 +65,11 @@ function ManageVolunteersViewModel() {
 
     app.post(this.controller, action, ko.toJSON(this.targetVolunteer))
     .success(function() {
-      alert('success!');
+      alert('Volunteer successfully modified!');
     }.bind(this))
     .error(function() {
-      alert('error');
+      if(app.authToken())
+        alert('There was an issue modifying the volunteer!');
     }.bind(this));
   }.bind(this);
 
@@ -110,7 +111,8 @@ function ManageVolunteersViewModel() {
       alert('Password Changed Successfully');
     })
     .error(() => {
-      alert('Unable to change password, plese try again later!');
+      if(app.authToken())
+        alert('Unable to change password, plese try again later!');
     });
   };
 

@@ -80,19 +80,8 @@ function CreateVolunteerViewModel() {
       alert('User Created!');
     }.bind(this))
     .error(function(data) {
-      if(data.responseJSON){
-        if(Array.isArray(data.responseJSON) && data.responseJSON.length > 1) {
-          //Aggregate errors
-
-          return;
-        }
-        else if(Array.isArray(data.responseJSON) && data.responseJSON.length == 1) {
-          data.responseJSON = data.responseJSON[0];
-        }
-
-        //Handle single error.
+      if(app.authToken())
         alert('Invalid username or password.');
-      }
     }.bind(this));
   }.bind(this);
 }

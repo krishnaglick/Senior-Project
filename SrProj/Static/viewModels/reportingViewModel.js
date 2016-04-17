@@ -135,7 +135,8 @@ function ReportingViewModel() {
         });
       })
       .error((data) => {
-        alert('There was an issue generating the report, please try again or contact your system administrator.');
+        if(app.authToken())
+          alert('There was an issue generating the report, please try again or contact your system administrator.');
       });
   };
 

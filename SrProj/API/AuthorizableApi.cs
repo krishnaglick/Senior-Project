@@ -39,7 +39,7 @@ namespace SrProj.API
       if (authResult != AuthorizationResult.Success)
       {
         if (authResult == AuthorizationResult.MismatchedUser || authResult == AuthorizationResult.ExpiredToken ||
-            authResult == AuthorizationResult.InvalidRequest)
+            authResult == AuthorizationResult.InvalidRequest || authResult == AuthorizationResult.InvalidToken)
         {
           response.errors.Add(new InvalidToken());
         }
@@ -51,7 +51,7 @@ namespace SrProj.API
         //return invalid token
         actionContext.Response = response.GenerateResponse(HttpStatusCode.Forbidden, new Dictionary<string, string>
         {
-            { "authToken", "" }
+            { "authToken", "-1" }
         });
       }
       else

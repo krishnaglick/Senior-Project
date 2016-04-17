@@ -63,6 +63,13 @@ function App() {
           if(authToken)
             app.authToken(authToken);
         }.bind(this),
+        error: function(error) {
+          if(~~error.getResponseHeader('authToken') === -1) {
+            //app.authToken('');
+            alert('Your session has expired, please login again!');
+            return app.logout();
+          }
+        },
         complete: function() {
           this.actionEnd();
         }.bind(this)
@@ -75,6 +82,7 @@ function App() {
     return $.ajax({
         type: 'GET',
         dataType: 'JSON',
+        url: this.apiBase + '/' + controller + '/' + action,
         contentType: "application/json",
         headers: this.headers(),
         success: function(data, textStatus, request) {
@@ -82,7 +90,13 @@ function App() {
           if(authToken)
             app.authToken(authToken);
         }.bind(this),
-        url: this.apiBase + '/' + controller + '/' + action,
+        error: function(error) {
+          if(~~error.getResponseHeader('authToken') === -1) {
+            //app.authToken('');
+            alert('Your session has expired, please login again!');
+            return app.logout();
+          }
+        },
         complete: function() {
           this.actionEnd();
         }.bind(this)
