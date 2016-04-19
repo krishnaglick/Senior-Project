@@ -83,7 +83,7 @@ function PatronCheckInViewModel() {
     this.addresses.default = [ new Address() ];
   this.addAddress = function() {
     this.addresses.push(new Address());
-    $('.zipField').mask('00000-0000');
+    setTimeout(() => $('.zipField').mask('00000-0000'), 50);
   }.bind(this);
   this.removeAddress = function(address) {
     //Confirm Alert
@@ -94,7 +94,7 @@ function PatronCheckInViewModel() {
     this.phoneNumbers.default = [ new PhoneNumber() ];
   this.addPhoneNumber = function() {
     this.phoneNumbers.push('');
-    $('.phoneField').mask('000-000-0000');
+    setTimeout(() => $('.phoneField').mask('000-000-0000'), 50);
   }.bind(this);
   this.removePhoneNumber = function(phoneNumber) {
     //Confirm Alert
@@ -105,7 +105,7 @@ function PatronCheckInViewModel() {
     this.emergencyContacts.default = [ new EmergencyContact() ];
   this.addEmergencyContact = function() {
     this.emergencyContacts.push(new EmergencyContact());
-    $('.phoneField').mask('000-000-0000');
+    setTimeout(() => $('.phoneField').mask('000-000-0000'), 50);
   }.bind(this);
   this.removeEmergencyContact = function(emergencyContact) {
     //Confirm Alert
@@ -178,16 +178,20 @@ function PatronCheckInViewModel() {
   }.bind(this);
   //End Patron Searching Functionality
 
-  this.showCheckInModal = function () {
+  this.showCheckInModal = () => {
+    if(app.services().length === 1)
+      this.serviceSelection(app.services()[0].id);
+    this.servicesUsed = ko.observableArray(this.servicesUsed.default);
+
     var errors = this.validate();
     if(!errors.length)
       $('.ui.modal.patronCheckIn').modal('show');
     else
       alert(errors.join('\n'));
-  }.bind(this);
+  };
 
-  this.clear = () => {
-    if(confirm("Are you sure you want to clear?")) {
+  this.clear = (hideConfirm) => {
+    if(hideConfirm || confirm("Are you sure you want to clear?")) {
       for(var key in this) {
         try {
           if(this[key].default !== undefined) {
@@ -208,14 +212,11 @@ function PatronCheckInViewModel() {
       if(!allowBanned) return $('.ui.modal').modal('hide');
     }
     var action = 'CheckIn';
-    if(app.services().length === 1)
-      this.serviceSelection(app.services()[0].id);
-    this.servicesUsed = ko.observableArray(this.servicesUsed.default);
 
     app.post(this.controller, action, ko.toJSON(this))
     .success(function(data, textStatus, request) {
       alert('Patron Checked In Successfully!');
-      this.clear();
+      this.clear(true);
     }.bind(this))
     .error(function() {
       if(app.authToken())

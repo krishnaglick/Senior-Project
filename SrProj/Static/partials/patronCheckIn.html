@@ -94,8 +94,8 @@
       <div class="fields">
         <div class="field banned">
           <label>Banned</label>
-          <div class="ui checkbox">
-            <input type="checkbox" data-bind="checked: banned">
+          <div class="ui checkbox" data-bind="css: { disabled: !app.isAdmin() }">
+            <input type="checkbox" data-bind="checked: banned, attr: { disabled: !app.isAdmin() }">
             <label>Banned</label>
           </div>
         </div>

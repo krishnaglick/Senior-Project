@@ -8,10 +8,16 @@ ko.components.register(`phoneNumbers`, {
       Add A Phone Number
     </button>
     <!-- ko foreach: data -->
-    <div class="field phoneNumber">
-      <div class="ui icon input close">
-        <input type="text" class="phoneField" placeholder="XXX-XXX-XXXX" data-bind="textInput: phoneNumber" />
-        <i class="clickable link close icon" data-bind="click: $root.removePhoneNumber"></i>
+    <div class="two fields phoneNumber">
+      <div class="field">
+        <div class="ui input">
+          <input type="text" class="phoneField" placeholder="XXX-XXX-XXXX" data-bind="textInput: $data" />
+        </div>
+      </div>
+      <div class="field">
+        <button class="circular red ui icon button" data-bind="click: $root.removePhoneNumber">
+          <i class="close icon"></i>
+        </button>
       </div>
     </div>
     <!-- /ko -->`,

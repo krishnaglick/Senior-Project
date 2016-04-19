@@ -54,15 +54,6 @@ namespace SrProj.API
             { "authToken", "-1" }
         });
       }
-      else
-      {
-        //refresh token
-        string activeUser = actionContext.Request.Headers.GetHeaderValue("username");
-        actionContext.Response = response.GenerateResponse(HttpStatusCode.OK, new Dictionary<string, string>
-        {
-            { "authToken", Authorization.GenerateToken(activeUser) }
-        });
-      }
 
       base.OnAuthorization(actionContext);
     }
