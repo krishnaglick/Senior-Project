@@ -142,7 +142,7 @@
     </div>
   </div>
 
-  <div class="patronSearchSelection" data-bind="visible: foundPatrons().length > 0 && search()">
+  <div class="patronSearchSelection" data-bind="if: foundPatrons().length > 0 && search()">
     <div class="ui form segment" data-bind="foreach: foundPatrons">
       <div class="clickable ui fields" data-bind="click: $root.fillPatron">
         <div class="field" data-bind="text: firstName"></div>
