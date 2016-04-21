@@ -93,7 +93,7 @@ function PatronCheckInViewModel() {
   this.phoneNumbers = ko.observableArray([ new PhoneNumber() ]);
     this.phoneNumbers.default = [ new PhoneNumber() ];
   this.addPhoneNumber = function() {
-    this.phoneNumbers.push('');
+    this.phoneNumbers.push(new PhoneNumber());
     setTimeout(() => $('.phoneField').mask('000-000-0000'), 50);
   }.bind(this);
   this.removePhoneNumber = function(phoneNumber) {

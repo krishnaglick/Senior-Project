@@ -11,7 +11,7 @@ ko.components.register(`phoneNumbers`, {
     <div class="two fields phoneNumber">
       <div class="field">
         <div class="ui input">
-          <input type="text" class="phoneField" placeholder="XXX-XXX-XXXX" data-bind="textInput: $data" />
+          <input type="text" class="phoneField" placeholder="XXX-XXX-XXXX" data-bind="textInput: phoneNumber" />
         </div>
       </div>
       <div class="field">
