@@ -55,7 +55,7 @@ namespace SrProj.API
                         .Include(p => p.EmergencyContacts)
                         .Include(p => p.PhoneNumbers)
                         .Include(p => p.Addresses)
-                        .Include(p => p.ServicesUsed.Select(su => su.ServiceType))
+                        .Include(p => p.Visits.Select(v => v.Service))
                     .ToList();
 
                     response.data = patrons;
@@ -115,10 +115,10 @@ namespace SrProj.API
                         CreateVolunteer = volunteer,
                         Service = serviceType,
                         Patron = database.Patrons.FirstOrDefault(p =>
-                            p.FirstName == checkIn.FirstName &&
-                            p.LastName == checkIn.LastName &&
-                            p.MiddleName == checkIn.MiddleName &&
-                            p.DateOfBirth == checkIn.DateOfBirth
+                            p.FirstName == upwardCasting.FirstName &&
+                            p.LastName == upwardCasting.LastName &&
+                            p.MiddleName == upwardCasting.MiddleName &&
+                            p.DateOfBirth == upwardCasting.DateOfBirth
                         )
                     };
                     database.Visits.Add(visit);

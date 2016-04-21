@@ -79,7 +79,6 @@
     <Compile Include="TestData\Enums.cs" />
     <Compile Include="TestData\Patrons.cs" />
     <Compile Include="TestData\PhoneNumberGenerator.cs" />
-    <Compile Include="TestData\ServiceGenerator.cs" />
     <Compile Include="TestData\Visits.cs" />
     <Compile Include="TestData\VolunteerRoles.cs" />
     <Compile Include="TestData\TestVolunteers.cs" />

@@ -70,7 +70,7 @@ namespace SrProj.API
           v.CreateDate >= reportingParams.StartDate && v.CreateDate <= reportingParams.EndDate &&
           !string.IsNullOrEmpty(reportingParams.ZipCode) ? v.Patron.Addresses.Count(a => a.Zip == reportingParams.ZipCode) > 0 : true &&
           serviceTypeIDs.Contains(v.Service.ID) &&
-          reportingParams.AndSearch ? v.Patron.ServicesUsed.Select(s => s.ID).ToList().Intersect(serviceTypeIDs).Count() == serviceTypeIDs.Count() && serviceTypeIDs.Contains(v.Service.ID) : true
+          reportingParams.AndSearch ? v.Patron.Visits.Select(s => s.ID).ToList().Intersect(serviceTypeIDs).Count() == serviceTypeIDs.Count() && serviceTypeIDs.Contains(v.Service.ID) : true
         ).ToList();
 
         response.data = report;
@@ -94,10 +94,10 @@ namespace SrProj.API
         try
         {
           var servicesWanted = reportingParams.ServiceTypeSelections.Select(st => st.ID).ToArray();
-          var services = db.ServiceEligibilities
-            .Include(se => se.Patron)
-            .Include(se => se.ServiceType)
-            .Where(se => se.Patron.ID == reportingParams.ID && servicesWanted.Contains(se.ServiceType.ID))
+          var services = db.Visits
+            .Include(v => v.Patron)
+            .Include(v => v.Service.ID)
+            .Where(v => v.Patron.ID == reportingParams.ID && servicesWanted.Contains(v.Service.ID))
             .ToList();
 
           response.data = services;

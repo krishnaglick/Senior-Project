@@ -7,23 +7,22 @@ function PatronCheckInViewModel() {
   this.search = ko.observable(true);
     this.search.default = true;
   this.serviceSelection = ko.observable();
-  this.servicesUsed = ko.observableArray([]);
-    this.servicesUsed.default = [];
+  this.visits = ko.observableArray([]);
+    this.visits.default = [];
 
   this.paperworkPreviouslyValidated = function() {
     function getDays(millisec) {
       var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
       return days;
     }
-    if(this.neccessaryPaperwork()) return;
-    if(!this.servicesUsed().length || !this.serviceSelection()) return;
-    this.servicesUsed().forEach(function(service) {
-      var serviceTypeID = service.serviceType.id;
+    if(!this.visits().length || !this.serviceSelection()) return;
+    this.visits().forEach(function(service) {
+      var serviceTypeID = service.service.id;
       var medicalID = 4;
       var dentalID = 5;
       if(~~this.serviceSelection() === serviceTypeID) {
         var serviceUsedDate = new Date(service.createDate);
-        let now = Date.now();
+        let now = Date.now().getFullYear ? Date.now() : new Date();
         if(serviceTypeID === medicalID || serviceTypeID === dentalID) {
           //If user has visited this year
           if(now.getFullYear() === serviceUsedDate.getFullYear())
@@ -181,7 +180,7 @@ function PatronCheckInViewModel() {
   this.showCheckInModal = () => {
     if(app.services().length === 1)
       this.serviceSelection(app.services()[0].id);
-    this.servicesUsed = ko.observableArray(this.servicesUsed.default);
+    this.visits = ko.observableArray(this.visits.default);
 
     var errors = this.validate();
     if(!errors.length)

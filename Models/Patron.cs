@@ -67,6 +67,6 @@ namespace Models
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }
-        public virtual ICollection<ServiceEligibility> ServicesUsed { get; set; }
+        public virtual ICollection<Visit> Visits { get; set; }
     }
 }
