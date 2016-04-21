@@ -203,6 +203,7 @@ function PatronCheckInViewModel() {
         }
       }
       $('.error').each((i, element) => $(element).removeClass('error'));
+      $('.ui.dropdown.selection').dropdown('clear');
     }
   };
 
