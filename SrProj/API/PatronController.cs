@@ -72,6 +72,7 @@ namespace SrProj.API
 
         public class PatronViewModel : Patron
         {
+            public int ID { get; set; }
             public bool NecessaryPaperwork { get; set; }
             public int ServiceSelection { get; set; }
 
@@ -102,24 +103,39 @@ namespace SrProj.API
                     var volunteerName = Request.Headers.GetHeaderValue("username");
                     var volunteer = database.Volunteers.FirstOrDefault(v => v.Username == volunteerName);
                     var serviceType = database.ServiceTypes.FirstOrDefault(st => st.ID == checkIn.ServiceSelection);
-                    var upwardCasting = JsonConvert.DeserializeObject<Patron>(JsonConvert.SerializeObject(checkIn)); //You can move values up an inheritance chain!
-                    upwardCasting.Ethnicity = database.Ethnicities.FirstOrDefault(et => et.ID == (int)checkIn.ethnicityID);
-                    upwardCasting.Gender = database.Genders.FirstOrDefault(gt => gt.ID == (int)checkIn.genderID);
-                    upwardCasting.ResidenceStatus = database.ResidenceStatuses.FirstOrDefault(rt => rt.ID == (int)checkIn.residenceStatusID);
-                    upwardCasting.MaritalStatus = database.MaritalStatuses.FirstOrDefault(mt => mt.ID == (int)checkIn.maritalStatusID);
+                    Patron patron;
+                    if (checkIn.ID > -1)
+                    {
+                        patron = database.Patrons
+                            .Include(p => p.Gender)
+                            .Include(p => p.Addresses)
+                            .Include(p => p.EmergencyContacts)
+                            .Include(p => p.Ethnicity)
+                            .Include(p => p.MaritalStatus)
+                            .Include(p => p.PhoneNumbers)
+                            .Include(p => p.ResidenceStatus)
+                            .First(p => p.ID == checkIn.ID);
+                    }
+                    else
+                    {
+                        patron = JsonConvert.DeserializeObject<Patron>(JsonConvert.SerializeObject(checkIn)); //You can move values up an inheritance chain!
+                    }
+                    patron.Ethnicity = database.Ethnicities.FirstOrDefault(et => et.ID == (int)checkIn.ethnicityID);
+                    patron.Gender = database.Genders.FirstOrDefault(gt => gt.ID == (int)checkIn.genderID);
+                    patron.ResidenceStatus = database.ResidenceStatuses.FirstOrDefault(rt => rt.ID == (int)checkIn.residenceStatusID);
+                    patron.MaritalStatus = database.MaritalStatuses.FirstOrDefault(mt => mt.ID == (int)checkIn.maritalStatusID);
+                    patron.Addresses = checkIn.Addresses;
+                    patron.EmergencyContacts = checkIn.EmergencyContacts;
+                    patron.PhoneNumbers = checkIn.PhoneNumbers;
+                    
 
-                    database.Patrons.AddOrUpdate(upwardCasting);
+                    database.Patrons.AddOrUpdate(patron);
                     database.SaveChanges();
                     Visit visit = new Visit
                     {
                         CreateVolunteer = volunteer,
                         Service = serviceType,
-                        Patron = database.Patrons.FirstOrDefault(p =>
-                            p.FirstName == upwardCasting.FirstName &&
-                            p.LastName == upwardCasting.LastName &&
-                            p.MiddleName == upwardCasting.MiddleName &&
-                            p.DateOfBirth == upwardCasting.DateOfBirth
-                        )
+                        Patron = patron
                     };
                     database.Visits.Add(visit);
                     database.SaveChanges();
