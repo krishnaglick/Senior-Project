@@ -59,10 +59,12 @@
         </div>
         <div class="fields" data-bind="visible: canSelectTimePeriod">
           <div class="field">
-            <input type="text" class="dateField" data-bind="textInput: startDate" />
+            <label data-bind="text: firstDateFieldLabel"></label>
+            <input type="text" class="dateField" data-bind="textInput: startDate" placeholder="XX/XX/XXXX" />
           </div>
           <div class="field">
-            <input type="text" class="dateField" data-bind="textInput: endDate, visible: timePeriodSelectIsDateRange" />
+            <label data-bind="text: secondDateFieldLabel"></label>
+            <input type="text" class="dateField" data-bind="textInput: endDate, visible: timePeriodSelectIsDateRange" placeholder="XX/XX/XXXX" />
           </div>
         </div>
       </div>

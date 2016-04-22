@@ -11,6 +11,8 @@ using Utility.ExtensionMethod;
 using System.Data.Entity;
 using SrProj.API.Responses.Errors;
 using Database = DataAccess.Contexts.Database;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 
 namespace SrProj.API
 {
@@ -63,15 +65,35 @@ namespace SrProj.API
 
         var serviceTypeIDs = reportingParams.ServiceTypeSelections.Select(st => st.ID).ToList();
 
-        List<Visit> report = db.Visits
+        var report = db.Visits
         .Include(v => v.Service)
         .Include(v => v.Patron)
+        .Include(v => v.Patron.ResidenceStatus)
+        .Include(v => v.Patron.MaritalStatus)
+        .Include(v => v.Patron.Gender)
+        .Include(v => v.Patron.Ethnicity)
+        .Include(v => v.Patron.Addresses)
+        .Include(v => v.CreateVolunteer)
         .Where(v =>
           v.CreateDate >= reportingParams.StartDate && v.CreateDate <= reportingParams.EndDate &&
-          !string.IsNullOrEmpty(reportingParams.ZipCode) ? v.Patron.Addresses.Count(a => a.Zip == reportingParams.ZipCode) > 0 : true &&
-          serviceTypeIDs.Contains(v.Service.ID) &&
-          reportingParams.AndSearch ? v.Patron.Visits.Select(s => s.ID).ToList().Intersect(serviceTypeIDs).Count() == serviceTypeIDs.Count() && serviceTypeIDs.Contains(v.Service.ID) : true
-        ).ToList();
+          !string.IsNullOrEmpty(reportingParams.ZipCode) ? v.Patron.Addresses.Count(a => a.Zip.Contains(reportingParams.ZipCode) || reportingParams.ZipCode.Contains(a.Zip)) > 0 : true &&
+          serviceTypeIDs.Contains(v.Service.ID)
+        ).ToList()
+        .Select(v => new
+        {
+          VisitDate = v.CreateDate,
+          VolunteerLastName = v.CreateVolunteer.FirstName,
+          VolunteerFirstName = v.CreateVolunteer.LastName,
+          PatronFirstName = v.Patron.FirstName,
+          PatronMiddleName = v.Patron.MiddleName,
+          PatronLastName = v.Patron.LastName,
+          Service = v.Service.ServiceName,
+          MaritalStatus = v.Patron.MaritalStatus.Name,
+          Gender = v.Patron.Gender.Name,
+          Ethnicity = v.Patron.Ethnicity.Name,
+          Addresses =  string.Join(" | ", v.Patron.Addresses.Select(a => $"{a.StreetAddress} {a.City} {a.State} {a.Zip}"))
+        });
+
 
         response.data = report;
 

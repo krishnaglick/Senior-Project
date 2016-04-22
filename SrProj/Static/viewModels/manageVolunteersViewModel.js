@@ -30,6 +30,8 @@ function ManageVolunteersViewModel() {
       this.volunteers(
         data.volunteers.map(function(volunteer) {
           volunteer.roles = this.parseVolunteerRoles(volunteer.roles);
+          volunteer.password = ko.observable();
+          volunteer.confirmPassword = ko.observable();
           return volunteer;
         }.bind(this))
       );
@@ -118,8 +120,8 @@ function ManageVolunteersViewModel() {
 
   this.editPassword = (data, event) => {
     data.fullName = data.firstName + ' ' + data.lastName;
-    data.password = ko.observable();
-    data.confirmPassword = ko.observable();
+    data.password('');
+    data.confirmPassword('');
     this.targetVolunteer(data);
     $('#changePassword').modal('show');
   };

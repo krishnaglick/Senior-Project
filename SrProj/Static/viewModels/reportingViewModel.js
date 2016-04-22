@@ -47,6 +47,18 @@ function ReportingViewModel() {
   this.timePeriodSelectIsDateRange = ko.computed(function() {
     return this.timePeriod() === '2';
   }, this);
+  this.firstDateFieldLabel = ko.computed(function() {
+    let tp = this.timePeriod();
+    if(tp == 1)
+      return 'What Day?';
+    if(tp == 2)
+      return 'Start Date';
+  }, this);
+  this.secondDateFieldLabel = ko.computed(function() {
+    let tp = this.timePeriod();
+    if(tp == 2)
+      return 'End Date';
+  }, this);
 
   //Patron auto-complete
   this.foundPatrons = ko.observableArray([]);
@@ -117,7 +129,7 @@ function ReportingViewModel() {
     this.serviceTypeSelections = app.services().filter((service) => {
       return services.includes(service.id);
     });
-    //TODO: Remap this to use this.timePeriod, when it works.
+
     this.timePeriod($('.ui.timePeriod.dropdown.selection div.item.active.selected').text());
 
     app.post(this.controller, action, ko.toJSON(this))
