@@ -115,6 +115,9 @@ namespace SrProj.API
                             .Include(p => p.PhoneNumbers)
                             .Include(p => p.ResidenceStatus)
                             .First(p => p.ID == checkIn.ID);
+                        patron.Addresses = checkIn.Addresses;
+                        patron.EmergencyContacts = checkIn.EmergencyContacts;
+                        patron.PhoneNumbers = checkIn.PhoneNumbers;
                     }
                     else
                     {
@@ -124,9 +127,6 @@ namespace SrProj.API
                     patron.Gender = database.Genders.FirstOrDefault(gt => gt.ID == (int)checkIn.genderID);
                     patron.ResidenceStatus = database.ResidenceStatuses.FirstOrDefault(rt => rt.ID == (int)checkIn.residenceStatusID);
                     patron.MaritalStatus = database.MaritalStatuses.FirstOrDefault(mt => mt.ID == (int)checkIn.maritalStatusID);
-                    patron.Addresses = checkIn.Addresses;
-                    patron.EmergencyContacts = checkIn.EmergencyContacts;
-                    patron.PhoneNumbers = checkIn.PhoneNumbers;
                     
 
                     database.Patrons.AddOrUpdate(patron);
