@@ -1,3 +1,73 @@
+
+body.pushable {
+  background: white none repeat scroll 0 0 !important;
+}
+
 .centeredText {
   text-align: center !important;
+}
+
+.address {
+  width: 500px;
+}
+
+.topMargin {
+  margin-top: 5% !important;
+}
+
+.halfTopMargin {
+  margin-top: 2% !important;
+}
+
+.leftMargin {
+  margin-left: 15% !important;
+}
+
+.noTopMargin {
+  margin-top: 0px !important;
+}
+
+.rightAligned {
+  text-align: right;
+}
+
+div#logIn{
+ padding-top:50%;
+}
+
+.bold {
+  font-weight: bold !important;
+}
+
+.patronSearchSelection, .reportingPatronSearch {
+  float: right;
+  position: fixed;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  background-color: grey;
+  opacity: 0.8;
+}
+
+.paginationButtons {
+  margin-top: 20px !important;
+}
+
+em {
+    opacity: 0.7;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.transparent {
+  background-image: none !important;
+  background-color: transparent !important;
 }

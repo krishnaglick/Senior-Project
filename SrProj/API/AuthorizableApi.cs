@@ -1,6 +1,6 @@
 ﻿
 using System;
-using System.Data.Entity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,78 +8,110 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using SrProj.API.Responses;
 using SrProj.API.Responses.Errors;
-using SrProj.Utility.Enum;
-using SrProj.Utility.ExtensionMethod;
-using Database = SrProj.Models.Context.Database;
+using Utility.Enum;
+using Utility.ExtensionMethod;
+using Database = DataAccess.Contexts.Database;
+using System.Data.Entity;
 
 namespace SrProj.API
 {
-    internal sealed class AuthorizationOptions
+  internal sealed class AuthorizationOptions
+  {
+    public static readonly RoleID[] DefaultAuthRoles = { RoleID.Admin };
+    public static readonly int AuthTokenTimeout = 480; //In Minutes
+  }
+
+  [AttributeUsage(AttributeTargets.Class)]
+  public class AuthorizableController : AuthorizationFilterAttribute
+  {
+    public RoleID[] DefaultAuthRoles;
+    public AuthorizableController(RoleID[] roles = null)
     {
-        public static readonly RoleID[] DefaultAuthRoles = { RoleID.Admin };
-        public static readonly int AuthTokenTimeout = 15; //In Minutes
+      this.DefaultAuthRoles = roles ?? AuthorizationOptions.DefaultAuthRoles;
     }
 
-    [AttributeUsage(AttributeTargets.Class)]
-    public class AuthorizableController : AuthorizationFilterAttribute
+    public override void OnAuthorization(HttpActionContext actionContext)
     {
-        public RoleID[] DefaultAuthRoles;
-        public AuthorizableController(RoleID[] roles = null)
+      base.OnAuthorization(actionContext);
+
+      var authResult = AuthorizationActions.Authorize(actionContext.Request, this.DefaultAuthRoles);
+      ApiResponse response = new ApiResponse(actionContext.Request);
+      if (authResult != AuthorizationResult.Success)
+      {
+        if (authResult == AuthorizationResult.MismatchedUser || authResult == AuthorizationResult.ExpiredToken ||
+            authResult == AuthorizationResult.InvalidRequest || authResult == AuthorizationResult.InvalidToken)
         {
-            this.DefaultAuthRoles = roles ?? AuthorizationOptions.DefaultAuthRoles;
+          response.errors.Add(new InvalidToken());
+        }
+        else if (authResult == AuthorizationResult.Unauthorized)
+        {
+          response.errors.Add(new NoAccess());
         }
 
-        public override void OnAuthorization(HttpActionContext actionContext)
+        //return invalid token
+        actionContext.Response = response.GenerateResponse(HttpStatusCode.Forbidden, new Dictionary<string, string>
         {
-            var isAuthorized = AuthorizationActions.Authorize(actionContext.Request, this.DefaultAuthRoles);
-            if(!isAuthorized)
-            {
-                ApiResponse response = new ApiResponse(actionContext.Request);
-                response.errors.Add(new NoAccess());
-                actionContext.Response = response.GenerateResponse(HttpStatusCode.Forbidden);
-            }
+            { "authToken", "-1" }
+        });
+      }
 
-            base.OnAuthorization(actionContext);
-        }
+      base.OnAuthorization(actionContext);
     }
-    
-    [AttributeUsage(AttributeTargets.Method)]
-    public class AuthorizableAction : AuthorizableController { }
+  }
 
-    internal static class AuthorizationActions
+  [AttributeUsage(AttributeTargets.Method)]
+  public class AuthorizableAction : AuthorizableController { }
+
+  public enum AuthorizationResult
+  {
+    Success = 0,
+
+    MismatchedUser = 1,
+
+    Unauthorized = 2,
+
+    ExpiredToken = 3,
+
+    InvalidRequest = 4,
+
+    InvalidToken = 5
+  }
+
+  internal static class AuthorizationActions
+  {
+    public static AuthorizationResult Authorize(HttpRequestMessage request, RoleID[] roles)
     {
-        public static bool Authorize(HttpRequestMessage request, RoleID[] roles)
+      string authToken = request.Headers.GetHeaderValue("authToken");
+      string activeUser = request.Headers.GetHeaderValue("username");
+
+      if (!string.IsNullOrEmpty(authToken) && !string.IsNullOrEmpty(activeUser))
+      {
+        using (var database = new Database())
         {
-            string authToken = request.Headers.GetHeaderValue("authToken");
-            string activeUser = request.Headers.GetHeaderValue("username");
+          var decodedAuthToken = Authorization.DecodeToken(authToken);
+          if (decodedAuthToken == null)
+            return AuthorizationResult.InvalidToken;
 
-            if (!string.IsNullOrEmpty(authToken) && !string.IsNullOrEmpty(activeUser))
-            {
-                var database = new Database();
-                var session =
-                    database.AuthenticationTokens.Include(at => at.AssociatedVolunteer).Include(at => at.AssociatedVolunteer.Roles)
-                    .FirstOrDefault(at => at.Token.ToString() == authToken);
+          if (decodedAuthToken.username != activeUser)
+            return AuthorizationResult.MismatchedUser;
 
-                if (session == null) return false;
+          if (decodedAuthToken.timeDiff > AuthorizationOptions.AuthTokenTimeout)
+            return AuthorizationResult.ExpiredToken;
 
-                int[] roleIDs = roles.Select(r => (int) r).ToArray();
-                var lastAccessedTime = session.LastAccessedTime;
-                //I have to do this so the auth token gets updated in the DB. Probably worth switching up what I'm doing here.
-                database.SaveChanges();
+          //Valid token, need to check roles
+          var dbRoles = database.RoleVolunteers
+              .Where(rv => rv.Volunteer.Username == activeUser)
+              .Include(rv => rv.Volunteer)
+              .Select(rv => rv.Role.ID).ToArray();
 
-                var matchingRoles = session.AssociatedVolunteer.Roles.Where(r => roleIDs.Contains(r.ID)).ToList();
+          if (roles.Select(r => (int)r).Intersect(dbRoles).Count() == roles.Length)
+            return AuthorizationResult.Success;
 
-                if (session.AssociatedVolunteer.Username == activeUser &&
-                    matchingRoles.Count == roles.Length &&
-                    lastAccessedTime > DateTime.UtcNow.AddMinutes(-AuthorizationOptions.AuthTokenTimeout) &&
-                    lastAccessedTime < DateTime.UtcNow.AddSeconds(20)
-                    )
-                {
-                    return true;
-                }
-            }
-
-            return false;
+          return AuthorizationResult.Unauthorized;
         }
+      }
+
+      return AuthorizationResult.InvalidRequest;
     }
+  }
 }

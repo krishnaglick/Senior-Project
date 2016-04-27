@@ -1,0 +1,104 @@
+
+<div class="ui modal" id="editVolunteer" data-bind="with: targetVolunteer">
+  <i class="clickable close icon"></i>
+  <div class="header" data-bind=`text: ${fullName} | ${username}`></div>
+  <div class="content">
+    <div class="ui form">
+      <div class="field">
+        <label>First Name</label>
+        <input id="firstname" placeholder="First Name" type="text" data-bind="textInput: firstName"  autofocus="true" />
+      </div>
+      <div class="field">
+        <label>Last Name</label>
+        <input id="lastname" placeholder="Last Name" type="text" data-bind="textInput: lastName"  autofocus="true" />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input id="email" placeholder="Email" type="text" data-bind="textInput: email"  autofocus="true" />
+      </div>
+      <div class="field">
+        <label>Roles</label>
+        <div id="volunteerRoles" data-bind="component: { name: 'multipleSearchSelection', params: { data: app.enums.roles, defaultValue: 'Roles', activeSelection: $parent.parseVolunteerRoles(roles) } }"></div>
+      </div>
+      <div class="field">
+        <label>Services</label>
+        <div id="volunteerServices" data-bind="component: { name: 'multipleSearchSelection', params: { data: app.enums.services, defaultValue: 'Services', activeSelection: $parent.parseVolunteerServices(services) } }"></div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui negative button">Cancel</div>
+    <div class="ui positive button" data-bind="click: $parent.modifyVolunteer">OK</div>
+  </div>
+</div>
+
+<div class="ui small modal" id="changePassword">
+  <i class="clickable close icon"></i>
+  <div class="header">Change Password</div>
+  <div class="content" data-bind="with: targetVolunteer">
+    <div class="ui form">
+      <div class="field">
+        <h4 data-bind="text: fullName"></h4>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <div class="ui input">
+          <input type="text" data-bind="textInput: password" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Confirm Password</label>
+        <div class="ui input">
+          <input type="text" data-bind="textInput: confirmPassword" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui negative button">Cancel</div>
+    <div class="ui positive button" data-bind="click: changePassword">Change Password</div>
+  </div>
+</div>
+
+<div class="ui centered grid topMargin">
+  <div class="five wide column">
+    <div class="ui equal width form segment">
+
+      <div class="fields headers">
+        <div class="field">
+          <label>Username</label>
+        </div>
+        <div class="field">
+          <label>First Name</label>
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+        </div>
+        <div class="field">
+          <label>Actions</label>
+        </div>
+      </div>
+
+      <div data-bind="foreach: paginatedVolunteers">
+        <div class="fields">
+          <div class="field" data-bind="text: username"></div>
+          <div class="field" data-bind="text: firstName"></div>
+          <div class="field" data-bind="text: lastName"></div>
+          <div class="field">
+            <div class="mini compact ui buttons">
+              <button class="ui inverted green button" data-bind="click: $parent.editVolunteer">Edit</button>
+              <button class="ui inverted blue button" data-bind="click: $parent.editPassword">Change Password</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="paginationButtons mini ui right floated buttons">
+        <div class="ui negative button" data-bind="click: function() {pageNumber(pageNumber() - 1);}"><</div>
+        <div class="or" data-bind="attr: { 'data-text': pageNumber }"></div>
+        <div class="ui positive button" data-bind="click: function() {pageNumber(pageNumber() + 1);}">></div>
+      </div>
+
+    </div>
+  </div>
+</div>

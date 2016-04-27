@@ -3,8 +3,8 @@ using System;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace SrProj
 {
@@ -13,6 +13,12 @@ namespace SrProj
         public static void Register(HttpConfiguration config)
         {
             config.Formatters.Add(new BrowserJsonFormatter());
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            
+            GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -30,6 +36,9 @@ namespace SrProj
             {
                 this.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
                 this.SerializerSettings.Formatting = Formatting.Indented;
+                this.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                this.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                this.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
             }
 
             public override void SetDefaultContentHeaders(Type type, HttpContentHeaders headers, MediaTypeHeaderValue mediaType)

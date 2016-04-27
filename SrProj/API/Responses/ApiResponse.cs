@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -8,7 +9,6 @@ namespace SrProj.API.Responses
 {
     public class JsonError
     {
-        public int id { get; set; }
         public string code { get; set; }
         public string title { get; set; }
         public string detail { get; set; }
@@ -18,7 +18,7 @@ namespace SrProj.API.Responses
 
     public class ApiResponse
     {
-        public object DefaultSuccessResponse = new { result = "success" };
+        public static object DefaultSuccessResponse = new { result = "success" };
 
         public ApiResponse(HttpRequestMessage Request)
         {
@@ -34,10 +34,7 @@ namespace SrProj.API.Responses
         {
             HttpResponseMessage res = request.CreateResponse(code, data ?? errors);
 
-            if (headers != null)
-            {
-                headers.ForEach(header => res.Headers.Add(header.Key, header.Value));
-            }
+            headers?.ForEach(header => res.Headers.Add(header.Key, header.Value));
 
             return res;
         }
